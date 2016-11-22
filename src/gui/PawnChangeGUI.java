@@ -1,17 +1,16 @@
-/**
- * 
- */
 package gui;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 //import javax.swing.ImageIcon;
 //import javax.swing.JLabel;
 import board.*;
 
-/** 
- * @author Kevin, Jeremiah
- * 
+/**
  * a GUI pops up when a pawn is to be promoted
+ * 
+ * @author Kevin
+ * @author JeremiahDeGreeff
  */
 @SuppressWarnings("serial")
 public class PawnChangeGUI extends JFrame{

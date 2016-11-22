@@ -1,15 +1,14 @@
-/**
- * 
- */
 package gui;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-/** 
- * @author Kevin, Jeremiah
- * 
+/**
  * a button on a PawnChangeGUI object
+ * 
+ * @author Kevin
+ * @author JeremiahDeGreeff
  */
 @SuppressWarnings("serial")
 public class PawnChangeButton extends JButton implements ActionListener{

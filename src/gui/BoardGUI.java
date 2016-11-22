@@ -1,17 +1,16 @@
-/**
- * 
- */
 package gui;
+
 import board.*;
 import pieces.*;
 import java.awt.GridLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-/** 
- * @author Kevin, Jeremiah
- * 
+/**
  * a GUI that represents a chess board
+ * 
+ * @author Kevin
+ * @author JeremiahDeGreeff
  */
 @SuppressWarnings("serial")
 public class BoardGUI extends JFrame{
@@ -24,7 +23,7 @@ public class BoardGUI extends JFrame{
 	/**
 	 * 2D array of all the buttons on this GUI
 	 */
-	private Button[][] buttons = new Button[8][8];
+	private BoardButton[][] buttons = new BoardButton[8][8];
 
 	/**
 	 * the board that this GUI represents
@@ -61,7 +60,7 @@ public class BoardGUI extends JFrame{
 		{
 			for(int j = 0; j < 8; j ++)
 			{
-				buttons[i][j] = new Button(i, j, this, board);
+				buttons[i][j] = new BoardButton(i, j, this, board);
 				p.add(buttons[i][j]);
 			}
 		}
@@ -77,7 +76,7 @@ public class BoardGUI extends JFrame{
 	 * @param col the desired column (0 - 7)
 	 * @return the button at position [row][col]
 	 */
-	public Button getButton(int row, int col)
+	public BoardButton getButton(int row, int col)
 	{
 		return buttons[row][col];
 	}

@@ -1,17 +1,15 @@
-/**
- * 
- */
 package gui;
+
 import javax.swing.JButton;
 
-import driver.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-/** 
- * @author Kevin, Jeremiah
- * 
+/**
  * a button on a CheckmateGUI object
+ * 
+ * @author Kevin
+ * @author JeremiahDeGreeff
  */
 @SuppressWarnings("serial")
 public class CheckmateButton extends JButton implements ActionListener
@@ -71,7 +69,7 @@ public class CheckmateButton extends JButton implements ActionListener
 		{
 			gui.getBoardGUI().dispose(); //close old game
 			gui.dispose(); //close this GUI
-			StartupScreen.main(null); //create a new startup screen
+			new StartupScreen(); //create a new startup screen
 		}
 	}
 

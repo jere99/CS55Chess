@@ -1,13 +1,11 @@
-/**
- * 
- */
 package pieces;
+
 import board.*;
 
 /**
- * @author JeremiahDeGreeff
- * 
  * an object that represents a knight
+ * 
+ * @author JeremiahDeGreeff
  */
 public class Knight extends Piece{
 

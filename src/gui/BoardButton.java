@@ -1,7 +1,5 @@
-/**
- * 
- */
 package gui;
+
 import board.*;
 import pieces.*;
 import javax.swing.JButton;
@@ -11,61 +9,62 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 
 /** 
- * @author Kevin, Jeremiah
- * 
  * a button that represents a square on the chess board of a BoardGUI object
+ * 
+ * @author Kevin
+ * @author JeremiahDeGreeff
  */
 @SuppressWarnings("serial")
-public class Button extends JButton implements ActionListener{
+public class BoardButton extends JButton implements ActionListener{
 	
 	/**
 	 * icon for a white pawn
 	 */
-	private static ImageIcon wPawn = new ImageIcon(Button.class.getResource("white_p.png"), "wPawn");
+	private static ImageIcon wPawn = new ImageIcon(BoardButton.class.getResource("white_p.png"), "wPawn");
 	/**
 	 * icon for a black pawn
 	 */
-	private static ImageIcon bPawn = new ImageIcon(Button.class.getResource("black_p.png"), "bPawn");
+	private static ImageIcon bPawn = new ImageIcon(BoardButton.class.getResource("black_p.png"), "bPawn");
 	/**
 	 * icon for a white knight
 	 */
-	private static ImageIcon wKnight = new ImageIcon(Button.class.getResource("white_n.png"), "wKnight");
+	private static ImageIcon wKnight = new ImageIcon(BoardButton.class.getResource("white_n.png"), "wKnight");
 	/**
 	 * icon for a black knight
 	 */
-	private static ImageIcon bKnight = new ImageIcon(Button.class.getResource("black_n.png"), "bKnight");
+	private static ImageIcon bKnight = new ImageIcon(BoardButton.class.getResource("black_n.png"), "bKnight");
 	/**
 	 * icon for a white rook
 	 */
-	private static ImageIcon wRook = new ImageIcon(Button.class.getResource("white_r.png"), "wRook");
+	private static ImageIcon wRook = new ImageIcon(BoardButton.class.getResource("white_r.png"), "wRook");
 	/**
 	 * icon for a black rook
 	 */
-	private static ImageIcon bRook = new ImageIcon(Button.class.getResource("black_r.png"), "bRook");
+	private static ImageIcon bRook = new ImageIcon(BoardButton.class.getResource("black_r.png"), "bRook");
 	/**
 	 * icon for a white bishop
 	 */
-	private static ImageIcon wBishop = new ImageIcon(Button.class.getResource("white_b.png"), "wBishop");
+	private static ImageIcon wBishop = new ImageIcon(BoardButton.class.getResource("white_b.png"), "wBishop");
 	/**
 	 * icon for a black bishop
 	 */
-	private static ImageIcon bBishop = new ImageIcon(Button.class.getResource("black_b.png"), "bBishop");
+	private static ImageIcon bBishop = new ImageIcon(BoardButton.class.getResource("black_b.png"), "bBishop");
 	/**
 	 * icon for a white queen
 	 */
-	private static ImageIcon wQueen = new ImageIcon(Button.class.getResource("white_q.png"), "wQueen");
+	private static ImageIcon wQueen = new ImageIcon(BoardButton.class.getResource("white_q.png"), "wQueen");
 	/**
 	 * icon for a black queen
 	 */
-	private static ImageIcon bQueen = new ImageIcon(Button.class.getResource("black_q.png"), "bQueen");
+	private static ImageIcon bQueen = new ImageIcon(BoardButton.class.getResource("black_q.png"), "bQueen");
 	/**
 	 * icon for a white king
 	 */
-	private static ImageIcon wKing = new ImageIcon(Button.class.getResource("white_k.png"), "wKing");
+	private static ImageIcon wKing = new ImageIcon(BoardButton.class.getResource("white_k.png"), "wKing");
 	/**
 	 * icon for a black king
 	 */
-	private static ImageIcon bKing = new ImageIcon(Button.class.getResource("black_k.png"), "bKing");
+	private static ImageIcon bKing = new ImageIcon(BoardButton.class.getResource("black_k.png"), "bKing");
 	
 	
 	/**
@@ -113,7 +112,7 @@ public class Button extends JButton implements ActionListener{
 	 * @param gui the GUI that this button is a part of
 	 * @param board the board that the GUI represents
 	 */
-	public Button(int row, int col, BoardGUI gui, Board board)
+	public BoardButton(int row, int col, BoardGUI gui, Board board)
 	{
 		super();
 		this.row = row;
@@ -337,12 +336,12 @@ public class Button extends JButton implements ActionListener{
 	public static void setWColor(String color)
 	{
 		System.out.println(color);
-		wPawn = new ImageIcon(Button.class.getResource(color + "_p.png"), "wPawn");
-		wKnight = new ImageIcon(Button.class.getResource(color + "_n.png"), "wKnight");
-		wRook = new ImageIcon(Button.class.getResource(color + "_r.png"), "wRook");
-		wBishop = new ImageIcon(Button.class.getResource(color + "_b.png"), "wBishop");
-		wQueen = new ImageIcon(Button.class.getResource(color + "_q.png"), "wQueen");
-		wKing = new ImageIcon(Button.class.getResource(color + "_k.png"), "wKing");
+		wPawn = new ImageIcon(BoardButton.class.getResource(color + "_p.png"), "wPawn");
+		wKnight = new ImageIcon(BoardButton.class.getResource(color + "_n.png"), "wKnight");
+		wRook = new ImageIcon(BoardButton.class.getResource(color + "_r.png"), "wRook");
+		wBishop = new ImageIcon(BoardButton.class.getResource(color + "_b.png"), "wBishop");
+		wQueen = new ImageIcon(BoardButton.class.getResource(color + "_q.png"), "wQueen");
+		wKing = new ImageIcon(BoardButton.class.getResource(color + "_k.png"), "wKing");
 	}
 	
 	/**
@@ -351,11 +350,11 @@ public class Button extends JButton implements ActionListener{
 	 */
 	public static void setBColor(String color)
 	{
-		bPawn = new ImageIcon(Button.class.getResource(color + "_p.png"), "bPawn");
-		bKnight = new ImageIcon(Button.class.getResource(color + "_n.png"), "bKnight");
-		bRook = new ImageIcon(Button.class.getResource(color + "_r.png"), "bRook");
-		bBishop = new ImageIcon(Button.class.getResource(color + "_b.png"), "bBishop");
-		bQueen = new ImageIcon(Button.class.getResource(color + "_q.png"), "bQueen");
-		bKing = new ImageIcon(Button.class.getResource(color + "_k.png"), "bKing");
+		bPawn = new ImageIcon(BoardButton.class.getResource(color + "_p.png"), "bPawn");
+		bKnight = new ImageIcon(BoardButton.class.getResource(color + "_n.png"), "bKnight");
+		bRook = new ImageIcon(BoardButton.class.getResource(color + "_r.png"), "bRook");
+		bBishop = new ImageIcon(BoardButton.class.getResource(color + "_b.png"), "bBishop");
+		bQueen = new ImageIcon(BoardButton.class.getResource(color + "_q.png"), "bQueen");
+		bKing = new ImageIcon(BoardButton.class.getResource(color + "_k.png"), "bKing");
 	}
 }

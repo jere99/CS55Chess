@@ -1,13 +1,11 @@
-/**
- * 
- */
 package pieces;
+
 import board.*;
 
 /**
- * @author JeremiahDeGreeff
- *
  * an object that represents a pawn
+ * 
+ * @author JeremiahDeGreeff
  */
 public class Pawn extends Piece{
 	

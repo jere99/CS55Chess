@@ -1,13 +1,11 @@
-/**
- * 
- */
 package pieces;
+
 import board.*;
 
 /**
- * @author JeremiahDeGreeff
- *
  *	an object that represents a queen
+ *
+ * @author JeremiahDeGreeff
  */
 public class Queen extends Piece{
 

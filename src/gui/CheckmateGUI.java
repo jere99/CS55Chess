@@ -1,14 +1,13 @@
-/**
- * 
- */
 package gui;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-/** 
- * @author Kevin, Jeremiah
- * 
+/**
  * a GUI that pops up when the game has ended
+ * 
+ * @author Kevin
+ * @author JeremiahDeGreeff
  */
 @SuppressWarnings("serial")
 public class CheckmateGUI extends JFrame{

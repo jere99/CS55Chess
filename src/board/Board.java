@@ -1,14 +1,12 @@
-/**
- * 
- */
 package board;
+
 import pieces.*;
 import gui.*;
 
 /**
- * @author Megha
- *
  * an object that represents a chess board
+ * 
+ * @author Megha
  */
 
 public class Board {
@@ -255,7 +253,7 @@ public class Board {
 		else if(type.equals("Bishop"))
 			board[row][col] = new Bishop(row, col, pawnIsWhite, this);
 		
-		gui.getButton(row, col).setIcon(Button.stringToIcon(type, pawnIsWhite));
+		gui.getButton(row, col).setIcon(BoardButton.stringToIcon(type, pawnIsWhite));
 		gui.getButton(row, col).detectCheck();
 	}
 }

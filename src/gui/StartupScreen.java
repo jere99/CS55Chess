@@ -1,5 +1,7 @@
-package driver;
+package gui;
+
 import board.*;
+
 import javax.swing.JFrame;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -9,29 +11,23 @@ import javax.swing.JLabel;
  * 
  * @author Kevin
  */
-public class StartupScreen
-{
+public class StartupScreen{
+	
+	/**
+	 * Variable to keep track of whether or not a settings menu has already been created
+	 * to prevent multiple settings menus from existing simultaneously
+	 */
+	protected static boolean settingsMenuCreated = false;
 	
 	/**
 	 * the main display component of the GUI: holds the background image
 	 */
-	private JLabel myLabel = new JLabel(new ImageIcon(this.getClass().getResource("BG2.png")));
+	private JLabel myLabel = new JLabel(new ImageIcon(this.getClass().getResource("startup_screen.png")));
 	
 	/**
 	 * the JFrame for the window
 	 */
 	protected static JFrame frame;
-
-	/**
-	 * Main method for the project
-	 */
-	public static void main(String[] args) 
-	{
-		
-		//Creating new window
-		new StartupScreen();
-
-	}
 
 	/**
 	 * Creates a new menu with all functional buttons and correct background
@@ -58,9 +54,9 @@ public class StartupScreen
 		frame.setLayout(null);
 
 		//Adding the buttons
-		StartupButtons newGame = new StartupButtons("New Game");
-		StartupButtons exit = new StartupButtons("Exit");
-		StartupButtons settings = new StartupButtons("Color Scheme");
+		StartupButton newGame = new StartupButton("New Game");
+		StartupButton exit = new StartupButton("Exit");
+		StartupButton settings = new StartupButton("Color Scheme");
 		
 		//Configuring locations and sizes of buttons
 		//.setBounds(x,y,width,height)

@@ -1,15 +1,20 @@
-package driver;
+package gui;
+
 import javax.swing.JFrame;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-
+/**
+ * The GUI for the settings menu
+ * 
+ * @author Kevin
+ */
 public class SettingsMenuGUI {
 
 	/**
 	 * the main display component of the GUI: holds the background image
 	 */
-	private JLabel myLabel = new JLabel(new ImageIcon(this.getClass().getResource("st2.png")));
+	private JLabel myLabel = new JLabel(new ImageIcon(this.getClass().getResource("settings_menu.png")));
 
 	/**
 	 * the JFrame for the window
@@ -19,31 +24,31 @@ public class SettingsMenuGUI {
 	/**
 	 * the button to return to the main menu
 	 */
-	protected static StartupButtons mainMenu = new StartupButtons("Main Menu");
+	protected static SettingsMenuButton mainMenu = new SettingsMenuButton("Main Menu");
 	/**
 	 * the button to select white
 	 */
-	protected static StartupButtons white = new StartupButtons("White");
+	protected static SettingsMenuButton white = new SettingsMenuButton("White");
 	/**
 	 * the button to select golden
 	 */
-	protected static StartupButtons golden = new StartupButtons("Golden");
+	protected static SettingsMenuButton golden = new SettingsMenuButton("Golden");
 	/**
 	 * the button to select clear
 	 */
-	protected static StartupButtons clear = new StartupButtons("Clear");
+	protected static SettingsMenuButton clear = new SettingsMenuButton("Clear");
 	/**
 	 * the button to select blue
 	 */
-	protected static StartupButtons blue = new StartupButtons("Blue");
+	protected static SettingsMenuButton blue = new SettingsMenuButton("Blue");
 	/**
 	 * the button to select black
 	 */
-	protected static StartupButtons black = new StartupButtons("Black");
+	protected static SettingsMenuButton black = new SettingsMenuButton("Black");
 	/**
 	 * the button to select walnut
 	 */
-	protected static StartupButtons walnut = new StartupButtons("Walnut");
+	protected static SettingsMenuButton walnut = new SettingsMenuButton("Walnut");
 	
 	/**
 	 * Creates window with correct buttons and background

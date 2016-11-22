@@ -1,13 +1,10 @@
-/**
- * 
- */
 package pieces;
 import board.*;
 
 /**
- * @author JeremiahDeGreeff
- * 
  * a class that is the template for a chess piece
+ * 
+ * @author JeremiahDeGreeff
  */
 public abstract class Piece {
 	

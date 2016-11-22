@@ -1,13 +1,11 @@
-/**
- * 
- */
 package pieces;
+
 import board.*;
 
 /**
- * @author JeremiahDeGreeff
- *
  * an object that represents a king
+ * 
+ * @author JeremiahDeGreeff
  */
 public class King extends Piece{
 

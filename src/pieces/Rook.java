@@ -1,13 +1,11 @@
-/**
- * 
- */
 package pieces;
+
 import board.*;
 
 /**
- * @author JeremiahDeGreeff
- *
  * an object that represents a rook
+ * 
+ * @author JeremiahDeGreeff
  */
 public class Rook extends Piece{
 
