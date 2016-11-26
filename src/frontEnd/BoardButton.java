@@ -173,30 +173,30 @@ public class BoardButton extends JButton implements ActionListener{
 	}
 	
 	/**
-	 * changes the color for the white pieces
+	 * sets the color for the white pieces
 	 * @param color the color to change to
 	 */
 	protected static void setWhiteColor(String color)
 	{
-		wPawn = new ImageIcon(BoardButton.class.getResource(color + "_p.png"), "wPawn");
-		wKnight = new ImageIcon(BoardButton.class.getResource(color + "_n.png"), "wKnight");
-		wRook = new ImageIcon(BoardButton.class.getResource(color + "_r.png"), "wRook");
-		wBishop = new ImageIcon(BoardButton.class.getResource(color + "_b.png"), "wBishop");
-		wQueen = new ImageIcon(BoardButton.class.getResource(color + "_q.png"), "wQueen");
-		wKing = new ImageIcon(BoardButton.class.getResource(color + "_k.png"), "wKing");
+		wPawn = new ImageIcon(BoardButton.class.getResource("resources/" + color + "_p.png"), "wPawn");
+		wKnight = new ImageIcon(BoardButton.class.getResource("resources/" + color + "_n.png"), "wKnight");
+		wRook = new ImageIcon(BoardButton.class.getResource("resources/" + color + "_r.png"), "wRook");
+		wBishop = new ImageIcon(BoardButton.class.getResource("resources/" + color + "_b.png"), "wBishop");
+		wQueen = new ImageIcon(BoardButton.class.getResource("resources/" + color + "_q.png"), "wQueen");
+		wKing = new ImageIcon(BoardButton.class.getResource("resources/" + color + "_k.png"), "wKing");
 	}
 	
 	/**
-	 * changes the color for the black pieces
+	 * sets the color for the black pieces
 	 * @param color the color to change to
 	 */
 	protected static void setBlackColor(String color)
 	{
-		bPawn = new ImageIcon(BoardButton.class.getResource(color + "_p.png"), "bPawn");
-		bKnight = new ImageIcon(BoardButton.class.getResource(color + "_n.png"), "bKnight");
-		bRook = new ImageIcon(BoardButton.class.getResource(color + "_r.png"), "bRook");
-		bBishop = new ImageIcon(BoardButton.class.getResource(color + "_b.png"), "bBishop");
-		bQueen = new ImageIcon(BoardButton.class.getResource(color + "_q.png"), "bQueen");
-		bKing = new ImageIcon(BoardButton.class.getResource(color + "_k.png"), "bKing");
+		bPawn = new ImageIcon(BoardButton.class.getResource("resources/" + color + "_p.png"), "bPawn");
+		bKnight = new ImageIcon(BoardButton.class.getResource("resources/" + color + "_n.png"), "bKnight");
+		bRook = new ImageIcon(BoardButton.class.getResource("resources/" + color + "_r.png"), "bRook");
+		bBishop = new ImageIcon(BoardButton.class.getResource("resources/" + color + "_b.png"), "bBishop");
+		bQueen = new ImageIcon(BoardButton.class.getResource("resources/" + color + "_q.png"), "bQueen");
+		bKing = new ImageIcon(BoardButton.class.getResource("resources/" + color + "_k.png"), "bKing");
 	}
 }

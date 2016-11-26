@@ -14,7 +14,7 @@ public class SettingsMenuGUI {
 	/**
 	 * the main display component of the GUI: holds the background image
 	 */
-	private JLabel myLabel = new JLabel(new ImageIcon(this.getClass().getResource("settings_menu.png")));
+	private JLabel myLabel = new JLabel(new ImageIcon(this.getClass().getResource("resources/settings_menu.png")));
 
 	/**
 	 * the JFrame for the window

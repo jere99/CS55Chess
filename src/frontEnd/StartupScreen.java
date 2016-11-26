@@ -31,7 +31,7 @@ public class StartupScreen{
 	/**
 	 * the main display component of the GUI: holds the background image
 	 */
-	private JLabel myLabel = new JLabel(new ImageIcon(this.getClass().getResource("startup_screen.png")));
+	private JLabel myLabel = new JLabel(new ImageIcon(this.getClass().getResource("resources/startup_screen.png")));
 	
 	/**
 	 * the JFrame for the window

@@ -19,27 +19,27 @@ public class SettingsMenuButton extends JButton implements ActionListener{
 	/**
 	 * icon for button to choose white
 	 */
-	private static ImageIcon whitePawn = new ImageIcon(StartupButton.class.getResource("white_p.png"));
+	private static ImageIcon whitePawn = new ImageIcon(StartupButton.class.getResource("resources/white_p.png"));
 	/**
 	 * icon for button to choose golden
 	 */
-	private static ImageIcon goldenPawn = new ImageIcon(StartupButton.class.getResource("golden_p.png"));
+	private static ImageIcon goldenPawn = new ImageIcon(StartupButton.class.getResource("resources/golden_p.png"));
 	/**
 	 * icon for button to choose clear
 	 */
-	private static ImageIcon clearPawn = new ImageIcon(StartupButton.class.getResource("clear_p.png"));
+	private static ImageIcon clearPawn = new ImageIcon(StartupButton.class.getResource("resources/clear_p.png"));
 	/**
 	 * icon for button to choose black
 	 */
-	private static ImageIcon blackPawn = new ImageIcon(StartupButton.class.getResource("black_p.png"));
+	private static ImageIcon blackPawn = new ImageIcon(StartupButton.class.getResource("resources/black_p.png"));
 	/**
 	 * icon for button to choose blue
 	 */
-	private static ImageIcon bluePawn = new ImageIcon(StartupButton.class.getResource("blue_p.png"));
+	private static ImageIcon bluePawn = new ImageIcon(StartupButton.class.getResource("resources/blue_p.png"));
 	/**
 	 * icon for button to choose walnut
 	 */
-	private static ImageIcon walnutPawn = new ImageIcon(StartupButton.class.getResource("walnut_p.png"));
+	private static ImageIcon walnutPawn = new ImageIcon(StartupButton.class.getResource("resources/walnut_p.png"));
 	/**
 	 * text displayed on the button, also used to identify the button
 	 */
