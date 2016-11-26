@@ -1,0 +1,202 @@
+package frontEnd;
+
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+
+/** 
+ * a button that represents a square on the chess board of a BoardGUI object
+ * 
+ * @author Kevin
+ * @author JeremiahDeGreeff
+ */
+@SuppressWarnings("serial")
+public class BoardButton extends JButton implements ActionListener{
+	
+	/**
+	 * icon for a white pawn
+	 */
+	private static ImageIcon wPawn;
+	/**
+	 * icon for a black pawn
+	 */
+	private static ImageIcon bPawn;
+	/**
+	 * icon for a white knight
+	 */
+	private static ImageIcon wKnight;
+	/**
+	 * icon for a black knight
+	 */
+	private static ImageIcon bKnight;
+	/**
+	 * icon for a white rook
+	 */
+	private static ImageIcon wRook;
+	/**
+	 * icon for a black rook
+	 */
+	private static ImageIcon bRook;
+	/**
+	 * icon for a white bishop
+	 */
+	private static ImageIcon wBishop;
+	/**
+	 * icon for a black bishop
+	 */
+	private static ImageIcon bBishop;
+	/**
+	 * icon for a white queen
+	 */
+	private static ImageIcon wQueen;
+	/**
+	 * icon for a black queen
+	 */
+	private static ImageIcon bQueen;
+	/**
+	 * icon for a white king
+	 */
+	private static ImageIcon wKing;
+	/**
+	 * icon for a black king
+	 */
+	private static ImageIcon bKing;
+	
+	
+	/**
+	 * this buttons's row on the BoardGUI
+	 */
+	private int row;
+	/**
+	 * this buttons's column on the BoardGUI
+	 */
+	private int column;
+	/**
+	 * the GUI that this button is a part of
+	 */
+	private BoardGUI gui;
+	
+
+	/**
+	 * Creates a new button and gives it the correct initial values
+	 * 
+	 * @param row row on GUI
+	 * @param col column on GUI
+	 * @param gui the GUI that this button is a part of
+	 * @param board the board that the GUI represents
+	 */
+	public BoardButton(int row, int column, BoardGUI gui)
+	{
+		super();
+		this.row = row;
+		this.column = column;
+		this.gui = gui;
+
+		//Set Background Colors
+		resetColor();
+		
+		//Necessary for buttons to work on MACs
+		setOpaque(true);
+		setBorderPainted(false);
+		
+		//creates a new Action Listener
+		this.addActionListener(this);
+	}
+	
+	/**
+	 * @return this buttons's row on the BoardGUI
+	 */
+	public int getRow() {
+		return row;
+	}
+	
+	/**
+	 * @return this buttons's column on the BoardGUI
+	 */
+	public int getColumn() {
+		return column;
+	}
+	
+	/**
+	 * This method is run every time the button is clicked
+	 * If move selected is valid, the move is made and the images are updated
+	 * If move is invalid, no changes are made to the board
+	 * 
+	 * @param e the click which triggers the method
+	 */
+	public void actionPerformed(ActionEvent e)
+	{
+		gui.buttonClick(this);
+	}
+	
+	/**
+	 * highlights this button
+	 */
+	public void highlight()
+	{
+		setBackground(Color.YELLOW);
+	}
+	
+	/**
+	 * Sets the button's background color to the default
+	 */
+	public void resetColor()
+	{
+		if((row + column) % 2 == 0)
+			setBackground(Color.WHITE);
+		else
+			setBackground(Color.BLACK);
+	}
+
+	/**
+	 * @param id the id of a piece
+	 * @return the imageIcon associated with the given id
+	 */
+	public static ImageIcon idToIcon(String id)
+	{
+		if(id.equals("wPawn")) return wPawn;
+		if(id.equals("bPawn")) return bPawn;
+		if(id.equals("wKnight")) return wKnight;
+		if(id.equals("bKnight")) return bKnight;
+		if(id.equals("wRook")) return wRook;
+		if(id.equals("bRook")) return bRook;
+		if(id.equals("wBishop")) return wBishop;
+		if(id.equals("bBishop")) return bBishop;
+		if(id.equals("wQueen")) return wQueen;
+		if(id.equals("bQueen")) return bQueen;
+		if(id.equals("wKing")) return wKing;
+		if(id.equals("bKing")) return bKing;
+		return null;
+	}
+	
+	/**
+	 * changes the color for the white pieces
+	 * @param color the color to change to
+	 */
+	protected static void setWhiteColor(String color)
+	{
+		wPawn = new ImageIcon(BoardButton.class.getResource(color + "_p.png"), "wPawn");
+		wKnight = new ImageIcon(BoardButton.class.getResource(color + "_n.png"), "wKnight");
+		wRook = new ImageIcon(BoardButton.class.getResource(color + "_r.png"), "wRook");
+		wBishop = new ImageIcon(BoardButton.class.getResource(color + "_b.png"), "wBishop");
+		wQueen = new ImageIcon(BoardButton.class.getResource(color + "_q.png"), "wQueen");
+		wKing = new ImageIcon(BoardButton.class.getResource(color + "_k.png"), "wKing");
+	}
+	
+	/**
+	 * changes the color for the black pieces
+	 * @param color the color to change to
+	 */
+	protected static void setBlackColor(String color)
+	{
+		bPawn = new ImageIcon(BoardButton.class.getResource(color + "_p.png"), "bPawn");
+		bKnight = new ImageIcon(BoardButton.class.getResource(color + "_n.png"), "bKnight");
+		bRook = new ImageIcon(BoardButton.class.getResource(color + "_r.png"), "bRook");
+		bBishop = new ImageIcon(BoardButton.class.getResource(color + "_b.png"), "bBishop");
+		bQueen = new ImageIcon(BoardButton.class.getResource(color + "_q.png"), "bQueen");
+		bKing = new ImageIcon(BoardButton.class.getResource(color + "_k.png"), "bKing");
+	}
+}

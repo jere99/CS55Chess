@@ -1,4 +1,4 @@
-package gui;
+package frontEnd;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -61,7 +61,7 @@ public class PawnChangeButton extends JButton implements ActionListener{
 			System.out.println("Promotting to Bishop");
 		
 		//promotes the pawn into the selected piece
-		gui.getBoard().pawnChange(gui.getRow(), gui.getCol(), piece, gui.getBoardGUI());
+		gui.getBoard().pawnChange(gui.getRow(), gui.getCol(), piece);
 		
 		//closes this GUI
 		gui.dispose();

@@ -1,5 +1,4 @@
-package pieces;
-import board.*;
+package backEnd;
 
 /**
  * a class that is the template for a chess piece
@@ -7,7 +6,18 @@ import board.*;
  * @author JeremiahDeGreeff
  */
 public abstract class Piece {
-	
+	/**
+	 * the type of piece this object represents
+	 */
+	private final String TYPE;
+	/**
+	 * true if white, false if black
+	 */
+	private final boolean IS_WHITE;
+	/**
+	 * the board associated with this piece
+	 */
+	private final Board BOARD;
 	/**
 	 * coordinate 8 - 1 of this piece expressed as 0 - 7
 	 */
@@ -16,14 +26,6 @@ public abstract class Piece {
 	 * coordinate a - h of this piece expressed as 0 - 7
 	 */
 	private int column;
-	/**
-	 * true if white, false if black
-	 */
-	private boolean isWhite;
-	/**
-	 * the board associated with this piece
-	 */
-	private Board board;
 	
 	
 	/**
@@ -31,13 +33,15 @@ public abstract class Piece {
 	 * @param column integer between 0 and 7 based on coordinate a - h
 	 * @param isWhite true if white, false if black
 	 * @param board board to be associated with this piece
+	 * @param type the type of this object represents
 	 */
-	public Piece(int row, int column, boolean isWhite, Board board)
+	public Piece(int row, int column, boolean isWhite, Board board, String type)
 	{
 		this.row = row;
 		this.column = column;
-		this.isWhite = isWhite;
-		this.board = board;
+		IS_WHITE = isWhite;
+		BOARD = board;
+		TYPE = type;
 	}
 	
 	
@@ -62,7 +66,7 @@ public abstract class Piece {
 	 */
 	public boolean isWhite()
 	{
-		return isWhite;
+		return IS_WHITE;
 	}
 	
 	/**
@@ -70,7 +74,18 @@ public abstract class Piece {
 	 */
 	public Board getBoard()
 	{
-		return board;
+		return BOARD;
+	}
+	
+	/**
+	 * @return a string which represents the piece's color and type
+	 */
+	public String getPieceID()
+	{
+		if(IS_WHITE)
+			return "w" + TYPE;
+		else
+			return "b" + TYPE;
 	}
 	
 	/**
@@ -96,15 +111,10 @@ public abstract class Piece {
 	 */
 	public boolean move(int newRow, int newColumn)
 	{
-		if(newRow == row && newColumn == column)
+		//If the move is valid
+		if(BOARD.testMove(this, newRow, newColumn))
 		{
-			return false;
-		}
-		if(board.testMove(this, newRow, newColumn))
-		{
-			Piece captured = board.movePiece(this, newRow, newColumn);
-			if (captured != null)
-				System.out.println("Piece Captured");
+			BOARD.makeMove(this, newRow, newColumn);
 			return true;
 		}
 		return false;

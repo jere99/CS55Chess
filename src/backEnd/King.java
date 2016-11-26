@@ -1,6 +1,4 @@
-package pieces;
-
-import board.*;
+package backEnd;
 
 /**
  * an object that represents a king
@@ -8,7 +6,11 @@ import board.*;
  * @author JeremiahDeGreeff
  */
 public class King extends Piece{
-
+	/**
+	 * the type of pieces this class represents
+	 */
+	private static final String CLASS_TYPE = "King";
+	
 	/**
 	 * false if has not moved and able to castle, true otherwise
 	 */
@@ -22,7 +24,7 @@ public class King extends Piece{
 	 */
 	public King(int row, int column, boolean isWhite, Board board)
 	{
-		super(row, column, isWhite, board);
+		super(row, column, isWhite, board, CLASS_TYPE);
 	}
 	
 	
@@ -49,10 +51,12 @@ public class King extends Piece{
 	 */
 	public boolean isValid(int newRow, int newColumn)
 	{
+		//regular move
 		if(getBoard().getPiece(newRow, newColumn) == null || getBoard().getPiece(newRow, newColumn).isWhite() != isWhite())
 			if(Math.abs(newRow - getRow()) <= 1 && Math.abs(newColumn - getColumn()) <= 1)
 				return true;
-		if(!hasMoved && getRow() == newRow && !getBoard().kingChecked(this)) //castling
+		//castle
+		if(!hasMoved && getRow() == newRow && !getBoard().kingChecked(this))
 		{
 			if(newColumn == 6 && getBoard().getPiece(newRow, 7) instanceof Rook && ((Rook) getBoard().getPiece(newRow, 7)).hasMoved() == false) //castle into column 6
 				if(getBoard().testMove(this, newRow, 5) && getBoard().getPiece(newRow, 5) == null && getBoard().getPiece(newRow, 6) == null)

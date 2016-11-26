@@ -1,10 +1,9 @@
-package gui;
+package frontEnd;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-//import javax.swing.ImageIcon;
-//import javax.swing.JLabel;
-import board.*;
+
+import backEnd.Board;
 
 /**
  * a GUI pops up when a pawn is to be promoted
@@ -36,10 +35,6 @@ public class PawnChangeGUI extends JFrame{
 	 * the column where this promotion is occurring
 	 */
 	private int col;
-	/**
-	 * the GUI that represents the board
-	 */
-	private BoardGUI boardGUI;
 	
 	
 	/**
@@ -50,7 +45,7 @@ public class PawnChangeGUI extends JFrame{
 	 * @param board the board on which this promotion is occurring
 	 * @param boardGUI the GUI that represents the board
 	 */
-	public PawnChangeGUI(int row, int col, Board board, BoardGUI boardGUI)
+	public PawnChangeGUI(int row, int col, Board board)
 	{
 		//Name the window
 		super("Pawn Promotion");
@@ -59,7 +54,6 @@ public class PawnChangeGUI extends JFrame{
 		this.row = row;
 		this.col = col;
 		this.board = board;
-		this.boardGUI = boardGUI;
 		
 		//Sets the size of the window
 		setSize(400,75);
@@ -111,13 +105,5 @@ public class PawnChangeGUI extends JFrame{
 	public Board getBoard()
 	{
 		return board;
-	}
-	
-	/**
-	 * @return the GUI that represents the board
-	 */
-	public BoardGUI getBoardGUI()
-	{
-		return boardGUI;
 	}
 }

@@ -1,6 +1,6 @@
 package driver;
 
-import gui.StartupScreen;
+import frontEnd.StartupScreen;
 
 /**
  * Main class for the project

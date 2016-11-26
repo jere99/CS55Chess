@@ -1,10 +1,10 @@
-package gui;
-
-import board.*;
+package frontEnd;
 
 import javax.swing.JFrame;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+
+import backEnd.Game;
 
 /**
  * The GUI for the startup screen
@@ -18,6 +18,15 @@ public class StartupScreen{
 	 * to prevent multiple settings menus from existing simultaneously
 	 */
 	protected static boolean settingsMenuCreated = false;
+	
+	/**
+	 * the color for the white pieces
+	 */
+	private static String whiteColor = "white";
+	/**
+	 * the color for the black pieces
+	 */
+	private static String blackColor = "black";
 	
 	/**
 	 * the main display component of the GUI: holds the background image
@@ -74,12 +83,34 @@ public class StartupScreen{
 	}
 	
 	/**
+	 * changes the color for the white pieces
+	 * @param color the color to change to
+	 */
+	public static void setWhiteColor(String color)
+	{
+		whiteColor = color;
+	}
+	
+	/**
+	 * changes the color for the black pieces
+	 * @param color the color to change to
+	 */
+	public static void setBlackColor(String color)
+	{
+		blackColor = color;
+	}
+	
+	/**
 	 * creates a new game
 	 */
 	public static void newGame() {
-		//Creates new Board
-		new Board();
+		//loads the correct piece images
+		BoardButton.setWhiteColor(whiteColor);
+		BoardButton.setBlackColor(blackColor);
 		//Confirms in console
-		System.out.println("New Game\nWhite's turn:");
+		System.out.println("\nNew Game");
+		//Creates new Game
+		new Game();
+		System.out.println("\nWhite's Turn");
 	}
 }

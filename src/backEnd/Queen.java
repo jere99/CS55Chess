@@ -1,19 +1,15 @@
-package pieces;
-
-import board.*;
+package backEnd;
 
 /**
- * an object that represents a rook
- * 
+ *	an object that represents a queen
+ *
  * @author JeremiahDeGreeff
  */
-public class Rook extends Piece{
-
+public class Queen extends Piece{
 	/**
-	 * false if has not moved and able to castle, true otherwise
+	 * the type of pieces this class represents
 	 */
-	private boolean hasMoved;
-	
+	private static final String CLASS_TYPE = "Queen";
 	
 	/**
 	 * @param row integer between 0 and 7 based on coordinate 8 - 1
@@ -21,36 +17,19 @@ public class Rook extends Piece{
 	 * @param isWhite true if white, false if black
 	 * @param board board to be associated with this piece
 	 */
-	public Rook(int row, int column, boolean isWhite, Board board)
+	public Queen(int row, int column, boolean isWhite, Board board)
 	{
-		super(row, column, isWhite, board);
-		hasMoved = false;
+		super(row, column, isWhite, board, CLASS_TYPE);
 	}
 	
-	
-	/**
-	 * @return value of hasMoved
-	 */
-	public boolean hasMoved()
-	{
-		return hasMoved;
-	}
-	
-	/**
-	 * to be called if the rook moves and can no longer castle
-	 */
-	public void rookMove()
-	{
-		hasMoved = true;
-	}
 	
 	/**
 	 * @param newRow number between 0 and 7 based on coordinate 8 - 1
 	 * @param newColumn number between 0 and 7 based on coordinate a - h
-	 * @return true if valid to move this piece to [newRow][newColumn], false otherwise
+	 * @return true if valid to move this piece to [newRow][newCol], false otherwise
 	 */
 	public boolean isValid(int newRow, int newColumn)
-	{
+	{	
 		if(newRow == getRow() && (getBoard().getPiece(newRow, newColumn) == null || getBoard().getPiece(newRow, newColumn).isWhite() != isWhite())) //same row
 		{
 			for(int c = getColumn() + (int) Math.signum(newColumn - getColumn()); c != newColumn; c += (int) Math.signum(newColumn - getColumn()))
@@ -65,6 +44,14 @@ public class Rook extends Piece{
 					return false;
 			return true;
 		}
+		if(Math.abs(newRow - getRow()) == Math.abs(newColumn - getColumn())) //on diagonal line
+			if(getBoard().getPiece(newRow, newColumn) == null || getBoard().getPiece(newRow, newColumn).isWhite() != isWhite())
+			{
+				for(int i = 1; i < Math.abs(newRow - getRow()); i++)
+					if(getBoard().getPiece(i * (int)Math.signum(newRow - getRow()) + getRow(), i * (int)Math.signum(newColumn - getColumn()) + getColumn()) != null)
+						return false;
+				return true;
+			}
 		return false;
 	}
 }

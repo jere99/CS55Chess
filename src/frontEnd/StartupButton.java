@@ -1,4 +1,4 @@
-package gui;
+package frontEnd;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,6 +9,7 @@ import javax.swing.JButton;
  * Buttons that appear on the StartupScreenGUI
  * 
  * @author Kevin
+ * @author JeremiahDeGreeff
  */
 @SuppressWarnings("serial")
 public class StartupButton extends JButton implements ActionListener{

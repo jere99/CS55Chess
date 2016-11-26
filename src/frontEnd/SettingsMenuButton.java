@@ -1,4 +1,4 @@
-package gui;
+package frontEnd;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -11,6 +11,7 @@ import javax.swing.JButton;
  * Buttons that appear on the SettingsMenuGUI
  * 
  * @author Kevin
+ * @author JeremiahDeGreeff
  */
 @SuppressWarnings("serial")
 public class SettingsMenuButton extends JButton implements ActionListener{
@@ -83,7 +84,7 @@ public class SettingsMenuButton extends JButton implements ActionListener{
 	}
 	
 	/**
-	 * Method is run whenever a button on the Startup Screen is clicked
+	 * Method is run whenever a button on the Settings Menu is clicked
 	 * It has varied functions based on what the icon is as determined by its desc instance variable
 	 */
 	public void actionPerformed(ActionEvent e) 
@@ -97,82 +98,30 @@ public class SettingsMenuButton extends JButton implements ActionListener{
 				StartupScreen.settingsMenuCreated = false;
 			}		
 	
-			//If "Clear" button is clicked
-			else if (desc.equals("Clear"))
+			//If a button for the white pieces is clicked
+			else if (desc.equals("White") || desc.equals("Clear") || desc.equals("Golden"))
 			{
 				//Resets the background color of all the white pieces
 				resetBackgroundColorWhitePieces();
 				//Sets the background color of the selected button to green
 				setBackground(Color.green);
 				//Confirmation in the Console
-				System.out.println("Setting Default White color to: Clear");
+				System.out.println("Setting Default White color to: " + desc);
 				//Setting correct static variable in the "Button" class, which configures the colors of the pieces
-				BoardButton.setWColor(desc);
+				StartupScreen.setWhiteColor(desc);
 			}
-	
-			//If "White" button is clicked
-			else if (desc.equals("White"))
-			{
-				//Resets the background color of all the white pieces
-				resetBackgroundColorWhitePieces();
-				//Sets the background color of the selected button to green
-				setBackground(Color.green);
-				//Confirmation in the Console
-				System.out.println("Setting Default White color to: White");
-				//Setting correct static variable in the "Button" class, which configures the colors of the pieces
-				BoardButton.setWColor(desc);
-			}
-	
-			//If "Golden" button is clicked
-			else if (desc.equals("Golden"))
-			{
-				//Resets the background color of all the white pieces
-				resetBackgroundColorWhitePieces();
-				//Sets the background color of the selected button to green
-				setBackground(Color.green);
-				//Confirmation in the Console
-				System.out.println("Setting Default White color to: Golden");
-				//Setting correct static variable in the "Button" class, which configures the colors of the pieces
-				BoardButton.setWColor(desc);
-			}
-	
-			//If "Black" button is clicked
-			else if (desc.equals("Black"))
+			
+			//If a button for the black pieces is clicked
+			else if (desc.equals("Black") || desc.equals("Walnut") || desc.equals("Blue"))
 			{
 				//Resets the background color of all the black pieces
 				resetBackgroundColorBlackPieces();
 				//Sets the background color of the selected button to green
 				setBackground(Color.green);
 				//Confirmation in the Console
-				System.out.println("Setting Default Black color to: Black");
+				System.out.println("Setting Default Black color to: " + desc);
 				//Setting correct static variable in the "Button" class, which configures the colors of the pieces
-				BoardButton.setBColor(desc);
-			}
-	
-			//If "Walnut" button is clicked
-			else if (desc.equals("Walnut"))
-			{
-				//Resets the background color of all the black pieces
-				resetBackgroundColorBlackPieces();
-				//Sets the background color of the selected button to green
-				setBackground(Color.green);
-				//Confirmation in the Console
-				System.out.println("Setting Default Black color to: Walnut");
-				//Setting correct static variable in the "Button" class, which configures the colors of the pieces
-				BoardButton.setBColor(desc);
-			}
-	
-			//If "Blue" button is clicked
-			else if (desc.equals("Blue"))
-			{
-				//Resets the background color of all the black pieces
-				resetBackgroundColorBlackPieces();
-				//Sets the background color of the selected button to green
-				setBackground(Color.green);
-				//Confirmation in the Console
-				System.out.println("Setting Default Black color to: Blue");
-				//Setting correct static variable in the "Button" class, which configures the colors of the pieces
-				BoardButton.setBColor(desc);
+				StartupScreen.setBlackColor(desc);
 			}
 	}
 	

@@ -1,4 +1,4 @@
-package gui;
+package frontEnd;
 
 import javax.swing.JButton;
 
