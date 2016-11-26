@@ -22,38 +22,34 @@ public class PawnChangeGUI extends JFrame{
 	 * array of all the buttons on this GUI
 	 */
 	private PawnChangeButton[] buttons;
-	
 	/**
 	 * the board on which this promotion is occurring
 	 */
-	private Board board;
+	private final Board BOARD;
 	/**
 	 * the row where this promotion is occurring
 	 */
-	private int row;
+	private final int ROW;
 	/**
 	 * the column where this promotion is occurring
 	 */
-	private int col;
+	private final int COLUMN;
 	
 	
 	/**
 	 * creates a pop-up window which asks the user what piece they would like to promote their pawn into
-	 * 
 	 * @param row the row where this promotion is occurring
-	 * @param col the column where this promotion is occurring
+	 * @param column the column where this promotion is occurring
 	 * @param board the board on which this promotion is occurring
-	 * @param boardGUI the GUI that represents the board
 	 */
-	public PawnChangeGUI(int row, int col, Board board)
-	{
+	public PawnChangeGUI(int row, int column, Board board) {
 		//Name the window
 		super("Pawn Promotion");
 
 		//saves the location of this pawnChange
-		this.row = row;
-		this.col = col;
-		this.board = board;
+		ROW = row;
+		COLUMN = column;
+		BOARD = board;
 		
 		//Sets the size of the window
 		setSize(400,75);
@@ -82,28 +78,28 @@ public class PawnChangeGUI extends JFrame{
 		setVisible(true);
 	}
 	
-	
 	/**
-	 * @return the row where this promotion is occurring
+	 * This method is run every time a button is clicked
+	 * @param button the button that was clicked
 	 */
-	public int getRow()
-	{
-		return row;
-	}
-	
-	/**
-	 * @return the column where this promotion is occurring
-	 */
-	public int getCol()
-	{
-		return col;
-	}
-	
-	/**
-	 * @return the board on which this promotion is occurring
-	 */
-	public Board getBoard()
-	{
-		return board;
+	public void buttonClick(PawnChangeButton button) {
+		//if "Queen" is clicked
+		if(button.getPieceName().equals("Queen"))
+			System.out.println("Promotting to Queen");
+		//if "Knight" is clicked
+		else if(button.getPieceName().equals("Knight"))
+			System.out.println("Promotting to Knight");
+		//if "Rook" is clicked
+		else if(button.getPieceName().equals("Rook"))
+			System.out.println("Promotting to Rook");
+		//if "Bishop" is clicked
+		else if(button.getPieceName().equals("Bishop"))
+			System.out.println("Promotting to Bishop");
+
+		//promote the pawn into the selected piece
+		BOARD.pawnChange(ROW, COLUMN, button.getPieceName());
+
+		//close this GUI
+		dispose();
 	}
 }

@@ -22,8 +22,7 @@ public class Game {
 	 */
 	private boolean isWhiteTurn = true;
 	
-	public Game()
-	{
+	public Game() {
 		BOARD = new Board(this);
 		GUI = new BoardGUI(this);
 	}

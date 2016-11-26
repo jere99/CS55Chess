@@ -35,8 +35,7 @@ public abstract class Piece {
 	 * @param board board to be associated with this piece
 	 * @param type the type of this object represents
 	 */
-	public Piece(int row, int column, boolean isWhite, Board board, String type)
-	{
+	public Piece(int row, int column, boolean isWhite, Board board, String type) {
 		this.row = row;
 		this.column = column;
 		IS_WHITE = isWhite;
@@ -48,40 +47,35 @@ public abstract class Piece {
 	/**
 	 * @return current row between 0 and 7 based on coordinate 8 - 1
 	 */
-	public int getRow()
-	{
+	public int getRow() {
 		return row;
 	}
 	
 	/**
 	 * @return current column between 0 and 7 based on coordinate a - h
 	 */
-	public int getColumn()
-	{
+	public int getColumn() {
 		return column;
 	}
 	
 	/**
 	 * @return true if this piece is white, false if black
 	 */
-	public boolean isWhite()
-	{
+	public boolean isWhite() {
 		return IS_WHITE;
 	}
 	
 	/**
 	 * @return the board associated with this piece
 	 */
-	public Board getBoard()
-	{
+	public Board getBoard() {
 		return BOARD;
 	}
 	
 	/**
 	 * @return a string which represents the piece's color and type
 	 */
-	public String getPieceID()
-	{
+	public String getPieceID() {
 		if(IS_WHITE)
 			return "w" + TYPE;
 		else
@@ -91,29 +85,27 @@ public abstract class Piece {
 	/**
 	 * @param row new row value between 0 and 7 based on coordinate 8 - 1
 	 */
-	public void setRow(int row)
-	{
+	public void setRow(int row) {
 		this.row = row;
 	}
 	
 	/**
 	 * @param column new column value between 0 and 7 based on coordinate a - h
 	 */
-	public void setColumn(int column)
-	{
+	public void setColumn(int column) {
 		this.column = column;
 	}
 	
 	/**
+	 * Moves the piece to the passed location if it is a valid move
 	 * @param newRow number between 0 and 7 based on coordinate 8 - 1
 	 * @param newColumn number between 0 and 7 based on coordinate a - h
 	 * @return true if move completed, false otherwise
 	 */
-	public boolean move(int newRow, int newColumn)
-	{
+	public boolean move(int newRow, int newColumn) {
 		//If the move is valid
-		if(BOARD.testMove(this, newRow, newColumn))
-		{
+		if(BOARD.testMove(this, newRow, newColumn)) {
+			//Then perform the move
 			BOARD.makeMove(this, newRow, newColumn);
 			return true;
 		}
@@ -121,6 +113,7 @@ public abstract class Piece {
 	}
 	
 	/**
+	 * Tests if a move is valid for the particular type of piece
 	 * @param newRow number between 0 and 7 based on coordinate 8 - 1
 	 * @param newColumn number between 0 and 7 based on coordinate a - h
 	 * @return true if valid to move this piece to [newRow][newCol], false otherwise

@@ -1,6 +1,6 @@
 package driver;
 
-import frontEnd.StartupScreen;
+import frontEnd.StartupScreenGUI;
 
 /**
  * Main class for the project
@@ -9,8 +9,7 @@ import frontEnd.StartupScreen;
  */
 public class Main {
 
-	public static void main(String[] args) 
-	{
-		new StartupScreen();
+	public static void main(String[] args) {
+		new StartupScreenGUI();
 	}
 }

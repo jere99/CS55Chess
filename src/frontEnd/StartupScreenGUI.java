@@ -10,15 +10,14 @@ import backEnd.Game;
  * The GUI for the startup screen
  * 
  * @author Kevin
+ * @author JeremiahDeGreeff
  */
-public class StartupScreen{
-	
+public class StartupScreenGUI {
 	/**
 	 * Variable to keep track of whether or not a settings menu has already been created
 	 * to prevent multiple settings menus from existing simultaneously
 	 */
-	protected static boolean settingsMenuCreated = false;
-	
+	private static boolean settingsMenuCreated = false;
 	/**
 	 * the color for the white pieces
 	 */
@@ -27,23 +26,19 @@ public class StartupScreen{
 	 * the color for the black pieces
 	 */
 	private static String blackColor = "black";
-	
 	/**
 	 * the main display component of the GUI: holds the background image
 	 */
 	private JLabel myLabel = new JLabel(new ImageIcon(this.getClass().getResource("resources/startup_screen.png")));
-	
 	/**
 	 * the JFrame for the window
 	 */
 	protected static JFrame frame;
-
+	
 	/**
-	 * Creates a new menu with all functional buttons and correct background
+	 * Creates a new window with all functional buttons and correct background
 	 */
-	public StartupScreen()
-	{	
-
+	public StartupScreenGUI() {
 		//Name the window
 		frame = new JFrame("Chromatic Chess");
 		
@@ -63,9 +58,9 @@ public class StartupScreen{
 		frame.setLayout(null);
 
 		//Adding the buttons
-		StartupButton newGame = new StartupButton("New Game");
-		StartupButton exit = new StartupButton("Exit");
-		StartupButton settings = new StartupButton("Color Scheme");
+		StartupScreenButton newGame = new StartupScreenButton(this, "New Game");
+		StartupScreenButton exit = new StartupScreenButton(this, "Exit");
+		StartupScreenButton settings = new StartupScreenButton(this, "Color Scheme");
 		
 		//Configuring locations and sizes of buttons
 		//.setBounds(x,y,width,height)
@@ -83,25 +78,55 @@ public class StartupScreen{
 	}
 	
 	/**
-	 * changes the color for the white pieces
+	 * Changes the color for the white pieces
 	 * @param color the color to change to
 	 */
-	public static void setWhiteColor(String color)
-	{
+	public static void setWhiteColor(String color) {
 		whiteColor = color;
 	}
 	
 	/**
-	 * changes the color for the black pieces
+	 * Changes the color for the black pieces
 	 * @param color the color to change to
 	 */
-	public static void setBlackColor(String color)
-	{
+	public static void setBlackColor(String color) {
 		blackColor = color;
 	}
 	
 	/**
-	 * creates a new game
+	 * Allows for a new SettingsMenuGUI to be created after the current one has closed
+	 */
+	public static void SettingsMenuClosed() {
+		settingsMenuCreated = false;
+	}
+	
+	/**
+	 * This method is run every time a button is clicked
+	 * @param button the button that was clicked
+	 */
+	public void buttonClick(StartupScreenButton button) {
+		//If the "New Game" button is clicked
+		if(button.getDescription().equals("New Game")) {
+			//Start the game
+			newGame();
+			//Dispose of the GUI
+			frame.dispose();
+		}
+		//If the "Settings" button is clicked
+		else if (button.getDescription().equals("Color Scheme") && settingsMenuCreated == false) {
+			//Create a new SettingsMenu GUI
+			new SettingsMenuGUI();
+			//Prevent a second SettingsMenu from being created
+			settingsMenuCreated = true;
+		}
+		//If the "Exit" button is clicked
+		else if (button.getDescription().equals("Exit"))
+			//Terminate the program
+			System.exit(0);
+	}
+	
+	/**
+	 * Creates a new game
 	 */
 	public static void newGame() {
 		//loads the correct piece images

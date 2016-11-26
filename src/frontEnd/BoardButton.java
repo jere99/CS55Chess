@@ -14,8 +14,7 @@ import javax.swing.JButton;
  * @author JeremiahDeGreeff
  */
 @SuppressWarnings("serial")
-public class BoardButton extends JButton implements ActionListener{
-	
+public class BoardButton extends JButton implements ActionListener {
 	/**
 	 * icon for a white pawn
 	 */
@@ -65,7 +64,6 @@ public class BoardButton extends JButton implements ActionListener{
 	 */
 	private static ImageIcon bKing;
 	
-	
 	/**
 	 * this buttons's row on the BoardGUI
 	 */
@@ -79,7 +77,7 @@ public class BoardButton extends JButton implements ActionListener{
 	 */
 	private BoardGUI gui;
 	
-
+	
 	/**
 	 * Creates a new button and gives it the correct initial values
 	 * 
@@ -88,8 +86,7 @@ public class BoardButton extends JButton implements ActionListener{
 	 * @param gui the GUI that this button is a part of
 	 * @param board the board that the GUI represents
 	 */
-	public BoardButton(int row, int column, BoardGUI gui)
-	{
+	public BoardButton(int row, int column, BoardGUI gui) {
 		super();
 		this.row = row;
 		this.column = column;
@@ -122,29 +119,24 @@ public class BoardButton extends JButton implements ActionListener{
 	
 	/**
 	 * This method is run every time the button is clicked
-	 * If move selected is valid, the move is made and the images are updated
-	 * If move is invalid, no changes are made to the board
-	 * 
+	 * It calls the buttonClick method on the GUI
 	 * @param e the click which triggers the method
 	 */
-	public void actionPerformed(ActionEvent e)
-	{
+	public void actionPerformed(ActionEvent e) {
 		gui.buttonClick(this);
 	}
 	
 	/**
 	 * highlights this button
 	 */
-	public void highlight()
-	{
+	public void highlight() {
 		setBackground(Color.YELLOW);
 	}
 	
 	/**
 	 * Sets the button's background color to the default
 	 */
-	public void resetColor()
-	{
+	public void resetColor() {
 		if((row + column) % 2 == 0)
 			setBackground(Color.WHITE);
 		else
@@ -176,7 +168,7 @@ public class BoardButton extends JButton implements ActionListener{
 	 * sets the color for the white pieces
 	 * @param color the color to change to
 	 */
-	protected static void setWhiteColor(String color)
+	public static void setWhiteColor(String color)
 	{
 		wPawn = new ImageIcon(BoardButton.class.getResource("resources/" + color + "_p.png"), "wPawn");
 		wKnight = new ImageIcon(BoardButton.class.getResource("resources/" + color + "_n.png"), "wKnight");
@@ -190,7 +182,7 @@ public class BoardButton extends JButton implements ActionListener{
 	 * sets the color for the black pieces
 	 * @param color the color to change to
 	 */
-	protected static void setBlackColor(String color)
+	public static void setBlackColor(String color)
 	{
 		bPawn = new ImageIcon(BoardButton.class.getResource("resources/" + color + "_p.png"), "bPawn");
 		bKnight = new ImageIcon(BoardButton.class.getResource("resources/" + color + "_n.png"), "bKnight");

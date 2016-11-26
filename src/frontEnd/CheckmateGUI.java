@@ -16,16 +16,14 @@ public class CheckmateGUI extends JFrame{
 	 * the main display component of the GUI
 	 */
 	private JPanel p = new JPanel();
-	
 	/**
 	 * array of all the buttons on this GUI
 	 */
 	private CheckmateButton[] buttons = new CheckmateButton[3];
-	
 	/**
 	 * the GUI of the completed game
 	 */
-	private BoardGUI boardGUI;
+	private final BoardGUI BOARD_GUI;
 	
 	/**
 	 * creates a pop-up window after checkmate occurs
@@ -39,7 +37,7 @@ public class CheckmateGUI extends JFrame{
 		//Name the window
 		super(winner + " wins!");
 		
-		this.boardGUI = boardGUI;
+		BOARD_GUI = boardGUI;
 
 		//Sets the size of the window
 		setSize(500,75);
@@ -68,10 +66,28 @@ public class CheckmateGUI extends JFrame{
 	}
 	
 	/**
-	 * @return the GUI of the completed game
+	 * This method is run every time a button is clicked
+	 * @param button the button that was clicked
 	 */
-	public BoardGUI getBoardGUI()
-	{
-		return boardGUI;
+	public void buttonClick(CheckmateButton button) {
+		//if "New Game" is clicked
+		if(button.getDisplayName().equals("New Game")) {
+			BOARD_GUI.dispose(); //close old game
+			dispose(); //close this GUI
+			System.out.println("\n\n\n"); //create space in console between old game and new game
+			StartupScreenGUI.newGame(); //start a new game
+		}
+		//if "Exit" is clicked
+		else if (button.getDisplayName().equals("Exit")) {
+			BOARD_GUI.dispose(); //close old game
+			dispose(); //close this GUI
+			System.exit(0); //terminate everything
+		}
+		//if "Main Menu" is clicked
+		else if (button.getDisplayName().equals("Main Menu")) {
+			BOARD_GUI.dispose(); //close old game
+			dispose(); //close this GUI
+			new StartupScreenGUI(); //create a new startup screen
+		}
 	}
 }

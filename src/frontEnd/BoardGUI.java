@@ -14,7 +14,6 @@ import backEnd.Game;
  */
 @SuppressWarnings("serial")
 public class BoardGUI extends JFrame{
-
 	/**
 	 * the main display component of the GUI
 	 */
@@ -38,13 +37,11 @@ public class BoardGUI extends JFrame{
 
 	
 	/**
-	 * Default constructor for the GUI of the chess board
 	 * Creates a window with an 8x8 grid layout
 	 * Initializes all 64 of the buttons with correct background colors
 	 * @param board the board that this GUI represents
 	 */
-	public BoardGUI(Game game)
-	{		
+	public BoardGUI(Game game) {		
 		//Name the window
 		super("Chess");
 		
@@ -64,14 +61,11 @@ public class BoardGUI extends JFrame{
 
 		//Add the buttons
 		for (int i = 0; i < 8; i ++)
-		{
-			for(int j = 0; j < 8; j ++)
-			{
+			for(int j = 0; j < 8; j ++) {
 				buttons[i][j] = new BoardButton(i, j, this);
 				updateSquare(i, j);
 				p.add(buttons[i][j]);
 			}
-		}
 
 		add(p);
 
@@ -80,24 +74,11 @@ public class BoardGUI extends JFrame{
 	}
 	
 	/**
-	 * @return the board this GUI represents
+	 * This method is run every time a button is clicked
+	 * Calls private helper methods based on whether or not this is the first click
+	 * @param button the button that was clicked
 	 */
-	public Game getGame()
-	{
-		return GAME;
-	}
-	
-	/**
-	 * @param row the desired row (0 - 7)
-	 * @param col the desired column (0 - 7)
-	 * @return the button at position [row][col]
-	 */
-	public BoardButton getButtonAt(int row, int col)
-	{
-		return buttons[row][col];
-	}
-	public void buttonClick(BoardButton button)
-	{
+	public void buttonClick(BoardButton button) {
 		if(isFirstClick)
 			firstClick(button);
 		else
@@ -105,21 +86,19 @@ public class BoardGUI extends JFrame{
 	}
 	
 	/**
-	 * if the first click is valid stores it and prepares for second click
+	 * Stores the information of the first click if it is valid
+	 * Otherwise reports error to the console
 	 * @param button the button which was clicked
 	 * @return if the click is valid
 	 */
-	private boolean firstClick(BoardButton button)
-	{
+	private boolean firstClick(BoardButton button) {
 		//Prints the coordinates of the selected button
 		System.out.println("First Click: " + button.getRow() + ", " + button.getColumn());
 		
 		//If piece exists
-		if(GAME.getBoard().getPiece(button.getRow(), button.getColumn()) != null)
-		{
+		if(GAME.getBoard().getPieceAt(button.getRow(), button.getColumn()) != null)
 			//If piece is correct color
-			if(GAME.getBoard().getPiece(button.getRow(), button.getColumn()).isWhite() == GAME.isWhiteTurn())
-			{
+			if(GAME.getBoard().getPieceAt(button.getRow(), button.getColumn()).isWhite() == GAME.isWhiteTurn()) {
 				//valid click: the next click will run the second click method
 				firstClick = button;
 				firstClick.highlight();
@@ -127,41 +106,34 @@ public class BoardGUI extends JFrame{
 				return true;
 			}
 			//If color of piece is invalid
-			else
-			{
+			else {
 				System.out.println("wrong color");
 				return false;
 			}
-		}
 		//If square is empty
-		else
-		{
+		else {
 			System.out.println("empty square");
 			return false;
 		}
 	}
 	
 	/**
-	 * moves the piece from the first click to the square of the second click if it is a valid move
+	 * Moves the piece from the first click to the square of the second click if it is a valid move
 	 * @param button the button which was clicked
 	 */
-	private void secondClick(BoardButton button)
-	{
+	private void secondClick(BoardButton button) {
 		//Prints the coordinates of the selected button
 		System.out.println("Second Click: " + button.getRow() + ", " + button.getColumn());
 		
 		//If the second square clicked is a valid spot for the piece from the first click to move to
-		if (GAME.getBoard().getPiece(firstClick.getRow(), firstClick.getColumn()).move(button.getRow(), button.getColumn()))
-		{
+		if (GAME.getBoard().getPieceAt(firstClick.getRow(), firstClick.getColumn()).move(button.getRow(), button.getColumn())) {
 			System.out.println("valid move");
 			//Switches to the next turn
 			GAME.nextTurn();
 		}
 		//If the second square clicked is not a valid spot for the piece from the first click to move to
 		else
-		{	
 			System.out.println("invalid move");
-		}
 		
 		//Reset the background color of the first button
 		firstClick.resetColor();
@@ -171,16 +143,15 @@ public class BoardGUI extends JFrame{
 	}
 	
 	/**
-	 * updates the icon of the square at the passed coordinates based on what is currently present on the board
+	 * Updates the icon of the square at the passed coordinates based on what is currently present on the board
 	 * @param row the row of the square to be updated
 	 * @param column the column of the square to be updated
 	 */
-	public void updateSquare(int row, int column)
-	{
+	public void updateSquare(int row, int column) {
 		System.out.println("Updating image at: " + row + ", " + column);
 		String id = "";
-		if(GAME.getBoard().getPiece(row, column) != null)
-			id = GAME.getBoard().getPiece(row, column).getPieceID();
+		if(GAME.getBoard().getPieceAt(row, column) != null)
+			id = GAME.getBoard().getPieceAt(row, column).getPieceID();
 		buttons[row][column].setIcon(BoardButton.idToIcon(id));
 	}
 }
