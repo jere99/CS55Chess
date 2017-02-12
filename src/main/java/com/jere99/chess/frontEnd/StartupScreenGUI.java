@@ -1,10 +1,10 @@
-package frontEnd;
+package main.java.com.jere99.chess.frontEnd;
 
 import javax.swing.JFrame;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-import backEnd.Game;
+import main.java.com.jere99.chess.backEnd.Game;
 
 /**
  * The GUI for the startup screen
@@ -29,7 +29,7 @@ public class StartupScreenGUI {
 	/**
 	 * the main display component of the GUI: holds the background image
 	 */
-	private JLabel myLabel = new JLabel(new ImageIcon(this.getClass().getResource("resources/startup_screen.png")));
+	private JLabel myLabel = new JLabel(new ImageIcon(this.getClass().getResource("/resources/startup_screen.png")));
 	/**
 	 * the JFrame for the window
 	 */

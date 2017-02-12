@@ -1,4 +1,4 @@
-package backEnd;
+package main.java.com.jere99.chess.backEnd;
 
 /**
  * a class that is the template for a chess piece

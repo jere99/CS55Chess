@@ -1,4 +1,4 @@
-package frontEnd;
+package main.java.com.jere99.chess.frontEnd;
 
 import javax.swing.JButton;
 

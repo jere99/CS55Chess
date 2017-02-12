@@ -1,4 +1,4 @@
-package frontEnd;
+package main.java.com.jere99.chess.frontEnd;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

@@ -1,6 +1,6 @@
-package backEnd;
+package main.java.com.jere99.chess.backEnd;
 
-import frontEnd.BoardGUI;
+import main.java.com.jere99.chess.frontEnd.BoardGUI;
 
 /**
  * an instance of a chess game

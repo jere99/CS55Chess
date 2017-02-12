@@ -1,4 +1,4 @@
-package backEnd;
+package main.java.com.jere99.chess.backEnd;
 
 /**
  * an object that represents a rook

@@ -1,6 +1,6 @@
-package driver;
+package main.java.com.jere99.chess.driver;
 
-import frontEnd.StartupScreenGUI;
+import main.java.com.jere99.chess.frontEnd.StartupScreenGUI;
 
 /**
  * Main class for the project

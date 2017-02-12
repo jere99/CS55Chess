@@ -1,7 +1,7 @@
-package backEnd;
+package main.java.com.jere99.chess.backEnd;
 
-import frontEnd.CheckmateGUI;
-import frontEnd.PawnChangeGUI;
+import main.java.com.jere99.chess.frontEnd.CheckmateGUI;
+import main.java.com.jere99.chess.frontEnd.PawnChangeGUI;
 
 /**
  * an object that represents a chess board
