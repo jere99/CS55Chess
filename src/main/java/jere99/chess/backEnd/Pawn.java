@@ -1,4 +1,4 @@
-package main.java.com.jere99.chess.backEnd;
+package main.java.jere99.chess.backEnd;
 
 /**
  * an object that represents a pawn

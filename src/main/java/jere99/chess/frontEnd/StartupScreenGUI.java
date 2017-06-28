@@ -1,10 +1,10 @@
-package main.java.com.jere99.chess.frontEnd;
+package main.java.jere99.chess.frontEnd;
 
 import javax.swing.JFrame;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-import main.java.com.jere99.chess.backEnd.Game;
+import main.java.jere99.chess.backEnd.Game;
 
 /**
  * The GUI for the startup screen
