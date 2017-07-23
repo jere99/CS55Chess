@@ -1,9 +1,9 @@
-package main.java.jere99.chess.frontEnd;
+package jere99.chess.frontEnd;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import main.java.jere99.chess.backEnd.Board;
+import jere99.chess.backEnd.Board;
 
 /**
  * a GUI pops up when a pawn is to be promoted

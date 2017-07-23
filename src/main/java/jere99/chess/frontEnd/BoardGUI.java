@@ -1,10 +1,10 @@
-package main.java.jere99.chess.frontEnd;
+package jere99.chess.frontEnd;
 
 import java.awt.GridLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import main.java.jere99.chess.backEnd.Game;
+import jere99.chess.backEnd.Game;
 
 /**
  * a GUI that represents a chess board

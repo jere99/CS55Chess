@@ -1,4 +1,4 @@
-package main.java.jere99.chess.frontEnd;
+package jere99.chess.frontEnd;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -170,12 +170,12 @@ public class BoardButton extends JButton implements ActionListener {
 	 */
 	public static void setWhiteColor(String color)
 	{
-		wPawn = new ImageIcon(BoardButton.class.getResource("/resources/" + color + "/pawn.png"), "wPawn");
-		wKnight = new ImageIcon(BoardButton.class.getResource("/resources/" + color + "/knight.png"), "wKnight");
-		wRook = new ImageIcon(BoardButton.class.getResource("/resources/" + color + "/rook.png"), "wRook");
-		wBishop = new ImageIcon(BoardButton.class.getResource("/resources/" + color + "/bishop.png"), "wBishop");
-		wQueen = new ImageIcon(BoardButton.class.getResource("/resources/" + color + "/queen.png"), "wQueen");
-		wKing = new ImageIcon(BoardButton.class.getResource("/resources/" + color + "/king.png"), "wKing");
+		wPawn = new ImageIcon(BoardButton.class.getResource("/" + color + "/pawn.png"), "wPawn");
+		wKnight = new ImageIcon(BoardButton.class.getResource("/" + color + "/knight.png"), "wKnight");
+		wRook = new ImageIcon(BoardButton.class.getResource("/" + color + "/rook.png"), "wRook");
+		wBishop = new ImageIcon(BoardButton.class.getResource("/" + color + "/bishop.png"), "wBishop");
+		wQueen = new ImageIcon(BoardButton.class.getResource("/" + color + "/queen.png"), "wQueen");
+		wKing = new ImageIcon(BoardButton.class.getResource("/" + color + "/king.png"), "wKing");
 	}
 	
 	/**
@@ -184,11 +184,11 @@ public class BoardButton extends JButton implements ActionListener {
 	 */
 	public static void setBlackColor(String color)
 	{
-		bPawn = new ImageIcon(BoardButton.class.getResource("/resources/" + color + "/pawn.png"), "bPawn");
-		bKnight = new ImageIcon(BoardButton.class.getResource("/resources/" + color + "/knight.png"), "bKnight");
-		bRook = new ImageIcon(BoardButton.class.getResource("/resources/" + color + "/rook.png"), "bRook");
-		bBishop = new ImageIcon(BoardButton.class.getResource("/resources/" + color + "/bishop.png"), "bBishop");
-		bQueen = new ImageIcon(BoardButton.class.getResource("/resources/" + color + "/queen.png"), "bQueen");
-		bKing = new ImageIcon(BoardButton.class.getResource("/resources/" + color + "/king.png"), "bKing");
+		bPawn = new ImageIcon(BoardButton.class.getResource("/" + color + "/pawn.png"), "bPawn");
+		bKnight = new ImageIcon(BoardButton.class.getResource("/" + color + "/knight.png"), "bKnight");
+		bRook = new ImageIcon(BoardButton.class.getResource("/" + color + "/rook.png"), "bRook");
+		bBishop = new ImageIcon(BoardButton.class.getResource("/" + color + "/bishop.png"), "bBishop");
+		bQueen = new ImageIcon(BoardButton.class.getResource("/" + color + "/queen.png"), "bQueen");
+		bKing = new ImageIcon(BoardButton.class.getResource("/" + color + "/king.png"), "bKing");
 	}
 }

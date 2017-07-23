@@ -1,4 +1,4 @@
-package main.java.jere99.chess.frontEnd;
+package jere99.chess.frontEnd;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;

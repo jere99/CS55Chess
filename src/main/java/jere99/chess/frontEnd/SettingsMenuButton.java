@@ -1,4 +1,4 @@
-package main.java.jere99.chess.frontEnd;
+package jere99.chess.frontEnd;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -18,27 +18,27 @@ public class SettingsMenuButton extends JButton implements ActionListener {
 	/**
 	 * icon for button to choose white
 	 */
-	private static ImageIcon whitePawn = new ImageIcon(StartupScreenButton.class.getResource("/resources/white/pawn.png"));
+	private static ImageIcon whitePawn = new ImageIcon(StartupScreenButton.class.getResource("/white/pawn.png"));
 	/**
 	 * icon for button to choose golden
 	 */
-	private static ImageIcon goldenPawn = new ImageIcon(StartupScreenButton.class.getResource("/resources/golden/pawn.png"));
+	private static ImageIcon goldenPawn = new ImageIcon(StartupScreenButton.class.getResource("/golden/pawn.png"));
 	/**
 	 * icon for button to choose clear
 	 */
-	private static ImageIcon clearPawn = new ImageIcon(StartupScreenButton.class.getResource("/resources/clear/pawn.png"));
+	private static ImageIcon clearPawn = new ImageIcon(StartupScreenButton.class.getResource("/clear/pawn.png"));
 	/**
 	 * icon for button to choose black
 	 */
-	private static ImageIcon blackPawn = new ImageIcon(StartupScreenButton.class.getResource("/resources/black/pawn.png"));
+	private static ImageIcon blackPawn = new ImageIcon(StartupScreenButton.class.getResource("/black/pawn.png"));
 	/**
 	 * icon for button to choose blue
 	 */
-	private static ImageIcon bluePawn = new ImageIcon(StartupScreenButton.class.getResource("/resources/blue/pawn.png"));
+	private static ImageIcon bluePawn = new ImageIcon(StartupScreenButton.class.getResource("/blue/pawn.png"));
 	/**
 	 * icon for button to choose walnut
 	 */
-	private static ImageIcon walnutPawn = new ImageIcon(StartupScreenButton.class.getResource("/resources/walnut/pawn.png"));
+	private static ImageIcon walnutPawn = new ImageIcon(StartupScreenButton.class.getResource("/walnut/pawn.png"));
 	/**
 	 * the text displayed on the button, also used to identify the button
 	 */
