@@ -26,11 +26,11 @@ public class CheckmateGUI extends JFrame {
 	/**
 	 * creates a pop-up window after checkmate occurs
 	 * @param boardGUI the GUI of the completed game
-	 * @param winner which player has won: either "White" or "Black"
+	 * @param isWhiteWinner which player has won true for white, false for black
 	 */
-	public CheckmateGUI(BoardGUI boardGUI, String winner) {
+	public CheckmateGUI(BoardGUI boardGUI, Boolean isWhiteWinner) {
 		//Name the window
-		super(winner + " wins!");
+		super((isWhiteWinner ? "white" : "black") + " wins!");
 		
 		BOARD_GUI = boardGUI;
 

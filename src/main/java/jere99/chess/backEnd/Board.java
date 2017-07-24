@@ -1,8 +1,6 @@
 package jere99.chess.backEnd;
 
 import jere99.chess.backEnd.pieces.*;
-import jere99.chess.frontEnd.CheckmateGUI;
-import jere99.chess.frontEnd.PawnChangeGUI;
 
 /**
  * an object that represents a chess board
@@ -34,7 +32,7 @@ public class Board {
 	 * creates a new Board object and initializes all pieces
 	 * @param game the game which this board is a part of
 	 */
-	public Board(Game game) {
+	protected Board(Game game) {
 		GAME = game;
 
 		// top is black...
@@ -65,8 +63,8 @@ public class Board {
 	}
 
 	/**
-	 * @param row row of wanted Piece
-	 * @param column column of wanted Piece
+	 * @param row the row of the wanted Piece
+	 * @param column the column of the wanted Piece
 	 * @return The piece at board[row][column]
 	 */
 	public Piece getPieceAt(int row, int column) {
@@ -115,8 +113,8 @@ public class Board {
 		movePiece(p, newRow, newColumn);
 
 		//update the GUI
-		GAME.getGUI().updateSquare(startRow, startColumn);
-		GAME.getGUI().updateSquare(newRow, newColumn);
+		GAME.updateSquare(startRow, startColumn);
+		GAME.updateSquare(newRow, newColumn);
 
 		//Prevent King or Rook from being able to castle in the future
 		if(p instanceof King && !((King)p).hasMoved())
@@ -132,7 +130,7 @@ public class Board {
 
 		//Creates a GUI for pawn promotion
 		if(p instanceof Pawn && (newRow == 0 || newRow == 7))
-			new PawnChangeGUI(newRow, newColumn, this);
+			GAME.pawnChangeInit(newRow, newColumn);
 
 		//See if the move has put the opposing king in check or checkmate
 		detectCheck(newRow, newColumn);
@@ -165,17 +163,13 @@ public class Board {
 	public void detectCheck(int row, int column) {
 		if(BOARD[row][column].isWhite() && kingChecked(BLACK_KING)) {
 			System.out.println("The Black king is in check!");
-			if(checkmate(BLACK_KING)) {
-				System.out.println("Checkmate!\nWhite Wins");
-				new CheckmateGUI(GAME.getGUI(), "White");
-			}
+			if(checkmate(BLACK_KING))
+				GAME.checkmateInit(true);
 		}
 		else if(!BOARD[row][column].isWhite() && kingChecked(WHITE_KING)) {
 			System.out.println("The White king is in check!");
-			if(checkmate(WHITE_KING)) {
-				System.out.println("Checkmate!\nBlack Wins");
-				new CheckmateGUI(GAME.getGUI(), "Black");
-			}
+			if(checkmate(WHITE_KING))
+				GAME.checkmateInit(false);
 		}
 	}
 
@@ -262,7 +256,6 @@ public class Board {
 						for(int i = 1; i < Math.abs(row - king.getRow()); i++)
 							if(testMove(p, i * (int)Math.signum(king.getRow() - row) + row, i * (int)Math.signum(king.getColumn() - col) + col))
 								return false;
-
 		return true;
 	}
 
@@ -272,10 +265,9 @@ public class Board {
 	 * Tests if promotion puts king in check
 	 * @param row row of pawn to change
 	 * @param col column of pawn to change
-	 * @param type name of the desired piece
-	 * @param gui the GUI which this method needs to affect
+	 * @param type name of the selected piece
 	 */
-	public void pawnChange(int row, int column, String type) {
+	protected void pawnChange(int row, int column, String type) {
 		boolean pawnIsWhite = BOARD[row][column].isWhite();
 		switch(type) {
 		case "Queen":
@@ -291,7 +283,7 @@ public class Board {
 			BOARD[row][column] = new Bishop(row, column, pawnIsWhite, this);
 			break;
 		}
-		GAME.getGUI().updateSquare(row, column);
+		GAME.updateSquare(row, column);
 		detectCheck(row, column);
 	}
 

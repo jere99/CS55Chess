@@ -3,7 +3,7 @@ package jere99.chess.frontEnd;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import jere99.chess.backEnd.Board;
+import jere99.chess.backEnd.Game;
 
 /**
  * a GUI pops up when a pawn is to be promoted
@@ -19,9 +19,9 @@ public class PawnChangeGUI extends JFrame {
 	 */
 	private final JPanel PANEL = new JPanel();
 	/**
-	 * the board on which this promotion is occurring
+	 * the Game in which this promotion is occurring
 	 */
-	private final Board BOARD;
+	private final Game GAME;
 	/**
 	 * the row where this promotion is occurring
 	 */
@@ -37,13 +37,13 @@ public class PawnChangeGUI extends JFrame {
 	 * @param column the column where this promotion is occurring
 	 * @param board the board on which this promotion is occurring
 	 */
-	public PawnChangeGUI(int row, int column, Board board) {
+	public PawnChangeGUI(int row, int column, Game game) {
 		//Name the window
 		super("Pawn Promotion");
 
 		ROW = row;
 		COLUMN = column;
-		BOARD = board;
+		GAME = game;
 
 		//Set the size of the window
 		setSize(400,75);
@@ -75,7 +75,7 @@ public class PawnChangeGUI extends JFrame {
 		System.out.println("Promoting to " + button.DISPLAY_NAME);
 
 		//promote the pawn into the selected piece
-		BOARD.pawnChange(ROW, COLUMN, button.DISPLAY_NAME);
+		GAME.pawnChange(ROW, COLUMN, button.DISPLAY_NAME);
 
 		//close this GUI
 		dispose();
