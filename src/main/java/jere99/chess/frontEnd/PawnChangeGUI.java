@@ -12,16 +12,12 @@ import jere99.chess.backEnd.Board;
  * @author JeremiahDeGreeff
  */
 @SuppressWarnings("serial")
-public class PawnChangeGUI extends JFrame{
-	
+public class PawnChangeGUI extends JFrame {
+
 	/**
 	 * the main display component of the GUI
 	 */
-	private JPanel p = new JPanel();
-	/**
-	 * array of all the buttons on this GUI
-	 */
-	private PawnChangeButton[] buttons;
+	private final JPanel PANEL = new JPanel();
 	/**
 	 * the board on which this promotion is occurring
 	 */
@@ -34,8 +30,7 @@ public class PawnChangeGUI extends JFrame{
 	 * the column where this promotion is occurring
 	 */
 	private final int COLUMN;
-	
-	
+
 	/**
 	 * creates a pop-up window which asks the user what piece they would like to promote their pawn into
 	 * @param row the row where this promotion is occurring
@@ -46,58 +41,41 @@ public class PawnChangeGUI extends JFrame{
 		//Name the window
 		super("Pawn Promotion");
 
-		//saves the location of this pawnChange
 		ROW = row;
 		COLUMN = column;
 		BOARD = board;
-		
-		//Sets the size of the window
+
+		//Set the size of the window
 		setSize(400,75);
 
-		//Allows window to be resized
+		//Don't allow window to be resized
 		setResizable(false);
 
 		//Default program end
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		
-		//Create the necessary buttons
-		buttons = new PawnChangeButton[4];
-		buttons[0] = new PawnChangeButton(this, "Knight");
-		buttons[1] = new PawnChangeButton(this, "Bishop");
-		buttons[2] = new PawnChangeButton(this, "Rook");
-		buttons[3] = new PawnChangeButton(this, "Queen");
 
-		//Add the necessary buttons to the JPanel
-		for (PawnChangeButton e : buttons)
-			p.add(e);
-		
-		//Implements the JPanel to the GUI
-		add(p);
-		
+		//Create the necessary buttons and add them to the JPanel
+		PANEL.add(new PawnChangeButton("Knight"));
+		PANEL.add(new PawnChangeButton("Bishop"));
+		PANEL.add(new PawnChangeButton("Rook"));
+		PANEL.add(new PawnChangeButton("Queen"));
+
+		//Add the JPanel to the GUI
+		add(PANEL);
+
 		//Last step: Set window to be visible
 		setVisible(true);
 	}
-	
+
 	/**
 	 * This method is run every time a button is clicked
 	 * @param button the button that was clicked
 	 */
 	public void buttonClick(PawnChangeButton button) {
-		//if "Queen" is clicked
-		if(button.getPieceName().equals("Queen"))
-			System.out.println("Promotting to Queen");
-		//if "Knight" is clicked
-		else if(button.getPieceName().equals("Knight"))
-			System.out.println("Promotting to Knight");
-		//if "Rook" is clicked
-		else if(button.getPieceName().equals("Rook"))
-			System.out.println("Promotting to Rook");
-		//if "Bishop" is clicked
-		else if(button.getPieceName().equals("Bishop"))
-			System.out.println("Promotting to Bishop");
+		System.out.println("Promoting to " + button.DISPLAY_NAME);
 
 		//promote the pawn into the selected piece
-		BOARD.pawnChange(ROW, COLUMN, button.getPieceName());
+		BOARD.pawnChange(ROW, COLUMN, button.DISPLAY_NAME);
 
 		//close this GUI
 		dispose();

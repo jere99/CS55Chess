@@ -23,8 +23,10 @@ public class Game {
 	private boolean isWhiteTurn = true;
 	
 	public Game() {
+		System.out.println("New Game");
 		BOARD = new Board(this);
 		GUI = new BoardGUI(this);
+		System.out.println("\nWhite's Turn");
 	}
 	
 	/**

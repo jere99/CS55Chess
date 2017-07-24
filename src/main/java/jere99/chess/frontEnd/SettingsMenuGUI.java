@@ -4,8 +4,9 @@ import javax.swing.JFrame;
 
 import java.awt.Color;
 
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
+import jere99.chess.reference.Colors;
+import jere99.chess.reference.Labels;
+import jere99.chess.reference.Settings;
 
 /**
  * The GUI for the settings menu
@@ -13,148 +14,104 @@ import javax.swing.JLabel;
  * @author Kevin
  * @author JeremiahDeGreeff
  */
-public class SettingsMenuGUI {
+@SuppressWarnings("serial")
+public class SettingsMenuGUI extends JFrame {
+
 	/**
-	 * the main display component of the GUI: holds the background image
+	 * the buttons on this GUI
 	 */
-	private JLabel myLabel = new JLabel(new ImageIcon(this.getClass().getResource("/settings_menu.png")));
+	private final SettingsMenuButton[] BUTTONS = new SettingsMenuButton[6];
 	/**
-	 * the JFrame for the window
+	 * the width of the frame
 	 */
-	protected static JFrame frame;
+	private static final int FRAME_WIDTH = 700;
 	/**
-	 * the button to return to the main menu
+	 * the height of the frame
 	 */
-	private static SettingsMenuButton mainMenu = new SettingsMenuButton("Main Menu");
+	private static final int FRAME_HEIGHT = 700;
 	/**
-	 * the button to select white
+	 * the width of the buttons on this GUI
 	 */
-	private static SettingsMenuButton white = new SettingsMenuButton("White");
+	private static final int BUTTON_WIDTH = 100;
 	/**
-	 * the button to select golden
+	 * the height of the buttons on this GUI
 	 */
-	private static SettingsMenuButton golden = new SettingsMenuButton("Golden");
+	private static final int BUTTON_HEIGHT = 100;
 	/**
-	 * the button to select clear
+	 * the horizontal spacing between the edge of the frame and the buttons
 	 */
-	private static SettingsMenuButton clear = new SettingsMenuButton("Clear");
+	private static final int HORIZONTAL_OFFSET = 90;
 	/**
-	 * the button to select blue
+	 * the vertical spacing between the buttons
 	 */
-	private static SettingsMenuButton blue = new SettingsMenuButton("Blue");
-	/**
-	 * the button to select black
-	 */
-	private static SettingsMenuButton black = new SettingsMenuButton("Black");
-	/**
-	 * the button to select walnut
-	 */
-	private static SettingsMenuButton walnut = new SettingsMenuButton("Walnut");
+	private static final int VERTICAL_OFFSET = 150;
 	
 	/**
 	 * Creates window for changing settings
 	 */
-	public SettingsMenuGUI() {
+	protected SettingsMenuGUI() {
 		//Name the window
-		frame = new JFrame("Color Scheme");
+		super("Color Scheme");
 
 		//Sets the size, (width, height)
-		frame.setSize(700,700);
+		setSize(FRAME_WIDTH, FRAME_HEIGHT);
 
 		//Allows window to be resized
-		frame.setResizable(false);
-
-		//Background Image
-		frame.setContentPane(myLabel);
-
-		//Setting JFrame to Absolute Layout so that elements may be positioned
-		frame.setLayout(null);
-
-		//Customizing the buttons' locations & sizes
-		//(x,y,width,height)
-		mainMenu.setBounds(300, 600, 150, 50);
+		setResizable(false);
 		
-		white.setBounds(90, 150, 100, 100);
-		clear.setBounds(90, 300, 100, 100);
-		golden.setBounds(90, 450, 100, 100);
-
-		black.setBounds(510, 150, 100, 100);
-		walnut.setBounds(510, 300, 100, 100);
-		blue.setBounds(510, 450, 100, 100);
-
-		//Add the buttons to the JFrame
-		frame.add(mainMenu);
-		frame.add(white);
-		frame.add(clear);
-		frame.add(golden);
-		frame.add(black);
-		frame.add(walnut);
-		frame.add(blue);
-
 		//Disables the "X" button on the top corner of the JFrame Dialog
 		//This is needed because if the user "X's" out of the Settings window instead of clicking "Main Menu",
 		//The instance variable that allows another settings menu to be created will not be reset,
 		//thus another settings menu cannot be created
-		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		
+		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+
+		//Background Image
+		setContentPane(Labels.SETTINGS_MENU);
+
+		//Setting JFrame to Absolute Layout so that elements may be positioned
+		setLayout(null);
+
+		//Creating the buttons
+		//Customizing the buttons' locations & sizes (x,y,width,height)
+		//Adding the buttons to the JFrame
+		for(Colors c : Colors.values()) {
+			BUTTONS[c.ordinal()] = new SettingsMenuButton(c);
+			BUTTONS[c.ordinal()].setBounds(c.isWhite() ? HORIZONTAL_OFFSET : FRAME_WIDTH - HORIZONTAL_OFFSET - BUTTON_WIDTH, (c.ordinal() % (Colors.values().length / 2) + 1) * VERTICAL_OFFSET, BUTTON_WIDTH, BUTTON_HEIGHT);
+			add(BUTTONS[c.ordinal()]);
+		}
+		//null is the MainMenu Button
+		SettingsMenuButton MainMenu = new SettingsMenuButton(null);
+		MainMenu.setBounds(300, 600, 150, 50);
+		add(MainMenu);
 		
 		//Last step: Set window to be visible
-		frame.setVisible(true);
+		setVisible(true);
 	}
 	
 	/**
 	 * This method is run every time a button is clicked
 	 * @param button the button that was clicked
 	 */
-	public static void buttonClick(SettingsMenuButton button) {
+	protected void buttonClick(SettingsMenuButton button) {
 		//If "Main Menu" button is clicked
-		if (button.getDescription().equals("Main Menu")) {
+		if (button.getColor() == null) {
+			System.out.println("1");
 			//Disposes of Settings Menu GUI
-			frame.dispose();
+			dispose();
+			System.out.println("2");
 			//Resets static variable so that the window may be re-created
 			StartupScreenGUI.SettingsMenuClosed();
-		}		
-
-		//If a button for the white pieces is clicked
-		else if (button.getDescription().equals("White") || button.getDescription().equals("Clear") || button.getDescription().equals("Golden")) {
-			//Resets the background color of all the white pieces
-			resetBackgroundColorWhitePieces();
-			//Sets the background color of the selected button to green
-			button.setBackground(Color.green);
+			System.out.println("3");
+		} else {
 			//Confirmation in the Console
-			System.out.println("Setting Default White color to: " + button.getDescription());
-			//Setting correct static variable in the "Button" class, which configures the colors of the pieces
-			StartupScreenGUI.setWhiteColor(button.getDescription());
-		}
-		
-		//If a button for the black pieces is clicked
-		else if (button.getDescription().equals("Black") || button.getDescription().equals("Walnut") || button.getDescription().equals("Blue")) {
-			//Resets the background color of all the black pieces
-			resetBackgroundColorBlackPieces();
-			//Sets the background color of the selected button to green
-			button.setBackground(Color.green);
-			//Confirmation in the Console
-			System.out.println("Setting Default Black color to: " + button.getDescription());
-			//Setting correct static variable in the "Button" class, which configures the colors of the pieces
-			StartupScreenGUI.setBlackColor(button.getDescription());
+			System.out.println("Setting default " + button.getColor().toString() + " color to: " + button.getColor().toString());
+			//Resets the background color of the old selection of the same color to white
+			BUTTONS[Settings.getColor(button.getColor().isWhite()).ordinal()].setBackground(Color.WHITE);
+			//Sets the background color of the new piece to green
+			button.setBackground(Color.GREEN);
+			//Updates Settings
+			Settings.update(button.getColor());
 		}
 	}
 	
-	/**
-	 * sets all the backgrounds of the white piece options to white
-	 */
-	private static void resetBackgroundColorWhitePieces() {
-		white.setBackground(Color.white);
-		clear.setBackground(Color.white);
-		golden.setBackground(Color.white);
-	}
-	
-	/**
-	 * sets all the backgrounds of the black piece options to white
-	 */
-	private static void resetBackgroundColorBlackPieces() {
-		black.setBackground(Color.white);
-		walnut.setBackground(Color.white);
-		blue.setBackground(Color.white);
-	}
 }

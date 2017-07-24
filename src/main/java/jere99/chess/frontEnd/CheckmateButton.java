@@ -13,41 +13,29 @@ import java.awt.event.ActionEvent;
  */
 @SuppressWarnings("serial")
 public class CheckmateButton extends JButton implements ActionListener {
-	/**
-	 * the GUI that this button is a part of
-	 */
-	private final CheckmateGUI GUI;
+	
 	/**
 	 * the text on the button
 	 */
-	private final String DISPLAY_NAME;
+	protected final String DISPLAY_NAME;
 	
 	/**
 	 * @param displayName the text to be put on the button
-	 * @param gui the GUI that this button is a part of
 	 */
-	public CheckmateButton(String displayName, CheckmateGUI gui) {
-		super();
+	protected CheckmateButton(String displayName) {
 		DISPLAY_NAME = displayName;
-		this.setText(displayName);
-		GUI = gui;
+		
+		setText(displayName);
 
 		//creates a new Action Listener
 		this.addActionListener(this);
-	}
-
-	/**
-	 * @return the text on the button
-	 */
-	public String getDisplayName() {
-		return DISPLAY_NAME;
 	}
 	
 	/**
 	 * Runs when the button is clicked
 	 */
 	public void actionPerformed(ActionEvent e) {
-		GUI.buttonClick(this);
+		((CheckmateGUI) getParent().getParent().getParent().getParent().getParent()).buttonClick(this);
 	}
 
 }

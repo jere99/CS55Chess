@@ -14,40 +14,29 @@ import java.awt.event.ActionEvent;
 public class PawnChangeButton extends JButton implements ActionListener {
 	
 	/**
-	 * the GUI that this button is a part of
-	 */
-	private final PawnChangeGUI GUI;
-	/**
 	 * the text on the button which is the name of the piece it corresponds to
 	 */
-	private final String PIECE_NAME;
-
+	protected final String DISPLAY_NAME;
 	
 	/**
+	 * creates a button as part of a PawnChangeGUI object
 	 * @param gui the GUI that this button is a part of
 	 * @param piece the text to be put on the button which is the name of a piece
 	 */
-	public PawnChangeButton(PawnChangeGUI gui, String piece) {
-		super();
-		GUI = gui;
-		PIECE_NAME = piece;
-		this.setText(PIECE_NAME);
+	public PawnChangeButton(String display_name) {
+		DISPLAY_NAME = display_name;
+		
+		setText(DISPLAY_NAME);
 		
 		//creates a new Action Listener
-		this.addActionListener(this);
-	}
-	
-	/**
-	 * @return the text on the button which is the name of the piece it corresponds to
-	 */
-	public String getPieceName() {
-		return PIECE_NAME;
+		addActionListener(this);
 	}
 	
 	/**
 	 * Runs when the button is clicked
 	 */
 	public void actionPerformed(ActionEvent e) {
-		GUI.buttonClick(this);
+		((PawnChangeGUI) getParent().getParent().getParent().getParent().getParent()).buttonClick(this);
 	}
+	
 }

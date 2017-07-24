@@ -1,10 +1,9 @@
 package jere99.chess.frontEnd;
 
 import javax.swing.JFrame;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 
 import jere99.chess.backEnd.Game;
+import jere99.chess.reference.Labels;
 
 /**
  * The GUI for the startup screen
@@ -12,130 +11,110 @@ import jere99.chess.backEnd.Game;
  * @author Kevin
  * @author JeremiahDeGreeff
  */
-public class StartupScreenGUI {
+@SuppressWarnings("serial")
+public class StartupScreenGUI extends JFrame {
+
 	/**
-	 * Variable to keep track of whether or not a settings menu has already been created
-	 * to prevent multiple settings menus from existing simultaneously
+	 * Boolean to keep track of whether or not a settings menu has already been created
+	 * in order to prevent multiple settings menus from existing simultaneously
 	 */
 	private static boolean settingsMenuCreated = false;
 	/**
-	 * the color for the white pieces
+	 * the width of the frame
 	 */
-	private static String whiteColor = "white";
+	private static final int FRAME_WIDTH = 1127;
 	/**
-	 * the color for the black pieces
+	 * the height of the frame
 	 */
-	private static String blackColor = "black";
+	private static final int FRAME_HEIGHT = 865;
 	/**
-	 * the main display component of the GUI: holds the background image
+	 * the width of the buttons on this GUI
 	 */
-	private JLabel myLabel = new JLabel(new ImageIcon(this.getClass().getResource("/startup_screen.png")));
+	private static final int BUTTON_WIDTH = 250;
 	/**
-	 * the JFrame for the window
+	 * the height of the buttons on this GUI
 	 */
-	protected static JFrame frame;
-	
+	private static final int BUTTON_HEIGHT = 30;
+	/**
+	 * the horizontal spacing between the edge of the frame and the buttons
+	 */
+	private static final int HORIZONTAL_OFFSET = 585;
+	/**
+	 * the vertical spacing between the top of the frame and the first button
+	 */
+	private static final int VERTICAL_OFFSET = 145;
+	/**
+	 * the vertical spacing between the buttons
+	 */
+	private static final int VERTICAL_SPACING = 70;
+
 	/**
 	 * Creates a new window with all functional buttons and correct background
 	 */
 	public StartupScreenGUI() {
 		//Name the window
-		frame = new JFrame("Chromatic Chess");
-		
+		super("Chromatic Chess");
+
 		//Sets the size, (width, height)
-		frame.setSize(1127,865);
+		setSize(FRAME_WIDTH, FRAME_HEIGHT);
 
 		//Allows window to be resized
-		frame.setResizable(false);
+		setResizable(false);
 
 		//Default program end
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 		//Background image
-		frame.setContentPane(myLabel);
+		setContentPane(Labels.STARTUP_SCREEN);
 
 		//Setting JFrame to Absolute Layout so that elements may be positioned
-		frame.setLayout(null);
+		setLayout(null);
 
-		//Adding the buttons
-		StartupScreenButton newGame = new StartupScreenButton(this, "New Game");
-		StartupScreenButton exit = new StartupScreenButton(this, "Exit");
-		StartupScreenButton settings = new StartupScreenButton(this, "Color Scheme");
-		
-		//Configuring locations and sizes of buttons
-		//.setBounds(x,y,width,height)
-		newGame.setBounds(585, 145, 250, 33);
-		settings.setBounds(585, 215, 250, 33);
-		exit.setBounds(585, 285, 250, 33);
+		//Creating the buttons
+		StartupScreenButton[] buttons = {
+				new StartupScreenButton("New Game"),
+				new StartupScreenButton("Exit"),
+				new StartupScreenButton("Color Scheme")};
 
-		//Add the buttons to the JFrame
-		frame.add(newGame);
-		frame.add(settings);
-		frame.add(exit);
-		
+		//Configuring locations and sizes of buttons (x,y,width,height)
+		//Adding the buttons to the JFrame
+		for(int i = 0; i < buttons.length; i++) {
+			buttons[i].setBounds(HORIZONTAL_OFFSET, VERTICAL_OFFSET + VERTICAL_SPACING * i, BUTTON_WIDTH, BUTTON_HEIGHT);
+			add(buttons[i]);
+		}
+
 		//Last step: Set window to be visible
-		frame.setVisible(true);
+		setVisible(true);
 	}
-	
-	/**
-	 * Changes the color for the white pieces
-	 * @param color the color to change to
-	 */
-	public static void setWhiteColor(String color) {
-		whiteColor = color;
-	}
-	
-	/**
-	 * Changes the color for the black pieces
-	 * @param color the color to change to
-	 */
-	public static void setBlackColor(String color) {
-		blackColor = color;
-	}
-	
-	/**
-	 * Allows for a new SettingsMenuGUI to be created after the current one has closed
-	 */
-	public static void SettingsMenuClosed() {
-		settingsMenuCreated = false;
-	}
-	
+
 	/**
 	 * This method is run every time a button is clicked
 	 * @param button the button that was clicked
 	 */
-	public void buttonClick(StartupScreenButton button) {
-		//If the "New Game" button is clicked
-		if(button.getDescription().equals("New Game")) {
-			//Start the game
-			newGame();
-			//Dispose of the GUI
-			frame.dispose();
+	protected void buttonClick(StartupScreenButton button) {
+		switch(button.DISPLAY_NAME) {
+		case "New Game":
+			new Game(); //Start the game
+			dispose(); //Dispose of the GUI
+			break;
+		case "Color Scheme":
+			if(!settingsMenuCreated) {
+				new SettingsMenuGUI(); //Create a new SettingsMenu GUI
+				settingsMenuCreated = true; //Prevent a second SettingsMenu from being created
+			}
+			break;
+		case "Exit":
+			System.out.println("Terminating program");
+			System.exit(0); //Terminate the program
 		}
-		//If the "Settings" button is clicked
-		else if (button.getDescription().equals("Color Scheme") && settingsMenuCreated == false) {
-			//Create a new SettingsMenu GUI
-			new SettingsMenuGUI();
-			//Prevent a second SettingsMenu from being created
-			settingsMenuCreated = true;
-		}
-		//If the "Exit" button is clicked
-		else if (button.getDescription().equals("Exit"))
-			//Terminate the program
-			System.exit(0);
 	}
-	
+
 	/**
-	 * Creates a new game
+	 * Allows for a new SettingsMenuGUI to be created after the current one has closed
 	 */
-	public static void newGame() {
-		//loads the correct piece images
-		BoardButton.setWhiteColor(whiteColor);
-		BoardButton.setBlackColor(blackColor);
-		//Confirms in console
-		System.out.println("\nNew Game");
-		//Creates new Game
-		new Game();
-		System.out.println("\nWhite's Turn");
+	protected static void SettingsMenuClosed() {
+		settingsMenuCreated = false;
+		System.out.println(false);
 	}
+
 }
