@@ -114,7 +114,6 @@ public class StartupScreenGUI extends JFrame {
 	 */
 	protected static void SettingsMenuClosed() {
 		settingsMenuCreated = false;
-		System.out.println(false);
 	}
 
 }

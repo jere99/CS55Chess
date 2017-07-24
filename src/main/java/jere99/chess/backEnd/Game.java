@@ -1,10 +1,12 @@
 package jere99.chess.backEnd;
 
+import javax.swing.ImageIcon;
+
 import jere99.chess.backEnd.pieces.Piece;
 import jere99.chess.frontEnd.BoardGUI;
 import jere99.chess.frontEnd.CheckmateGUI;
 import jere99.chess.frontEnd.PawnChangeGUI;
-import jere99.chess.reference.Icons;
+import jere99.chess.reference.Pieces;
 
 /**
  * an instance of a chess game
@@ -41,15 +43,24 @@ public class Game {
 		GUI = new BoardGUI(this);
 		System.out.println("\nWhite's Turn");
 	}
+	
+	/**
+	 * returns the ImageIcon corresponding to the current state of the passed square
+	 * @param row the row of the square
+	 * @param column the column of the square
+	 * @return the ImageIcon corresponding to the peice in the square
+	 */
+	public ImageIcon getIconForSquare(int row, int column) {
+		return BOARD.getPieceAt(row, column) != null ? Pieces.getIcon(BOARD.getPieceAt(row, column)) : null;
+	}
 
 	/**
 	 * updates square at the passed coordinates on the BoardGUI based on the current state of the board
 	 * @param row the row of the square to update
 	 * @param column the column of the square to update
 	 */
-	public void updateSquare(int row, int column) {
-		if(BOARD.getPieceAt(row, column) != null)
-			GUI.updateSquare(row, column, Icons.getIcon(BOARD.getPieceAt(row, column).getPieceID()));
+	protected void updateSquare(int row, int column) {
+		GUI.updateSquare(row, column, getIconForSquare(row, column));
 	}
 
 	/**

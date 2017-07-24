@@ -95,16 +95,13 @@ public class SettingsMenuGUI extends JFrame {
 	protected void buttonClick(SettingsMenuButton button) {
 		//If "Main Menu" button is clicked
 		if (button.getColor() == null) {
-			System.out.println("1");
 			//Disposes of Settings Menu GUI
 			dispose();
-			System.out.println("2");
 			//Resets static variable so that the window may be re-created
 			StartupScreenGUI.SettingsMenuClosed();
-			System.out.println("3");
 		} else {
 			//Confirmation in the Console
-			System.out.println("Setting default " + button.getColor().toString() + " color to: " + button.getColor().toString());
+			System.out.println("Setting default " + (button.getColor().isWhite() ? "white" : "black") + " color to: " + button.getColor().toString().toLowerCase());
 			//Resets the background color of the old selection of the same color to white
 			BUTTONS[Settings.getColor(button.getColor().isWhite()).ordinal()].setBackground(Color.WHITE);
 			//Sets the background color of the new piece to green

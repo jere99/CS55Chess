@@ -8,10 +8,6 @@ import jere99.chess.backEnd.Board;
  * @author JeremiahDeGreeff
  */
 public class Bishop extends Piece {
-	/**
-	 * the type of pieces this class represents
-	 */
-	private static final String STATIC_TYPE = "Bishop";
 	
 	/**
 	 * @param row integer between 0 and 7 based on coordinate 8 - 1
@@ -20,7 +16,7 @@ public class Bishop extends Piece {
 	 * @param board board to be associated with this piece
 	 */
 	public Bishop(int row, int column, boolean isWhite, Board board) {
-		super(row, column, isWhite, board, STATIC_TYPE);
+		super(row, column, isWhite, board);
 	}
 	
 	

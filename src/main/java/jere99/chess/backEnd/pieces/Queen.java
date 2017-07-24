@@ -10,18 +10,13 @@ import jere99.chess.backEnd.Board;
 public class Queen extends Piece {
 	
 	/**
-	 * the type of pieces this class represents
-	 */
-	private static final String STATIC_TYPE = "Queen";
-	
-	/**
 	 * @param row integer between 0 and 7 based on coordinate 8 - 1
 	 * @param column integer between 0 and 7 based on coordinate a - h
 	 * @param isWhite true if white, false if black
 	 * @param board board to be associated with this piece
 	 */
 	public Queen(int row, int column, boolean isWhite, Board board) {
-		super(row, column, isWhite, board, STATIC_TYPE);
+		super(row, column, isWhite, board);
 	}
 	
 	

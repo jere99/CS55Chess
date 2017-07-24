@@ -8,11 +8,7 @@ import jere99.chess.backEnd.Board;
  * @author JeremiahDeGreeff
  */
 public abstract class Piece {
-	
-	/**
-	 * the type of piece this object represents
-	 */
-	private final String TYPE;
+
 	/**
 	 * true if white, false if black
 	 */
@@ -38,13 +34,20 @@ public abstract class Piece {
 	 * @param board board to be associated with this piece
 	 * @param type the type of this object represents
 	 */
-	public Piece(int row, int column, boolean isWhite, Board board, String type) {
+	public Piece(int row, int column, boolean isWhite, Board board) {
 		this.row = row;
 		this.column = column;
 		IS_WHITE = isWhite;
 		BOARD = board;
-		TYPE = type;
 	}
+	
+	/**
+	 * Tests if a move is valid for the particular type of piece
+	 * @param newRow number between 0 and 7 based on coordinate 8 - 1
+	 * @param newColumn number between 0 and 7 based on coordinate a - h
+	 * @return true if valid to move this piece to [newRow][newCol], false otherwise
+	 */
+	public abstract boolean isValid(int newRow, int newColumn);
 	
 	/**
 	 * @return current row between 0 and 7 based on coordinate 8 - 1
@@ -65,16 +68,6 @@ public abstract class Piece {
 	 */
 	public boolean isWhite() {
 		return IS_WHITE;
-	}
-	
-	/**
-	 * @return a string which represents the piece's color and type
-	 */
-	public String getPieceID() {
-		if(IS_WHITE)
-			return "w" + TYPE;
-		else
-			return "b" + TYPE;
 	}
 	
 	/**
@@ -106,13 +99,5 @@ public abstract class Piece {
 		}
 		return false;
 	}
-	
-	/**
-	 * Tests if a move is valid for the particular type of piece
-	 * @param newRow number between 0 and 7 based on coordinate 8 - 1
-	 * @param newColumn number between 0 and 7 based on coordinate a - h
-	 * @return true if valid to move this piece to [newRow][newCol], false otherwise
-	 */
-	public abstract boolean isValid(int newRow, int newColumn);
 	
 }

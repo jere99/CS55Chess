@@ -7,7 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import jere99.chess.backEnd.Game;
-import jere99.chess.reference.Icons;
+import jere99.chess.reference.Pieces;
 
 /**
  * a GUI that represents a chess board
@@ -63,14 +63,14 @@ public class BoardGUI extends JFrame {
 		PANEL.setLayout(new GridLayout(8,8));
 
 		//Load the correct piece icons
-		Icons.loadIcons();
+		Pieces.loadIcons();
 
 		//Add the buttons
 		for (int r = 0; r < 8; r ++)
 			for(int c = 0; c < 8; c ++) {
 				BUTTONS[r][c] = new BoardButton(r, c);
 				PANEL.add(BUTTONS[r][c]);
-				GAME.updateSquare(r, c);
+				updateSquare(r, c, GAME.getIconForSquare(r, c));
 			}
 
 		add(PANEL);

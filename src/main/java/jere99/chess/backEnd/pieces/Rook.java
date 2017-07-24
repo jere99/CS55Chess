@@ -8,10 +8,6 @@ import jere99.chess.backEnd.Board;
  * @author JeremiahDeGreeff
  */
 public class Rook extends Piece {
-	/**
-	 * the type of pieces this class represents
-	 */
-	private static final String STATIC_TYPE = "Rook";
 	
 	/**
 	 * false if has not moved and able to castle, true otherwise
@@ -25,7 +21,7 @@ public class Rook extends Piece {
 	 * @param board board to be associated with this piece
 	 */
 	public Rook(int row, int column, boolean isWhite, Board board) {
-		super(row, column, isWhite, board, STATIC_TYPE);
+		super(row, column, isWhite, board);
 		hasMoved = false;
 	}
 	
