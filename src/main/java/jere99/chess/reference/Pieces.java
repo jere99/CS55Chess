@@ -17,13 +17,37 @@ public enum Pieces {
 	KNIGHT(Knight.class),
 	PAWN(Pawn.class);
 	
+	/**
+	 * the class from which an object of this piece is created
+	 */
 	private final Class<? extends Piece> TYPE;
-	
+	/**
+	 * the current ImageIcon for a white version of this piece
+	 */
 	private ImageIcon white;
+	/**
+	 * the current ImageIcon for a black version of this piece
+	 */
 	private ImageIcon black;
+	
 	
 	Pieces(Class<? extends Piece> type) {
 		TYPE = type;
+	}
+	
+	/**
+	 * @return the class from which an object of this piece is created
+	 */
+	public Class<? extends Piece> getType() {
+		return TYPE;
+	}
+	
+	/**
+	 * @param isWhite {@code true} for the white variant, {@code false} for the black variant
+	 * @return the current ImageIcon for this piece
+	 */
+	public ImageIcon getIcon(boolean isWhite) {
+		return isWhite ? white : black;
 	}
 	
 	/**
@@ -33,7 +57,7 @@ public enum Pieces {
 	public static ImageIcon getIcon(Piece piece) {
 		for(Pieces p : values())
 			if(piece.getClass().equals(p.TYPE))
-				return piece.isWhite() ? p.white : p.black;
+				return p.getIcon(piece.isWhite());
 		return null;
 	}
 	

@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import jere99.chess.backEnd.Game;
+import jere99.chess.reference.Pieces;
 
 /**
  * a GUI pops up when a pawn is to be promoted
@@ -37,7 +38,7 @@ public class PawnChangeGUI extends JFrame {
 	 * @param column the column where this promotion is occurring
 	 * @param board the board on which this promotion is occurring
 	 */
-	public PawnChangeGUI(int row, int column, Game game) {
+	public PawnChangeGUI(int row, int column, Game game, boolean isWhite) {
 		//Name the window
 		super("Pawn Promotion");
 
@@ -46,7 +47,7 @@ public class PawnChangeGUI extends JFrame {
 		GAME = game;
 
 		//Set the size of the window
-		setSize(400,75);
+		setSize(352,112);
 
 		//Don't allow window to be resized
 		setResizable(false);
@@ -55,10 +56,8 @@ public class PawnChangeGUI extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 		//Create the necessary buttons and add them to the JPanel
-		PANEL.add(new PawnChangeButton("Knight"));
-		PANEL.add(new PawnChangeButton("Bishop"));
-		PANEL.add(new PawnChangeButton("Rook"));
-		PANEL.add(new PawnChangeButton("Queen"));
+		for(int i = 1; i <= 4; i++)
+			PANEL.add(new PawnChangeButton(Pieces.values()[i], isWhite));
 
 		//Add the JPanel to the GUI
 		add(PANEL);
@@ -72,10 +71,10 @@ public class PawnChangeGUI extends JFrame {
 	 * @param button the button that was clicked
 	 */
 	public void buttonClick(PawnChangeButton button) {
-		System.out.println("Promoting to " + button.DISPLAY_NAME);
+		System.out.println("Promoting to " + button.PIECE.toString().toLowerCase());
 
 		//promote the pawn into the selected piece
-		GAME.pawnChange(ROW, COLUMN, button.DISPLAY_NAME);
+		GAME.pawnChange(ROW, COLUMN, button.PIECE);
 
 		//close this GUI
 		dispose();

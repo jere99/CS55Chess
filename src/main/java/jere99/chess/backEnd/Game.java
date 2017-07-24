@@ -75,7 +75,7 @@ public class Game {
 	 * creates a PawnChangeGUI
 	 */
 	protected void pawnChangeInit(int row, int column) {
-		new PawnChangeGUI(row, column, this);
+		new PawnChangeGUI(row, column, this, isWhiteTurn);
 	}
 
 	/**
@@ -84,8 +84,8 @@ public class Game {
 	 * @param col column of pawn to change
 	 * @param type name of the selected piece
 	 */
-	public void pawnChange(int row, int column, String type) {
-		BOARD.pawnChange(row, column, type);
+	public void pawnChange(int row, int column, Pieces piece) {
+		BOARD.pawnChange(row, column, piece);
 	}
 
 	/**

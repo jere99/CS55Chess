@@ -1,6 +1,7 @@
 package jere99.chess.backEnd;
 
 import jere99.chess.backEnd.pieces.*;
+import jere99.chess.reference.Pieces;
 
 /**
  * an object that represents a chess board
@@ -36,25 +37,25 @@ public class Board {
 		GAME = game;
 
 		// top is black...
-		BOARD[0][0] = new Rook(0,0,false, this);
-		BOARD[0][1] = new Knight(0,1,false, this);
-		BOARD[0][2] = new Bishop(0,2,false, this);
-		BOARD[0][3] = new Queen(0,3,false, this);
-		BOARD[0][4] = new King(0,4,false, this);
-		BOARD[0][5] = new Bishop(0,5,false, this);
-		BOARD[0][6] = new Knight(0,6,false, this);
-		BOARD[0][7] = new Rook(0,7,false, this);
+		BOARD[0][0] = new Rook(0, 0, false, this);
+		BOARD[0][1] = new Knight(0, 1, false, this);
+		BOARD[0][2] = new Bishop(0, 2, false, this);
+		BOARD[0][3] = new Queen(0, 3, false, this);
+		BOARD[0][4] = new King(0, 4, false, this);
+		BOARD[0][5] = new Bishop(0, 5, false, this);
+		BOARD[0][6] = new Knight(0, 6, false, this);
+		BOARD[0][7] = new Rook(0, 7, false, this);
 		for (int i = 0; i < BOARD[1].length; i++)
-			BOARD[1][i] = new Pawn(1,i,false, this);
+			BOARD[1][i] = new Pawn(1, i, false, this);
 		//...and bottom is white
-		BOARD[7][0] = new Rook(7,0,true, this);
-		BOARD[7][1] = new Knight(7,1,true, this);
-		BOARD[7][2] = new Bishop(7,2,true, this);
-		BOARD[7][3] = new Queen(7,3,true, this);
-		BOARD[7][4] = new King(7,4,true, this);
-		BOARD[7][5] = new Bishop(7,5,true, this);
-		BOARD[7][6] = new Knight(7,6,true, this);
-		BOARD[7][7] = new Rook(7,7,true, this);
+		BOARD[7][0] = new Rook(7, 0, true, this);
+		BOARD[7][1] = new Knight(7, 1, true, this);
+		BOARD[7][2] = new Bishop(7, 2, true, this);
+		BOARD[7][3] = new Queen(7, 3, true, this);
+		BOARD[7][4] = new King(7, 4, true, this);
+		BOARD[7][5] = new Bishop(7, 5, true, this);
+		BOARD[7][6] = new Knight(7 ,6, true, this);
+		BOARD[7][7] = new Rook(7, 7, true, this);
 		for (int i = 0; i < BOARD[6].length; i++)
 			BOARD[6][i] = new Pawn(6,i,true, this);
 
@@ -80,8 +81,7 @@ public class Board {
 	 * @return true if move is valid and will not check own king, false otherwise
 	 */
 	public boolean testMove (Piece p, int newRow, int newColumn) {
-		int tempRow = p.getRow();
-		int tempCol = p.getColumn();
+		int tempRow = p.getRow(), tempCol = p.getColumn();
 		if(!(tempRow == newRow && tempCol == newColumn) && p.isValid(newRow, newColumn)) {
 			Piece temp = movePiece(p, newRow, newColumn);
 			if((p.isWhite() && kingChecked(WHITE_KING)) || (!p.isWhite() && kingChecked(BLACK_KING))) {
@@ -106,8 +106,7 @@ public class Board {
 	 * @param newColumn the column to move p to
 	 */
 	public void makeMove(Piece p, int newRow, int newColumn) {
-		int startRow = p.getRow();
-		int startColumn = p.getColumn();
+		int startRow = p.getRow(), startColumn = p.getColumn();
 
 		//move the piece
 		movePiece(p, newRow, newColumn);
@@ -267,19 +266,19 @@ public class Board {
 	 * @param col column of pawn to change
 	 * @param type name of the selected piece
 	 */
-	protected void pawnChange(int row, int column, String type) {
+	protected void pawnChange(int row, int column, Pieces piece) {
 		boolean pawnIsWhite = BOARD[row][column].isWhite();
-		switch(type) {
-		case "Queen":
+		switch(piece.toString()) {
+		case "QUEEN":
 			BOARD[row][column] = new Queen(row, column, pawnIsWhite, this);
 			break;
-		case "Knight":
+		case "KNIGHT":
 			BOARD[row][column] = new Knight(row, column, pawnIsWhite, this);
 			break;
-		case "Rook":
+		case "ROOK":
 			BOARD[row][column] = new Rook(row, column, pawnIsWhite, this);
 			break;
-		case "Bishop":
+		case "BISHOP":
 			BOARD[row][column] = new Bishop(row, column, pawnIsWhite, this);
 			break;
 		}

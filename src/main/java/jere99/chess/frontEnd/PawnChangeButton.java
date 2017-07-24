@@ -1,6 +1,9 @@
 package jere99.chess.frontEnd;
 
 import javax.swing.JButton;
+
+import jere99.chess.reference.Pieces;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -16,17 +19,17 @@ public class PawnChangeButton extends JButton implements ActionListener {
 	/**
 	 * the text on the button which is the name of the piece it corresponds to
 	 */
-	protected final String DISPLAY_NAME;
+	protected final Pieces PIECE;
 	
 	/**
 	 * creates a button as part of a PawnChangeGUI object
 	 * @param gui the GUI that this button is a part of
 	 * @param piece the text to be put on the button which is the name of a piece
 	 */
-	public PawnChangeButton(String display_name) {
-		DISPLAY_NAME = display_name;
+	public PawnChangeButton(Pieces piece, boolean isWhite) {
+		PIECE = piece;
 		
-		setText(DISPLAY_NAME);
+		setIcon(PIECE.getIcon(isWhite));
 		
 		//creates a new Action Listener
 		addActionListener(this);
