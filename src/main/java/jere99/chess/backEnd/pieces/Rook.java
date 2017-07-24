@@ -1,4 +1,6 @@
-package jere99.chess.backEnd;
+package jere99.chess.backEnd.pieces;
+
+import jere99.chess.backEnd.Board;
 
 /**
  * an object that represents a rook
@@ -9,7 +11,7 @@ public class Rook extends Piece {
 	/**
 	 * the type of pieces this class represents
 	 */
-	private static final String CLASS_TYPE = "Rook";
+	private static final String STATIC_TYPE = "Rook";
 	
 	/**
 	 * false if has not moved and able to castle, true otherwise
@@ -23,7 +25,7 @@ public class Rook extends Piece {
 	 * @param board board to be associated with this piece
 	 */
 	public Rook(int row, int column, boolean isWhite, Board board) {
-		super(row, column, isWhite, board, CLASS_TYPE);
+		super(row, column, isWhite, board, STATIC_TYPE);
 		hasMoved = false;
 	}
 	
@@ -51,17 +53,16 @@ public class Rook extends Piece {
 	@Override
 	public boolean isValid(int newRow, int newColumn) {
 		//same row
-		if(newRow == getRow() && (getBoard().getPieceAt(newRow, newColumn) == null || getBoard().getPieceAt(newRow, newColumn).isWhite() != isWhite())) {
-			for(int c = getColumn() + (int) Math.signum(newColumn - getColumn()); c != newColumn; c += (int) Math.signum(newColumn - getColumn()))
-				if(getBoard().getPieceAt(newRow, c) != null)
+		if(newRow == row && (BOARD.getPieceAt(newRow, newColumn) == null || BOARD.getPieceAt(newRow, newColumn).IS_WHITE != this.IS_WHITE)) {
+			for(int c = column + (int) Math.signum(newColumn - column); c != newColumn; c += (int) Math.signum(newColumn - column))
+				if(BOARD.getPieceAt(newRow, c) != null)
 					return false;
 			return true;
 		}
-		
 		//same column
-		if(newColumn == getColumn() && (getBoard().getPieceAt(newRow, newColumn) == null || getBoard().getPieceAt(newRow, newColumn).isWhite() != isWhite())) {
-			for(int r = getRow() + (int) Math.signum(newRow - getRow()); r != newRow; r += (int) Math.signum(newRow - getRow()))
-				if(getBoard().getPieceAt(r, newColumn) != null)
+		if(newColumn == column && (BOARD.getPieceAt(newRow, newColumn) == null || BOARD.getPieceAt(newRow, newColumn).IS_WHITE != this.IS_WHITE)) {
+			for(int r = row + (int) Math.signum(newRow - row); r != newRow; r += (int) Math.signum(newRow - row))
+				if(BOARD.getPieceAt(r, newColumn) != null)
 					return false;
 			return true;
 		}

@@ -8,6 +8,7 @@ import jere99.chess.frontEnd.BoardGUI;
  * @author JeremiahDeGreeff
  */
 public class Game {
+	
 	/**
 	 * the board for this game
 	 */
@@ -22,6 +23,9 @@ public class Game {
 	 */
 	private boolean isWhiteTurn = true;
 	
+	/**
+	 * creates a new Game with a board and a GUI
+	 */
 	public Game() {
 		System.out.println("New Game");
 		BOARD = new Board(this);
@@ -60,4 +64,5 @@ public class Game {
 		else
 			System.out.println("\nBlack's turn:");
 	}
+	
 }

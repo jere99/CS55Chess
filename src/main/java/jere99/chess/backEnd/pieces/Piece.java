@@ -1,4 +1,6 @@
-package jere99.chess.backEnd;
+package jere99.chess.backEnd.pieces;
+
+import jere99.chess.backEnd.Board;
 
 /**
  * a class that is the template for a chess piece
@@ -6,6 +8,7 @@ package jere99.chess.backEnd;
  * @author JeremiahDeGreeff
  */
 public abstract class Piece {
+	
 	/**
 	 * the type of piece this object represents
 	 */
@@ -13,19 +16,19 @@ public abstract class Piece {
 	/**
 	 * true if white, false if black
 	 */
-	private final boolean IS_WHITE;
+	protected final boolean IS_WHITE;
 	/**
 	 * the board associated with this piece
 	 */
-	private final Board BOARD;
+	protected final Board BOARD;
 	/**
 	 * coordinate 8 - 1 of this piece expressed as 0 - 7
 	 */
-	private int row;
+	protected int row;
 	/**
 	 * coordinate a - h of this piece expressed as 0 - 7
 	 */
-	private int column;
+	protected int column;
 	
 	
 	/**
@@ -42,7 +45,6 @@ public abstract class Piece {
 		BOARD = board;
 		TYPE = type;
 	}
-	
 	
 	/**
 	 * @return current row between 0 and 7 based on coordinate 8 - 1
@@ -63,13 +65,6 @@ public abstract class Piece {
 	 */
 	public boolean isWhite() {
 		return IS_WHITE;
-	}
-	
-	/**
-	 * @return the board associated with this piece
-	 */
-	public Board getBoard() {
-		return BOARD;
 	}
 	
 	/**
@@ -119,4 +114,5 @@ public abstract class Piece {
 	 * @return true if valid to move this piece to [newRow][newCol], false otherwise
 	 */
 	public abstract boolean isValid(int newRow, int newColumn);
+	
 }
