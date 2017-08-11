@@ -1,8 +1,5 @@
 package jere99.chess.frontEnd;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
 import jere99.chess.backEnd.Game;
 
 /**
@@ -12,12 +9,8 @@ import jere99.chess.backEnd.Game;
  * @author JeremiahDeGreeff
  */
 @SuppressWarnings("serial")
-public class CheckmateGUI extends JFrame {
-
-	/**
-	 * the main display component of the GUI
-	 */
-	private final JPanel PANEL = new JPanel();
+public class CheckmateGUI extends GenericPanelGUI {
+	
 	/**
 	 * the GUI of the completed game
 	 */
@@ -33,33 +26,26 @@ public class CheckmateGUI extends JFrame {
 		super((isWhiteWinner ? "white" : "black") + " wins!");
 		
 		BOARD_GUI = boardGUI;
-
+		
 		//Set the size of the window
-		setSize(500,75);
-
-		//Don't allow window to be resized
-		setResizable(false);
-
-		//Default program end
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-
+		setSize(352, 64);
+		
 		//Create the necessary buttons and add to JPanel
 		PANEL.add(new CheckmateButton("New Game"));
 		PANEL.add(new CheckmateButton("Main Menu"));
 		PANEL.add(new CheckmateButton("Exit"));
-
-		//Add the JPanel to the GUI
-		add(PANEL);
-
+		
 		//Last step: Set window to be visible
 		setVisible(true);
 	}
 	
 	/**
 	 * This method is run every time a button is clicked
-	 * @param button the button that was clicked
+	 * @param b the button that was clicked
 	 */
-	protected void buttonClick(CheckmateButton button) {
+	@Override
+	protected void buttonClick(GenericButton b) {
+		CheckmateButton button = (CheckmateButton) b;
 		BOARD_GUI.dispose(); //close old game
 		dispose(); //close this GUI
 		switch(button.DISPLAY_NAME) {
@@ -74,6 +60,32 @@ public class CheckmateGUI extends JFrame {
 			System.out.println("Terminating program");
 			System.exit(0); //terminate everything
 		}
+	}
+	
+	/**
+	 * a button on a CheckmateGUI object
+	 * 
+	 * @author Kevin
+	 * @author JeremiahDeGreeff
+	 */
+	private class CheckmateButton extends GenericPanelButton {
+		
+		/**
+		 * the text on the button
+		 */
+		protected final String DISPLAY_NAME;
+		
+		/**
+		 * @param displayName the text to be put on the button
+		 */
+		protected CheckmateButton(String displayName) {
+			DISPLAY_NAME = displayName;
+			
+			setText(displayName);
+			
+			setBorderPainted(true);
+		}
+
 	}
 	
 }

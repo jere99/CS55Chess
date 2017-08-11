@@ -1,7 +1,5 @@
 package jere99.chess.frontEnd;
 
-import javax.swing.JFrame;
-
 import java.awt.Color;
 
 import jere99.chess.reference.Colors;
@@ -15,7 +13,7 @@ import jere99.chess.reference.Settings;
  * @author JeremiahDeGreeff
  */
 @SuppressWarnings("serial")
-public class SettingsMenuGUI extends JFrame {
+public class SettingsMenuGUI extends GenericLabelGUI {
 
 	/**
 	 * the buttons on this GUI
@@ -56,9 +54,6 @@ public class SettingsMenuGUI extends JFrame {
 		//Sets the size, (width, height)
 		setSize(FRAME_WIDTH, FRAME_HEIGHT);
 
-		//Allows window to be resized
-		setResizable(false);
-		
 		//Disables the "X" button on the top corner of the JFrame Dialog
 		//This is needed because if the user "X's" out of the Settings window instead of clicking "Main Menu",
 		//The instance variable that allows another settings menu to be created will not be reset,
@@ -67,9 +62,6 @@ public class SettingsMenuGUI extends JFrame {
 
 		//Background Image
 		setContentPane(Labels.SETTINGS_MENU);
-
-		//Setting JFrame to Absolute Layout so that elements may be positioned
-		setLayout(null);
 
 		//Creating the buttons
 		//Customizing the buttons' locations & sizes (x,y,width,height)
@@ -90,25 +82,69 @@ public class SettingsMenuGUI extends JFrame {
 	
 	/**
 	 * This method is run every time a button is clicked
-	 * @param button the button that was clicked
+	 * @param b the button that was clicked
 	 */
-	protected void buttonClick(SettingsMenuButton button) {
+	@Override
+	protected void buttonClick(GenericButton b) {
+		SettingsMenuButton button = (SettingsMenuButton) b;
 		//If "Main Menu" button is clicked
-		if (button.getColor() == null) {
+		if (button.COLOR == null) {
 			//Disposes of Settings Menu GUI
 			dispose();
 			//Resets static variable so that the window may be re-created
 			StartupScreenGUI.SettingsMenuClosed();
 		} else {
 			//Confirmation in the Console
-			System.out.println("Setting default " + (button.getColor().isWhite() ? "white" : "black") + " color to: " + button.getColor().toString().toLowerCase());
+			System.out.println("Setting default " + (button.COLOR.isWhite() ? "white" : "black") + " color to: " + button.COLOR.toString().toLowerCase());
 			//Resets the background color of the old selection of the same color to white
-			BUTTONS[Settings.getColor(button.getColor().isWhite()).ordinal()].setBackground(Color.WHITE);
+			BUTTONS[Settings.getColor(button.COLOR.isWhite()).ordinal()].setBackground(Color.WHITE);
 			//Sets the background color of the new piece to green
 			button.setBackground(Color.GREEN);
 			//Updates Settings
-			Settings.update(button.getColor());
+			Settings.update(button.COLOR);
 		}
+	}
+	
+	/**
+	 * Buttons that appear on the SettingsMenuGUI
+	 * 
+	 * @author Kevin
+	 * @author JeremiahDeGreeff
+	 */
+	private class SettingsMenuButton extends GenericLabelButton {
+		
+		/**
+		 * the color of the piece which this button represents
+		 */
+		protected final Colors COLOR;
+		
+		/**
+		 * Creates a button for the SettingsMenuGUI
+		 * @param color the color which clicking this button would select,
+		 * null color indicates the Main Menu button
+		 */
+		protected SettingsMenuButton(Colors color) {
+			COLOR = color;
+			
+			//Necessary for buttons to work on OSX
+			setOpaque(true);
+			setBorderPainted(false);
+			
+			//Set the background to white
+			setBackground(Color.white);
+			
+			//Set the text and color for the button that returns to the Startup Screen
+			if(COLOR == null) {
+				setText("Main Menu");
+				setForeground(Color.cyan);
+			} else
+			//Set the necessary images to the correct buttons
+				setIcon(COLOR.getPawn());
+			
+			//Create a new Action Listener
+			addActionListener(this);
+		}
+		
 	}
 	
 }

@@ -1,6 +1,6 @@
 package jere99.chess.frontEnd;
 
-import javax.swing.JFrame;
+import java.awt.Color;
 
 import jere99.chess.backEnd.Game;
 import jere99.chess.reference.Labels;
@@ -12,7 +12,7 @@ import jere99.chess.reference.Labels;
  * @author JeremiahDeGreeff
  */
 @SuppressWarnings("serial")
-public class StartupScreenGUI extends JFrame {
+public class StartupScreenGUI extends GenericLabelGUI {
 
 	/**
 	 * Boolean to keep track of whether or not a settings menu has already been created
@@ -58,17 +58,8 @@ public class StartupScreenGUI extends JFrame {
 		//Sets the size, (width, height)
 		setSize(FRAME_WIDTH, FRAME_HEIGHT);
 
-		//Allows window to be resized
-		setResizable(false);
-
-		//Default program end
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-
 		//Background image
 		setContentPane(Labels.STARTUP_SCREEN);
-
-		//Setting JFrame to Absolute Layout so that elements may be positioned
-		setLayout(null);
 
 		//Creating the buttons
 		StartupScreenButton[] buttons = {
@@ -89,9 +80,11 @@ public class StartupScreenGUI extends JFrame {
 
 	/**
 	 * This method is run every time a button is clicked
-	 * @param button the button that was clicked
+	 * @param b the button that was clicked
 	 */
-	protected void buttonClick(StartupScreenButton button) {
+	@Override
+	protected void buttonClick(GenericButton b) {
+		StartupScreenButton button = (StartupScreenButton) b;
 		switch(button.DISPLAY_NAME) {
 		case "New Game":
 			new Game(); //Start the game
@@ -114,6 +107,36 @@ public class StartupScreenGUI extends JFrame {
 	 */
 	protected static void SettingsMenuClosed() {
 		settingsMenuCreated = false;
+	}
+	
+	/**
+	 * Buttons that appear on the StartupScreenGUI
+	 * 
+	 * @author Kevin
+	 * @author JeremiahDeGreeff
+	 */
+	private class StartupScreenButton extends GenericLabelButton {
+
+		/**
+		 * text displayed on the button, also used to identify the button
+		 */
+		protected final String DISPLAY_NAME;
+
+		/**
+		 * creates a button for the StartupScreenGUI
+		 * @param displayName the text to be displayed on the button
+		 */
+		public StartupScreenButton(String displayName) {
+			DISPLAY_NAME = displayName;
+			
+			//Set the button to show the text
+			setText(DISPLAY_NAME);
+			
+			//Set Foreground/Background colors
+			setForeground(Color.CYAN);
+			setBackground(Color.white);
+		}
+		
 	}
 
 }
