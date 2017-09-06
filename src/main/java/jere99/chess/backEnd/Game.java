@@ -19,7 +19,7 @@ public class Game {
 	/**
 	 * the board for this game
 	 */
-	private final Board board = new Board(this);;
+	private final Board board = new Board();;
 	/**
 	 * the GUI for this game
 	 */
@@ -38,7 +38,9 @@ public class Game {
 	 * creates a new Game with a board and a GUI
 	 */
 	public Game() {
-		System.out.println("New Game\n\nWhite's Turn");
+		System.out.println("New Game");
+		board.setGame(this);
+		System.out.println("White's Turn");
 	}
 	
 	/**

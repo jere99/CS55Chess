@@ -1,5 +1,7 @@
 package jere99.chess.backEnd;
 
+import java.lang.reflect.InvocationTargetException;
+
 import jere99.chess.backEnd.pieces.*;
 import jere99.chess.reference.Pieces;
 
@@ -10,12 +12,12 @@ import jere99.chess.reference.Pieces;
  * @author JeremiahDeGreeff
  */
 
-public class Board {
-
+public class Board implements Cloneable {
+	
 	/**
 	 * the game which this board is a part of
 	 */
-	private final Game game;
+	private Game game;
 	/**
 	 * 2D-array that holds all of the pieces in the appropriate locations
 	 */
@@ -33,8 +35,7 @@ public class Board {
 	 * creates a new Board object and initializes all pieces
 	 * @param game the game which this board is a part of
 	 */
-	protected Board(Game game) {
-		this.game = game;
+	protected Board() {
 		for(int row = 0; row < 8; row++) {
 			if(row == 0 || row == 7) {
 				board[row][0] = new Rook(row, 0, row == 7, this);
@@ -63,7 +64,32 @@ public class Board {
 	public Piece getPieceAt(int row, int column) {
 		return board[row][column];
 	}
-
+	
+	/**
+	 * sets the Game to which this Board is attached
+	 * @param game the Game to set
+	 */
+	protected void setGame(Game game) {
+		this.game = game;
+	}
+	
+	@Override
+	public Board clone() {
+		Board newBoard = new Board();
+		for(int row = 0; row < 8; row++)
+			for(int column = 0; column < 8; column++) {
+				Piece p = board[row][column];
+				if(p != null) {
+					try {newBoard.board[row][column] = p.getClass().getConstructor(int.class, int.class, boolean.class, Board.class).newInstance(row, column, p.isWhite(), newBoard);}
+					catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+						e.printStackTrace();
+						return null;
+					}
+				}
+			}
+		return newBoard;
+	}
+	
 	/**
 	 * Tests if moving p to board[newRow][newColumn] is valid and does not check own king
 	 * Changes everything back to how it was before call
