@@ -28,41 +28,33 @@ public class Board {
 	 * Alias of the black king to make locating easier
 	 */
 	private final King blackKing;
-
+	
 	/**
 	 * creates a new Board object and initializes all pieces
 	 * @param game the game which this board is a part of
 	 */
 	protected Board(Game game) {
 		this.game = game;
-
-		// top is black...
-		board[0][0] = new Rook(0, 0, false, this);
-		board[0][1] = new Knight(0, 1, false, this);
-		board[0][2] = new Bishop(0, 2, false, this);
-		board[0][3] = new Queen(0, 3, false, this);
-		board[0][4] = new King(0, 4, false, this);
-		board[0][5] = new Bishop(0, 5, false, this);
-		board[0][6] = new Knight(0, 6, false, this);
-		board[0][7] = new Rook(0, 7, false, this);
-		for (int i = 0; i < board[1].length; i++)
-			board[1][i] = new Pawn(1, i, false, this);
-		//...and bottom is white
-		board[7][0] = new Rook(7, 0, true, this);
-		board[7][1] = new Knight(7, 1, true, this);
-		board[7][2] = new Bishop(7, 2, true, this);
-		board[7][3] = new Queen(7, 3, true, this);
-		board[7][4] = new King(7, 4, true, this);
-		board[7][5] = new Bishop(7, 5, true, this);
-		board[7][6] = new Knight(7 ,6, true, this);
-		board[7][7] = new Rook(7, 7, true, this);
-		for (int i = 0; i < board[6].length; i++)
-			board[6][i] = new Pawn(6,i,true, this);
-
+		for(int row = 0; row < 8; row++) {
+			if(row == 0 || row == 7) {
+				board[row][0] = new Rook(row, 0, row == 7, this);
+				board[row][1] = new Knight(row, 1, row == 7, this);
+				board[row][2] = new Bishop(row, 2, row == 7, this);
+				board[row][3] = new Queen(row, 3, row == 7, this);
+				board[row][4] = new King(row, 4, row == 7, this);
+				board[row][5] = new Bishop(row, 5, row == 7, this);
+				board[row][6] = new Knight(row, 6, row == 7, this);
+				board[row][7] = new Rook(row, 7, row == 7, this);
+			}
+			else if(row == 1 || row == 6)
+				for (int column = 0; column < board[1].length; column++)
+					board[row][column] = new Pawn(row, column, row == 6, this);
+		}
+		
 		blackKing = (King)board[0][4];
 		whiteKing = (King)board[7][4];
 	}
-
+	
 	/**
 	 * @param row the row of the wanted Piece
 	 * @param column the column of the wanted Piece
@@ -96,7 +88,7 @@ public class Board {
 		}
 		return false;
 	}
-
+	
 	/**
 	 * Moves p to board[newRow][newColumn]
 	 * Updates the GUI accordingly
@@ -107,34 +99,34 @@ public class Board {
 	 */
 	public void makeMove(Piece p, int newRow, int newColumn) {
 		int startRow = p.getRow(), startColumn = p.getColumn();
-
+		
 		//move the piece
 		movePiece(p, newRow, newColumn);
-
+		
 		//update the GUI
 		game.updateSquare(startRow, startColumn);
 		game.updateSquare(newRow, newColumn);
-
+		
 		//Prevent King or Rook from being able to castle in the future
 		if(p instanceof King && !((King)p).hasMoved())
 			((King)p).kingMove();
 		if(p instanceof Rook && !((Rook)p).hasMoved())
 			((Rook)p).rookMove();
-
+		
 		//If the move is a castle also moves the rook
 		if(p instanceof King && startColumn == 4 && newColumn == 6)
 			movePiece(board[newRow][7], newRow, 5);
 		if(p instanceof King && startColumn == 4 && newColumn == 2)
 			movePiece(board[newRow][0], newRow, 3);
-
+		
 		//Creates a GUI for pawn promotion
 		if(p instanceof Pawn && (newRow == 0 || newRow == 7))
 			game.pawnChangeInit(newRow, newColumn);
-
+		
 		//See if the move has put the opposing king in check or checkmate
 		detectCheck(newRow, newColumn);
 	}
-
+	
 	/**
 	 * Moves p to board[newRow][newColumn]
 	 * Should only be run when the move is valid according to piece rules
@@ -145,15 +137,15 @@ public class Board {
 	 */
 	private Piece movePiece(Piece p, int newRow, int newColumn) {
 		Piece captured = board[newRow][newColumn];
-
+		
 		board[newRow][newColumn] = p;
 		board[p.getRow()][p.getColumn()] = null;
 		p.setRow(newRow);
 		p.setColumn(newColumn);
-
+		
 		return captured;
 	}
-
+	
 	/**
 	 * Tests if a move to a particular row and column has resulted in check or checkmate for the opposing player
 	 * @param row the row of the piece that just moved
@@ -171,7 +163,7 @@ public class Board {
 				game.checkmateInit(false);
 		}
 	}
-
+	
 	/**
 	 * tests if king is in check
 	 * @param king king to test
@@ -185,7 +177,7 @@ public class Board {
 						return true;
 		return false;
 	}
-
+	
 	/**
 	 * Tests if king is in checkmate
 	 * @param king king to test if in checkmate
@@ -197,7 +189,7 @@ public class Board {
 			for (int c = king.getColumn() - 1; c < king.getColumn() + 1; c++)
 				if (r >= 0 && r <= 7 && c >= 0 && c <= 7 && testMove(king, r, c))
 					return false;
-
+		
 		Piece temp = null;
 		//find Piece checking king and set temp to Piece
 		for (Piece[] row : board)
@@ -208,17 +200,17 @@ public class Board {
 					else
 						return true;
 				}
-
+		
 		//find out if temp can be taken
 		for (Piece[] row : board)
 			for (Piece p : row)
 				if (p != null && p.isWhite() != temp.isWhite() && testMove(p, temp.getRow(), temp.getColumn()))
 					return false;
-
+		
 		//find out if temp can be blocked
 		if (!(temp instanceof Rook || temp instanceof Queen || temp instanceof Bishop))
 			return true;
-
+		
 		int row = temp.getRow();
 		int col = temp.getColumn();
 		//if temp is Rook (or Queen)...
@@ -246,7 +238,7 @@ public class Board {
 							if (p != null && p.isWhite() != temp.isWhite() && testMove(p, r, col))
 								return false;
 			}
-
+		
 		//if temp is Bishop (or Queen)...
 		if (temp instanceof Bishop || temp instanceof Queen)
 			for (Piece[] boardRow : board)
@@ -257,7 +249,7 @@ public class Board {
 								return false;
 		return true;
 	}
-
+	
 	/**
 	 * Changes pawn that reached far row to new Piece of player's choice
 	 * Updates GUI accordingly
