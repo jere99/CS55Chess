@@ -16,7 +16,7 @@ public abstract class GenericPanelGUI extends GenericGUI {
 	/**
 	 * the main display component of the GUI
 	 */
-	protected final JPanel PANEL = new JPanel();
+	protected final JPanel panel = new JPanel();
 	
 	/**
 	 * creates a GenericPanelGUI with an indicated title
@@ -27,7 +27,7 @@ public abstract class GenericPanelGUI extends GenericGUI {
 		super(title);
 		
 		//Add the JPanel to the GUI
-		add(PANEL);
+		add(panel);
 	}
 	
 	/**

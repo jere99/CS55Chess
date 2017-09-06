@@ -12,11 +12,11 @@ public abstract class Piece {
 	/**
 	 * true if white, false if black
 	 */
-	protected final boolean IS_WHITE;
+	protected final boolean isWhite;
 	/**
 	 * the board associated with this piece
 	 */
-	protected final Board BOARD;
+	protected final Board board;
 	/**
 	 * coordinate 8 - 1 of this piece expressed as 0 - 7
 	 */
@@ -37,8 +37,8 @@ public abstract class Piece {
 	public Piece(int row, int column, boolean isWhite, Board board) {
 		this.row = row;
 		this.column = column;
-		IS_WHITE = isWhite;
-		BOARD = board;
+		this.isWhite = isWhite;
+		this.board = board;
 	}
 	
 	/**
@@ -67,7 +67,7 @@ public abstract class Piece {
 	 * @return true if this piece is white, false if black
 	 */
 	public boolean isWhite() {
-		return IS_WHITE;
+		return isWhite;
 	}
 	
 	/**
@@ -92,9 +92,9 @@ public abstract class Piece {
 	 */
 	public boolean move(int newRow, int newColumn) {
 		//If the move is valid
-		if(BOARD.testMove(this, newRow, newColumn)) {
+		if(board.testMove(this, newRow, newColumn)) {
 			//Then perform the move
-			BOARD.makeMove(this, newRow, newColumn);
+			board.makeMove(this, newRow, newColumn);
 			return true;
 		}
 		return false;

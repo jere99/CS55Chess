@@ -29,21 +29,21 @@ public class Pawn extends Piece {
 	@Override
 	public boolean isValid(int newRow, int newColumn) {
 		//forward one square
-		if((IS_WHITE && newRow - row == -1) || (!IS_WHITE && newRow - row == 1)) {
+		if((isWhite && newRow - row == -1) || (!isWhite && newRow - row == 1)) {
 			//to empty square directly ahead
-			if(newColumn == column && BOARD.getPieceAt(newRow, newColumn) == null)
+			if(newColumn == column && board.getPieceAt(newRow, newColumn) == null)
 				return true;
 			//take opponent in diagonal square
-			if(Math.abs(newColumn - column) == 1 && BOARD.getPieceAt(newRow, newColumn) != null && BOARD.getPieceAt(newRow, newColumn).IS_WHITE != this.IS_WHITE)
+			if(Math.abs(newColumn - column) == 1 && board.getPieceAt(newRow, newColumn) != null && board.getPieceAt(newRow, newColumn).isWhite != this.isWhite)
 				return true;
 		}
 
 		//forward two empty squares as initial move
-		if(IS_WHITE && row == 6 && newRow == 4 && newColumn == column)
-			if(BOARD.getPieceAt(5, newColumn) == null && BOARD.getPieceAt(4, newColumn) == null)
+		if(isWhite && row == 6 && newRow == 4 && newColumn == column)
+			if(board.getPieceAt(5, newColumn) == null && board.getPieceAt(4, newColumn) == null)
 				return true;
-		if(!IS_WHITE && row == 1 && newRow == 3 && newColumn == column)
-			if(BOARD.getPieceAt(2, newColumn) == null && BOARD.getPieceAt(3, newColumn) == null)
+		if(!isWhite && row == 1 && newRow == 3 && newColumn == column)
+			if(board.getPieceAt(2, newColumn) == null && board.getPieceAt(3, newColumn) == null)
 				return true;
 
 		return false;

@@ -19,11 +19,11 @@ public class Game {
 	/**
 	 * the board for this game
 	 */
-	private final Board BOARD;
+	private final Board board = new Board(this);;
 	/**
 	 * the GUI for this game
 	 */
-	private final BoardGUI GUI;
+	private final BoardGUI gui = new BoardGUI(this);
 
 	/**
 	 * whose turn it is currently: true if white, false if black
@@ -38,10 +38,7 @@ public class Game {
 	 * creates a new Game with a board and a GUI
 	 */
 	public Game() {
-		System.out.println("New Game");
-		BOARD = new Board(this);
-		GUI = new BoardGUI(this);
-		System.out.println("\nWhite's Turn");
+		System.out.println("New Game\n\nWhite's Turn");
 	}
 	
 	/**
@@ -51,7 +48,7 @@ public class Game {
 	 * @return the ImageIcon corresponding to the peice in the square
 	 */
 	public ImageIcon getIconForSquare(int row, int column) {
-		return BOARD.getPieceAt(row, column) != null ? Pieces.getIcon(BOARD.getPieceAt(row, column)) : null;
+		return board.getPieceAt(row, column) != null ? Pieces.getIcon(board.getPieceAt(row, column)) : null;
 	}
 
 	/**
@@ -60,7 +57,7 @@ public class Game {
 	 * @param column the column of the square to update
 	 */
 	protected void updateSquare(int row, int column) {
-		GUI.updateSquare(row, column, getIconForSquare(row, column));
+		gui.updateSquare(row, column, getIconForSquare(row, column));
 	}
 
 	/**
@@ -68,7 +65,7 @@ public class Game {
 	 */
 	protected void checkmateInit(boolean isWhiteWinner) {
 		System.out.println("Checkmate!\n" + (isWhiteWinner ? "White" : "Black") + " Wins");
-		new CheckmateGUI(GUI, isWhiteWinner);
+		new CheckmateGUI(gui, isWhiteWinner);
 	}
 
 	/**
@@ -85,7 +82,7 @@ public class Game {
 	 * @param type name of the selected piece
 	 */
 	public void pawnChange(int row, int column, Pieces piece) {
-		BOARD.pawnChange(row, column, piece);
+		board.pawnChange(row, column, piece);
 	}
 
 	/**
@@ -95,7 +92,7 @@ public class Game {
 	 * @return true if the click is valid, false otherwise
 	 */
 	public boolean firstClick(int row, int column) {
-		firstClick = BOARD.getPieceAt(row, column);
+		firstClick = board.getPieceAt(row, column);
 		//If piece exists
 		if(firstClick != null)
 			//If piece is correct color

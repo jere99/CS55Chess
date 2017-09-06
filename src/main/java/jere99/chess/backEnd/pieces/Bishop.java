@@ -27,9 +27,9 @@ public class Bishop extends Piece {
 	 */
 	public boolean isValid(int newRow, int newColumn) {
 		if(Math.abs(newRow - row) == Math.abs(newColumn - column)) //on diagonal line
-			if(BOARD.getPieceAt(newRow, newColumn) == null || BOARD.getPieceAt(newRow, newColumn).IS_WHITE != this.IS_WHITE) {
+			if(board.getPieceAt(newRow, newColumn) == null || board.getPieceAt(newRow, newColumn).isWhite != this.isWhite) {
 				for(int i = 1; i < Math.abs(newRow - row); i++)
-					if(BOARD.getPieceAt(i * (int)Math.signum(newRow - row) + row, i * (int)Math.signum(newColumn - column) + column) != null)
+					if(board.getPieceAt(i * (int)Math.signum(newRow - row) + row, i * (int)Math.signum(newColumn - column) + column) != null)
 						return false;
 				return true;
 			}

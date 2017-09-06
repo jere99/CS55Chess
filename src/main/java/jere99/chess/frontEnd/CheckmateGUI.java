@@ -14,7 +14,7 @@ public class CheckmateGUI extends GenericPanelGUI {
 	/**
 	 * the GUI of the completed game
 	 */
-	private final BoardGUI BOARD_GUI;
+	private final BoardGUI boardGUI;
 	
 	/**
 	 * creates a pop-up window after checkmate occurs
@@ -25,15 +25,15 @@ public class CheckmateGUI extends GenericPanelGUI {
 		//Name the window
 		super((isWhiteWinner ? "white" : "black") + " wins!");
 		
-		BOARD_GUI = boardGUI;
+		this.boardGUI = boardGUI;
 		
 		//Set the size of the window
 		setSize(352, 64);
 		
 		//Create the necessary buttons and add to JPanel
-		PANEL.add(new CheckmateButton("New Game"));
-		PANEL.add(new CheckmateButton("Main Menu"));
-		PANEL.add(new CheckmateButton("Exit"));
+		panel.add(new CheckmateButton("New Game"));
+		panel.add(new CheckmateButton("Main Menu"));
+		panel.add(new CheckmateButton("Exit"));
 		
 		//Last step: Set window to be visible
 		setVisible(true);
@@ -46,7 +46,7 @@ public class CheckmateGUI extends GenericPanelGUI {
 	@Override
 	protected void buttonClick(GenericButton b) {
 		CheckmateButton button = (CheckmateButton) b;
-		BOARD_GUI.dispose(); //close old game
+		boardGUI.dispose(); //close old game
 		dispose(); //close this GUI
 		switch(button.DISPLAY_NAME) {
 		case "Main Menu":

@@ -18,7 +18,7 @@ public class SettingsMenuGUI extends GenericLabelGUI {
 	/**
 	 * the buttons on this GUI
 	 */
-	private final SettingsMenuButton[] BUTTONS = new SettingsMenuButton[6];
+	private final SettingsMenuButton[] buttons = new SettingsMenuButton[6];
 	/**
 	 * the width of the frame
 	 */
@@ -67,9 +67,9 @@ public class SettingsMenuGUI extends GenericLabelGUI {
 		//Customizing the buttons' locations & sizes (x,y,width,height)
 		//Adding the buttons to the JFrame
 		for(Colors c : Colors.values()) {
-			BUTTONS[c.ordinal()] = new SettingsMenuButton(c);
-			BUTTONS[c.ordinal()].setBounds(c.isWhite() ? HORIZONTAL_OFFSET : FRAME_WIDTH - HORIZONTAL_OFFSET - BUTTON_WIDTH, (c.ordinal() % (Colors.values().length / 2) + 1) * VERTICAL_OFFSET, BUTTON_WIDTH, BUTTON_HEIGHT);
-			add(BUTTONS[c.ordinal()]);
+			buttons[c.ordinal()] = new SettingsMenuButton(c);
+			buttons[c.ordinal()].setBounds(c.isWhite() ? HORIZONTAL_OFFSET : FRAME_WIDTH - HORIZONTAL_OFFSET - BUTTON_WIDTH, (c.ordinal() % (Colors.values().length / 2) + 1) * VERTICAL_OFFSET, BUTTON_WIDTH, BUTTON_HEIGHT);
+			add(buttons[c.ordinal()]);
 		}
 		//null is the MainMenu Button
 		SettingsMenuButton MainMenu = new SettingsMenuButton(null);
@@ -97,7 +97,7 @@ public class SettingsMenuGUI extends GenericLabelGUI {
 			//Confirmation in the Console
 			System.out.println("Setting default " + (button.COLOR.isWhite() ? "white" : "black") + " color to: " + button.COLOR.toString().toLowerCase());
 			//Resets the background color of the old selection of the same color to white
-			BUTTONS[Settings.getColor(button.COLOR.isWhite()).ordinal()].setBackground(Color.WHITE);
+			buttons[Settings.getColor(button.COLOR.isWhite()).ordinal()].setBackground(Color.WHITE);
 			//Sets the background color of the new piece to green
 			button.setBackground(Color.GREEN);
 			//Updates Settings

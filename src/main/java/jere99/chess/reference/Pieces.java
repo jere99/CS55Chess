@@ -20,7 +20,7 @@ public enum Pieces {
 	/**
 	 * the class from which an object of this piece is created
 	 */
-	private final Class<? extends Piece> TYPE;
+	private final Class<? extends Piece> type;
 	/**
 	 * the current ImageIcon for a white version of this piece
 	 */
@@ -32,14 +32,14 @@ public enum Pieces {
 	
 	
 	Pieces(Class<? extends Piece> type) {
-		TYPE = type;
+		this.type = type;
 	}
 	
 	/**
 	 * @return the class from which an object of this piece is created
 	 */
 	public Class<? extends Piece> getType() {
-		return TYPE;
+		return type;
 	}
 	
 	/**
@@ -56,7 +56,7 @@ public enum Pieces {
 	 */
 	public static ImageIcon getIcon(Piece piece) {
 		for(Pieces p : values())
-			if(piece.getClass().equals(p.TYPE))
+			if(piece.getClass().equals(p.type))
 				return p.getIcon(piece.isWhite());
 		return null;
 	}

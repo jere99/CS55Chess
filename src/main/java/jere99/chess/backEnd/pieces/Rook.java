@@ -49,16 +49,16 @@ public class Rook extends Piece {
 	@Override
 	public boolean isValid(int newRow, int newColumn) {
 		//same row
-		if(newRow == row && (BOARD.getPieceAt(newRow, newColumn) == null || BOARD.getPieceAt(newRow, newColumn).IS_WHITE != this.IS_WHITE)) {
+		if(newRow == row && (board.getPieceAt(newRow, newColumn) == null || board.getPieceAt(newRow, newColumn).isWhite != this.isWhite)) {
 			for(int c = column + (int) Math.signum(newColumn - column); c != newColumn; c += (int) Math.signum(newColumn - column))
-				if(BOARD.getPieceAt(newRow, c) != null)
+				if(board.getPieceAt(newRow, c) != null)
 					return false;
 			return true;
 		}
 		//same column
-		if(newColumn == column && (BOARD.getPieceAt(newRow, newColumn) == null || BOARD.getPieceAt(newRow, newColumn).IS_WHITE != this.IS_WHITE)) {
+		if(newColumn == column && (board.getPieceAt(newRow, newColumn) == null || board.getPieceAt(newRow, newColumn).isWhite != this.isWhite)) {
 			for(int r = row + (int) Math.signum(newRow - row); r != newRow; r += (int) Math.signum(newRow - row))
-				if(BOARD.getPieceAt(r, newColumn) != null)
+				if(board.getPieceAt(r, newColumn) != null)
 					return false;
 			return true;
 		}

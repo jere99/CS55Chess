@@ -28,7 +28,7 @@ public class Knight extends Piece {
 	@Override
 	public boolean isValid(int newRow, int newColumn) {
 		//empty square or opponent
-		if(BOARD.getPieceAt(newRow, newColumn) == null || BOARD.getPieceAt(newRow, newColumn).IS_WHITE != this.IS_WHITE) {
+		if(board.getPieceAt(newRow, newColumn) == null || board.getPieceAt(newRow, newColumn).isWhite != this.isWhite) {
 			//right or left 1, up or down 2
 			if(Math.abs(newRow - row) == 2 && Math.abs(newColumn - column) == 1)
 				return true;

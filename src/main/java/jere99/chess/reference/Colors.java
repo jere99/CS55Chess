@@ -20,14 +20,14 @@ public enum Colors {
 	 * {@code true} if this element is for the white player,
 	 * {@code false} if this element is for the black player
 	 */
-	private final boolean IS_WHITE;
+	private final boolean isWhite;
 	/**
 	 * the icon that is used in the settings screen to select this color
 	 */
 	private final ImageIcon pawn;
 	
 	Colors(boolean isWhite) {
-		IS_WHITE = isWhite;
+		this.isWhite = isWhite;
 		pawn = new ImageIcon(Colors.class.getResource(Paths.PIECES + toString().toLowerCase() + "/pawn.png"));
 	}
 	
@@ -35,7 +35,7 @@ public enum Colors {
 	 * @return {@code true} if this element is for the white player, {@code false} if this element is for the black player
 	 */
 	public boolean isWhite() {
-		return IS_WHITE;
+		return isWhite;
 	}
 	
 	/**

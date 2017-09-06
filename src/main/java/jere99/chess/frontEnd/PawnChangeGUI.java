@@ -15,15 +15,15 @@ public class PawnChangeGUI extends GenericPanelGUI {
 	/**
 	 * the Game in which this promotion is occurring
 	 */
-	private final Game GAME;
+	private final Game game;
 	/**
 	 * the row where this promotion is occurring
 	 */
-	private final int ROW;
+	private final int row;
 	/**
 	 * the column where this promotion is occurring
 	 */
-	private final int COLUMN;
+	private final int column;
 	
 	/**
 	 * creates a pop-up window which asks the user what piece they would like to promote their pawn into
@@ -35,16 +35,16 @@ public class PawnChangeGUI extends GenericPanelGUI {
 		//Name the window
 		super("Pawn Promotion");
 		
-		ROW = row;
-		COLUMN = column;
-		GAME = game;
+		this.row = row;
+		this.column = column;
+		this.game = game;
 		
 		//Set the size of the window
 		setSize(352, 112);
 		
 		//Create the necessary buttons and add them to the JPanel
 		for(int i = 1; i <= 4; i++)
-			PANEL.add(new PawnChangeButton(Pieces.values()[i], isWhite));
+			panel.add(new PawnChangeButton(Pieces.values()[i], isWhite));
 		
 		//Last step: Set window to be visible
 		setVisible(true);
@@ -60,7 +60,7 @@ public class PawnChangeGUI extends GenericPanelGUI {
 		System.out.println("Promoting to " + button.PIECE.toString().toLowerCase());
 		
 		//promote the pawn into the selected piece
-		GAME.pawnChange(ROW, COLUMN, button.PIECE);
+		game.pawnChange(row, column, button.PIECE);
 		
 		//close this GUI
 		dispose();

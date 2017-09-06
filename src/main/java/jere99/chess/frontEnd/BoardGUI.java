@@ -20,11 +20,11 @@ public class BoardGUI extends GenericPanelGUI {
 	/**
 	 * the game that this GUI represents
 	 */
-	private final Game GAME;
+	private final Game game;
 	/**
 	 * 2D array of all the buttons on this GUI
 	 */
-	private final BoardButton[][] BUTTONS = new BoardButton[8][8];
+	private final BoardButton[][] buttons = new BoardButton[8][8];
 	/**
 	 * the first button that the user clicks
 	 */
@@ -43,13 +43,13 @@ public class BoardGUI extends GenericPanelGUI {
 		//Name the window
 		super("Chess");
 		
-		GAME = game;
+		this.game = game;
 		
 		//Sets the size, (width, height)
 		setSize(800,800);
 		
 		//Create new grid layout
-		PANEL.setLayout(new GridLayout(8,8));
+		panel.setLayout(new GridLayout(8,8));
 		
 		//Load the correct piece icons
 		Pieces.loadIcons();
@@ -57,9 +57,9 @@ public class BoardGUI extends GenericPanelGUI {
 		//Add the buttons
 		for (int r = 0; r < 8; r ++)
 			for(int c = 0; c < 8; c ++) {
-				BUTTONS[r][c] = new BoardButton(r, c);
-				PANEL.add(BUTTONS[r][c]);
-				updateSquare(r, c, GAME.getIconForSquare(r, c));
+				buttons[r][c] = new BoardButton(r, c);
+				panel.add(buttons[r][c]);
+				updateSquare(r, c, game.getIconForSquare(r, c));
 			}
 		
 		//Last step: Set window to be visible
@@ -76,13 +76,13 @@ public class BoardGUI extends GenericPanelGUI {
 		BoardButton button = (BoardButton) b;
 		System.out.println((isFirstClick ? "First" : "Second") + " Click: " + button.ROW + ", " + button.COLUMN);
 		if(isFirstClick) {
-			if(GAME.firstClick(button.ROW, button.COLUMN)) {
+			if(game.firstClick(button.ROW, button.COLUMN)) {
 				firstClick = button;
 				firstClick.highlight();
 				isFirstClick = false;
 			}
 		} else {
-			GAME.secondClick(button.ROW, button.COLUMN);
+			game.secondClick(button.ROW, button.COLUMN);
 			firstClick.resetColor();
 			isFirstClick = true;
 		}
@@ -96,7 +96,7 @@ public class BoardGUI extends GenericPanelGUI {
 	 */
 	public void updateSquare(int row, int column, ImageIcon icon) {
 		System.out.println("Updating image at: " + row + ", " + column);
-		BUTTONS[row][column].setIcon(icon);
+		buttons[row][column].setIcon(icon);
 	}
 	
 	/** 
