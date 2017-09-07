@@ -74,8 +74,16 @@ public class Board {
 		for(int row = 0; row < 8; row++)
 			for(int column = 0; column < 8; column++) {
 				Piece p = oldBoard.board[row][column];
-				if(p != null)
-					board[row][column] = p.copyPiece(this);
+				if(p == null)
+					board[row][column] = null;
+				else {
+					 Piece newPiece = p.copyPiece(this);
+					 if(p instanceof King && ((King) p).hasMoved())
+						 ((King) newPiece).kingMove();
+					 else if(p instanceof Rook && ((Rook) p).hasMoved())
+						 ((Rook) newPiece).rookMove();
+					 board[row][column] = newPiece;
+				}
 			}
 	}
 	

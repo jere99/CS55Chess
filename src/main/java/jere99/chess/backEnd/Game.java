@@ -45,6 +45,7 @@ public class Game implements Cloneable {
 	public Game clone() {
 		Game newGame = new Game();
 		newGame.board.copyBoard(board);
+		newGame.refreshGUI();
 		return newGame;
 	}
 	
@@ -65,6 +66,15 @@ public class Game implements Cloneable {
 	 */
 	protected void updateSquare(int row, int column) {
 		gui.updateSquare(row, column, getIconForSquare(row, column));
+	}
+	
+	/**
+	 * Updates every square on the BoardGUI.
+	 */
+	protected void refreshGUI() {
+		for(int row = 0; row < 8; row++)
+			for(int column = 0; column < 8; column++)
+				gui.updateSquare(row, column, getIconForSquare(row, column));
 	}
 
 	/**
