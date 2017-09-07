@@ -1,7 +1,5 @@
 package jere99.chess.backEnd;
 
-import java.lang.reflect.InvocationTargetException;
-
 import jere99.chess.backEnd.pieces.*;
 import jere99.chess.reference.Pieces;
 
@@ -12,12 +10,12 @@ import jere99.chess.reference.Pieces;
  * @author JeremiahDeGreeff
  */
 
-public class Board implements Cloneable {
+public class Board {
 	
 	/**
 	 * the game which this board is a part of
 	 */
-	private Game game;
+	private final Game game;
 	/**
 	 * 2D-array that holds all of the pieces in the appropriate locations
 	 */
@@ -35,7 +33,8 @@ public class Board implements Cloneable {
 	 * creates a new Board object and initializes all pieces
 	 * @param game the game which this board is a part of
 	 */
-	protected Board() {
+	protected Board(Game game) {
+		this.game = game;
 		for(int row = 0; row < 8; row++) {
 			if(row == 0 || row == 7) {
 				board[row][0] = new Rook(row, 0, row == 7, this);
@@ -66,28 +65,18 @@ public class Board implements Cloneable {
 	}
 	
 	/**
-	 * sets the Game to which this Board is attached
-	 * @param game the Game to set
+	 * Copies the contents of a Board into this Board.
+	 * Intended to be used only when cloning a Game object.
+	 * 
+	 * @param oldBoard the Board whose contents will be copied
 	 */
-	protected void setGame(Game game) {
-		this.game = game;
-	}
-	
-	@Override
-	public Board clone() {
-		Board newBoard = new Board();
+	protected void copyBoard(Board oldBoard) {
 		for(int row = 0; row < 8; row++)
 			for(int column = 0; column < 8; column++) {
-				Piece p = board[row][column];
-				if(p != null) {
-					try {newBoard.board[row][column] = p.getClass().getConstructor(int.class, int.class, boolean.class, Board.class).newInstance(row, column, p.isWhite(), newBoard);}
-					catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-						e.printStackTrace();
-						return null;
-					}
-				}
+				Piece p = oldBoard.board[row][column];
+				if(p != null)
+					board[row][column] = p.copyPiece(this);
 			}
-		return newBoard;
 	}
 	
 	/**

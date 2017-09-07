@@ -1,5 +1,7 @@
 package jere99.chess.backEnd.pieces;
 
+import java.lang.reflect.InvocationTargetException;
+
 import jere99.chess.backEnd.Board;
 
 /**
@@ -82,6 +84,21 @@ public abstract class Piece {
 	 */
 	public void setColumn(int column) {
 		this.column = column;
+	}
+	
+	/**
+	 * Creates a copy of this Piece which is on a different Board.
+	 * Intended to be used only when cloning a Game object.
+	 * 
+	 * @param newBoard the Board which the new piece is on
+	 * @return the new Piece
+	 */
+	public Piece copyPiece(Board newBoard) {
+		try {return getClass().getConstructor(int.class, int.class, boolean.class, Board.class).newInstance(row, column, isWhite, newBoard);}
+		catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 	/**

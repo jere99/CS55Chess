@@ -14,12 +14,12 @@ import jere99.chess.reference.Pieces;
  * 
  * @author JeremiahDeGreeff
  */
-public class Game {
+public class Game implements Cloneable {
 
 	/**
 	 * the board for this game
 	 */
-	private final Board board = new Board();;
+	private final Board board = new Board(this);
 	/**
 	 * the GUI for this game
 	 */
@@ -38,9 +38,14 @@ public class Game {
 	 * creates a new Game with a board and a GUI
 	 */
 	public Game() {
-		System.out.println("New Game");
-		board.setGame(this);
-		System.out.println("White's Turn");
+		System.out.println("New Game\n\nWhite's Turn");
+	}
+	
+	@Override
+	public Game clone() {
+		Game newGame = new Game();
+		newGame.board.copyBoard(board);
+		return newGame;
 	}
 	
 	/**
