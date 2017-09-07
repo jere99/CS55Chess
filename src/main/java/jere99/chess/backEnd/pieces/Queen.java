@@ -3,7 +3,7 @@ package jere99.chess.backEnd.pieces;
 import jere99.chess.backEnd.Board;
 
 /**
- *	an object that represents a queen
+ * Represents a queen.
  *
  * @author JeremiahDeGreeff
  */
@@ -21,10 +21,11 @@ public class Queen extends Piece {
 	
 	
 	/**
-	 * Tests if a move is valid for the particular type of piece
-	 * @param newRow number between 0 and 7 based on coordinate 8 - 1
-	 * @param newColumn number between 0 and 7 based on coordinate a - h
-	 * @return true if valid to move this piece to [newRow][newCol], false otherwise
+	 * Tests if a move is valid for a Queen.
+	 * 
+	 * @param newRow [0, 7] based on coordinate [8, 1]
+	 * @param newColumn [0, 7] based on coordinate [a, h]
+	 * @return true if valid to move this piece to the new position, false otherwise
 	 */
 	@Override
 	public boolean isValid(int newRow, int newColumn) {	

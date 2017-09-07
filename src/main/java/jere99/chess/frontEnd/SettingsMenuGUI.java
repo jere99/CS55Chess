@@ -7,7 +7,7 @@ import jere99.chess.reference.Labels;
 import jere99.chess.reference.Settings;
 
 /**
- * The GUI for the settings menu
+ * The GUI for the settings menu.
  * 
  * @author Kevin
  * @author JeremiahDeGreeff
@@ -16,37 +16,34 @@ import jere99.chess.reference.Settings;
 public class SettingsMenuGUI extends GenericLabelGUI {
 
 	/**
-	 * the buttons on this GUI
+	 * The buttons on this GUI.
 	 */
 	private final SettingsMenuButton[] buttons = new SettingsMenuButton[6];
 	/**
-	 * the width of the frame
+	 * The width of the frame.
 	 */
 	private static final int FRAME_WIDTH = 700;
 	/**
-	 * the height of the frame
+	 * The height of the frame.
 	 */
 	private static final int FRAME_HEIGHT = 700;
 	/**
-	 * the width of the buttons on this GUI
+	 * The width of the buttons on this GUI.
 	 */
 	private static final int BUTTON_WIDTH = 100;
 	/**
-	 * the height of the buttons on this GUI
+	 * The height of the buttons on this GUI.
 	 */
 	private static final int BUTTON_HEIGHT = 100;
 	/**
-	 * the horizontal spacing between the edge of the frame and the buttons
+	 * The horizontal spacing between the edge of the frame and the buttons.
 	 */
 	private static final int HORIZONTAL_OFFSET = 90;
 	/**
-	 * the vertical spacing between the buttons
+	 * The vertical spacing between the buttons.
 	 */
 	private static final int VERTICAL_OFFSET = 150;
 	
-	/**
-	 * Creates window for changing settings
-	 */
 	protected SettingsMenuGUI() {
 		//Name the window
 		super("Color Scheme");
@@ -81,32 +78,34 @@ public class SettingsMenuGUI extends GenericLabelGUI {
 	}
 	
 	/**
-	 * This method is run every time a button is clicked
+	 * Changes the settings depending on which button has been clicked.
+	 * Should be called every time a button on this SettingsMenuGUI is clicked.
+	 * 
 	 * @param b the button that was clicked
 	 */
 	@Override
 	protected void buttonClick(GenericButton b) {
 		SettingsMenuButton button = (SettingsMenuButton) b;
 		//If "Main Menu" button is clicked
-		if (button.COLOR == null) {
+		if (button.color == null) {
 			//Disposes of Settings Menu GUI
 			dispose();
 			//Resets static variable so that the window may be re-created
 			StartupScreenGUI.SettingsMenuClosed();
 		} else {
 			//Confirmation in the Console
-			System.out.println("Setting default " + (button.COLOR.isWhite() ? "white" : "black") + " color to: " + button.COLOR.toString().toLowerCase());
+			System.out.println("Setting default " + (button.color.isWhite() ? "white" : "black") + " color to: " + button.color.toString().toLowerCase());
 			//Resets the background color of the old selection of the same color to white
-			buttons[Settings.getColor(button.COLOR.isWhite()).ordinal()].setBackground(Color.WHITE);
+			buttons[Settings.getColor(button.color.isWhite()).ordinal()].setBackground(Color.WHITE);
 			//Sets the background color of the new piece to green
 			button.setBackground(Color.GREEN);
 			//Updates Settings
-			Settings.update(button.COLOR);
+			Settings.update(button.color);
 		}
 	}
 	
 	/**
-	 * Buttons that appear on the SettingsMenuGUI
+	 * A button on a SettingsMenuGUI.
 	 * 
 	 * @author Kevin
 	 * @author JeremiahDeGreeff
@@ -114,17 +113,15 @@ public class SettingsMenuGUI extends GenericLabelGUI {
 	private class SettingsMenuButton extends GenericLabelButton {
 		
 		/**
-		 * the color of the piece which this button represents
+		 * The color of the piece which this button represents.
 		 */
-		protected final Colors COLOR;
+		private final Colors color;
 		
 		/**
-		 * Creates a button for the SettingsMenuGUI
-		 * @param color the color which clicking this button would select,
-		 * null color indicates the Main Menu button
+		 * @param color the color which clicking this button would select - null indicates the Main Menu button
 		 */
-		protected SettingsMenuButton(Colors color) {
-			COLOR = color;
+		private SettingsMenuButton(Colors color) {
+			this.color = color;
 			
 			//Necessary for buttons to work on OSX
 			setOpaque(true);
@@ -134,12 +131,12 @@ public class SettingsMenuGUI extends GenericLabelGUI {
 			setBackground(Color.white);
 			
 			//Set the text and color for the button that returns to the Startup Screen
-			if(COLOR == null) {
+			if(color == null) {
 				setText("Main Menu");
 				setForeground(Color.cyan);
 			} else
 			//Set the necessary images to the correct buttons
-				setIcon(COLOR.getPawn());
+				setIcon(color.getPawn());
 			
 			//Create a new Action Listener
 			addActionListener(this);

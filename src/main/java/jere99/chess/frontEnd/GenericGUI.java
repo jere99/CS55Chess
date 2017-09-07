@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 
 /**
  * An abstract JFrame which all GUIs in this project extend.
+ * 
  * @author JeremiahDeGreeff
  * @see GenericPanelGUI
  * @see GenericLabelGUI
@@ -16,7 +17,7 @@ import javax.swing.JFrame;
 public abstract class GenericGUI extends JFrame {
 	
 	/**
-	 * creates a GenericGUI with an indicated title
+	 * Performs generic initialization for a JFrame.
 	 * @param title the title of the window
 	 */
 	protected GenericGUI(String title) {
@@ -31,19 +32,21 @@ public abstract class GenericGUI extends JFrame {
 	}
 	
 	/**
-	 * This method will be called whenever a button on this GUI is clicked
+	 * This method should be called whenever a button on this GUI is clicked.
+	 * 
 	 * @param b the button which has been clicked
 	 */
 	protected abstract void buttonClick(GenericButton b);
 	
 	/**
 	 * An abstract JButton which all buttons in this project extend.
+	 * 
 	 * @author JeremiahDeGreeff
 	 */
 	protected abstract class GenericButton extends JButton implements ActionListener {
 		
 		/**
-		 * performs generic initialization for a button
+		 * Performs generic initialization for a JButton.
 		 */
 		protected GenericButton() {
 			setOpaque(true);
@@ -54,7 +57,7 @@ public abstract class GenericGUI extends JFrame {
 		}
 		
 		/**
-		 * Runs when the button is clicked
+		 * Runs when the button is clicked.
 		 */
 		public abstract void actionPerformed(ActionEvent e);
 	}

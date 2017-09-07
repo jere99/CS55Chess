@@ -12,19 +12,19 @@ import jere99.chess.backEnd.Board;
 public abstract class Piece {
 
 	/**
-	 * true if white, false if black
+	 * True if white, false if black.
 	 */
 	protected final boolean isWhite;
 	/**
-	 * the board associated with this piece
+	 * The board associated with this piece.
 	 */
 	protected final Board board;
 	/**
-	 * coordinate 8 - 1 of this piece expressed as 0 - 7
+	 * Coordinate 8 - 1 of this piece expressed as 0 - 7.
 	 */
 	protected int row;
 	/**
-	 * coordinate a - h of this piece expressed as 0 - 7
+	 * Coordinate a - h of this piece expressed as 0 - 7.
 	 */
 	protected int column;
 	
@@ -44,10 +44,11 @@ public abstract class Piece {
 	}
 	
 	/**
-	 * Tests if a move is valid for the particular type of piece
-	 * @param newRow number between 0 and 7 based on coordinate 8 - 1
-	 * @param newColumn number between 0 and 7 based on coordinate a - h
-	 * @return true if valid to move this piece to [newRow][newCol], false otherwise
+	 * Tests if a move is valid for the particular type of piece.
+	 * 
+	 * @param newRow [0, 7] based on coordinate [8, 1]
+	 * @param newColumn [0, 7] based on coordinate [a, h]
+	 * @return true if valid to move this piece to the new position, false otherwise
 	 */
 	public abstract boolean isValid(int newRow, int newColumn);
 	
@@ -73,6 +74,8 @@ public abstract class Piece {
 	}
 	
 	/**
+	 * Changes the row of this piece.
+	 * 
 	 * @param row new row value between 0 and 7 based on coordinate 8 - 1
 	 */
 	public void setRow(int row) {
@@ -80,6 +83,8 @@ public abstract class Piece {
 	}
 	
 	/**
+	 * Changes the column of this piece.
+	 * 
 	 * @param column new column value between 0 and 7 based on coordinate a - h
 	 */
 	public void setColumn(int column) {
@@ -102,7 +107,8 @@ public abstract class Piece {
 	}
 	
 	/**
-	 * Moves the piece to the passed location if it is a valid move
+	 * Moves the piece to the passed location if it is a valid move.
+	 * 
 	 * @param newRow number between 0 and 7 based on coordinate 8 - 1
 	 * @param newColumn number between 0 and 7 based on coordinate a - h
 	 * @return true if move completed, false otherwise

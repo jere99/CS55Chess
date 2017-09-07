@@ -9,7 +9,7 @@ import jere99.chess.backEnd.Game;
 import jere99.chess.reference.Pieces;
 
 /**
- * a GUI that represents a chess board
+ * A GUI that represents a chess board.
  * 
  * @author Kevin
  * @author JeremiahDeGreeff
@@ -18,25 +18,23 @@ import jere99.chess.reference.Pieces;
 public class BoardGUI extends GenericPanelGUI {
 	
 	/**
-	 * the game that this GUI represents
+	 * The game that this GUI represents.
 	 */
 	private final Game game;
 	/**
-	 * 2D array of all the buttons on this GUI
+	 * All the buttons on this GUI.
 	 */
 	private final BoardButton[][] buttons = new BoardButton[8][8];
 	/**
-	 * the first button that the user clicks
+	 * The first button that the user clicked.
 	 */
 	private BoardButton firstClick;
 	/**
-	 * true if no square has been selected yet, false otherwise
+	 * True if no square has been selected yet, false otherwise.
 	 */
 	private boolean isFirstClick = true;
 	
 	/**
-	 * Creates a window with an 8x8 grid layout
-	 * Initializes all 64 of the buttons with correct background colors
 	 * @param game the game whose board this GUI represents
 	 */
 	public BoardGUI(Game game) {		
@@ -67,29 +65,31 @@ public class BoardGUI extends GenericPanelGUI {
 	}
 	
 	/**
-	 * This method is run every time a button is clicked
-	 * Calls different methods on the GAME object based on whether or not this is the first click
+	 * Calls different methods on the GAME object based on whether or not this is the first click.
+	 * Should be called every time a button on this BoardGUI is clicked.
+	 * 
 	 * @param b the button that was clicked
 	 */
 	@Override
 	protected void buttonClick(GenericButton b) {
 		BoardButton button = (BoardButton) b;
-		System.out.println((isFirstClick ? "First" : "Second") + " Click: " + button.ROW + ", " + button.COLUMN);
+		System.out.println((isFirstClick ? "First" : "Second") + " Click: " + button.row + ", " + button.column);
 		if(isFirstClick) {
-			if(game.firstClick(button.ROW, button.COLUMN)) {
+			if(game.firstClick(button.row, button.column)) {
 				firstClick = button;
 				firstClick.highlight();
 				isFirstClick = false;
 			}
 		} else {
-			game.secondClick(button.ROW, button.COLUMN);
+			game.secondClick(button.row, button.column);
 			firstClick.resetColor();
 			isFirstClick = true;
 		}
 	}
 	
 	/**
-	 * Updates the icon of the square at the passed coordinates based on what is currently present on the board
+	 * Updates the icon of the specified square.
+	 * 
 	 * @param row the row of the square to be updated
 	 * @param column the column of the square to be updated
 	 * @param icon the icon to update to
@@ -100,7 +100,7 @@ public class BoardGUI extends GenericPanelGUI {
 	}
 	
 	/** 
-	 * a button that represents a square on the chess board of a BoardGUI object
+	 * A button that represents a square on the chess board of a BoardGUI object.
 	 * 
 	 * @author Kevin
 	 * @author JeremiahDeGreeff
@@ -108,41 +108,42 @@ public class BoardGUI extends GenericPanelGUI {
 	private class BoardButton extends GenericPanelButton {
 		
 		/**
-		 * this buttons's row on the BoardGUI
+		 * This buttons's row on the BoardGUI.
 		 */
-		protected final int ROW;
+		private final int row;
 		/**
-		 * this buttons's column on the BoardGUI
+		 * This buttons's column on the BoardGUI.
 		 */
-		protected final int COLUMN;
+		private final int column;
 		
 		/**
-		 * Creates a new button and gives it the correct initial values
+		 * Creates a new button and gives it the correct initial values.
+		 * 
 		 * @param row the buttons's row on the BoardGUI
 		 * @param col the buttons's column on the BoardGUI
 		 */
-		protected BoardButton(int row, int column) {
-			ROW = row;
-			COLUMN = column;
+		private BoardButton(int row, int column) {
+			this.row = row;
+			this.column = column;
 
 			//Set Background Colors
 			resetColor();
 		}
 		
 		/**
-		 * Sets the button's background color to the default
+		 * Sets the button's background color to the default.
 		 */
-		protected void resetColor() {
-			if((ROW + COLUMN) % 2 == 0)
+		private void resetColor() {
+			if((row + column) % 2 == 0)
 				setBackground(Color.WHITE);
 			else
 				setBackground(Color.BLACK);
 		}
 		
 		/**
-		 * highlights this button
+		 * Highlights this button.
 		 */
-		protected void highlight() {
+		private void highlight() {
 			setBackground(Color.YELLOW);
 		}
 		

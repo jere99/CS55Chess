@@ -3,14 +3,14 @@ package jere99.chess.backEnd.pieces;
 import jere99.chess.backEnd.Board;
 
 /**
- * an object that represents a rook
+ * Represents a rook.
  * 
  * @author JeremiahDeGreeff
  */
 public class Rook extends Piece {
 	
 	/**
-	 * false if has not moved and able to castle, true otherwise
+	 * True if the Rook has moved and thus cannot castle, false otherwise.
 	 */
 	private boolean hasMoved;
 	
@@ -34,17 +34,18 @@ public class Rook extends Piece {
 	}
 	
 	/**
-	 * to be called if the rook moves and can no longer castle
+	 * Should be called if the rook moves and can thus no longer castle.
 	 */
 	public void rookMove() {
 		hasMoved = true;
 	}
 	
 	/**
-	 * Tests if a move is valid for the particular type of piece
-	 * @param newRow number between 0 and 7 based on coordinate 8 - 1
-	 * @param newColumn number between 0 and 7 based on coordinate a - h
-	 * @return true if valid to move this piece to [newRow][newColumn], false otherwise
+	 * Tests if a move is valid for a rook.
+	 * 
+	 * @param newRow [0, 7] based on coordinate [8, 1]
+	 * @param newColumn [0, 7] based on coordinate [a, h]
+	 * @return true if valid to move this piece to the new position, false otherwise
 	 */
 	@Override
 	public boolean isValid(int newRow, int newColumn) {

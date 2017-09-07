@@ -6,7 +6,7 @@ import jere99.chess.backEnd.Game;
 import jere99.chess.reference.Labels;
 
 /**
- * The GUI for the startup screen
+ * The GUI for the startup screen.
  * 
  * @author Kevin
  * @author JeremiahDeGreeff
@@ -15,42 +15,38 @@ import jere99.chess.reference.Labels;
 public class StartupScreenGUI extends GenericLabelGUI {
 
 	/**
-	 * Boolean to keep track of whether or not a settings menu has already been created
-	 * in order to prevent multiple settings menus from existing simultaneously
+	 * Keeps track of whether or not a settings menu has already been created in order to prevent multiple settings menus from existing simultaneously.
 	 */
 	private static boolean settingsMenuCreated = false;
 	/**
-	 * the width of the frame
+	 * The width of the frame.
 	 */
 	private static final int FRAME_WIDTH = 1127;
 	/**
-	 * the height of the frame
+	 * The height of the frame.
 	 */
 	private static final int FRAME_HEIGHT = 865;
 	/**
-	 * the width of the buttons on this GUI
+	 * The width of the buttons on this GUI.
 	 */
 	private static final int BUTTON_WIDTH = 250;
 	/**
-	 * the height of the buttons on this GUI
+	 * The height of the buttons on this GUI.
 	 */
 	private static final int BUTTON_HEIGHT = 30;
 	/**
-	 * the horizontal spacing between the edge of the frame and the buttons
+	 * The horizontal spacing between the edge of the frame and the buttons.
 	 */
 	private static final int HORIZONTAL_OFFSET = 585;
 	/**
-	 * the vertical spacing between the top of the frame and the first button
+	 * The vertical spacing between the top of the frame and the first button.
 	 */
 	private static final int VERTICAL_OFFSET = 145;
 	/**
-	 * the vertical spacing between the buttons
+	 * The vertical spacing between the buttons.
 	 */
 	private static final int VERTICAL_SPACING = 70;
 
-	/**
-	 * Creates a new window with all functional buttons and correct background
-	 */
 	public StartupScreenGUI() {
 		//Name the window
 		super("Chromatic Chess");
@@ -79,13 +75,15 @@ public class StartupScreenGUI extends GenericLabelGUI {
 	}
 
 	/**
-	 * This method is run every time a button is clicked
+	 * Starts a new Game, opens a new SettingsMenuGUI, or terminates the program depending on which button has been clicked.
+	 * Should be called every time a button on this StartupScreenGUI is clicked.
+	 * 
 	 * @param b the button that was clicked
 	 */
 	@Override
 	protected void buttonClick(GenericButton b) {
 		StartupScreenButton button = (StartupScreenButton) b;
-		switch(button.DISPLAY_NAME) {
+		switch(button.displayName) {
 		case "New Game":
 			new Game(); //Start the game
 			dispose(); //Dispose of the GUI
@@ -103,14 +101,14 @@ public class StartupScreenGUI extends GenericLabelGUI {
 	}
 
 	/**
-	 * Allows for a new SettingsMenuGUI to be created after the current one has closed
+	 * Allows for a new SettingsMenuGUI to be created after the current one has closed.
 	 */
 	protected static void SettingsMenuClosed() {
 		settingsMenuCreated = false;
 	}
 	
 	/**
-	 * Buttons that appear on the StartupScreenGUI
+	 * A button on a StartupScreenGUI.
 	 * 
 	 * @author Kevin
 	 * @author JeremiahDeGreeff
@@ -118,19 +116,18 @@ public class StartupScreenGUI extends GenericLabelGUI {
 	private class StartupScreenButton extends GenericLabelButton {
 
 		/**
-		 * text displayed on the button, also used to identify the button
+		 * The text displayed on the button.
 		 */
-		protected final String DISPLAY_NAME;
+		private final String displayName;
 
 		/**
-		 * creates a button for the StartupScreenGUI
 		 * @param displayName the text to be displayed on the button
 		 */
-		public StartupScreenButton(String displayName) {
-			DISPLAY_NAME = displayName;
+		private StartupScreenButton(String displayName) {
+			this.displayName = displayName;
 			
 			//Set the button to show the text
-			setText(DISPLAY_NAME);
+			setText(displayName);
 			
 			//Set Foreground/Background colors
 			setForeground(Color.CYAN);

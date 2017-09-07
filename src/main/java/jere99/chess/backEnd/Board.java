@@ -4,7 +4,7 @@ import jere99.chess.backEnd.pieces.*;
 import jere99.chess.reference.Pieces;
 
 /**
- * an object that represents a chess board
+ * Represents a chess board.
  * 
  * @author Megha
  * @author JeremiahDeGreeff
@@ -13,24 +13,23 @@ import jere99.chess.reference.Pieces;
 public class Board {
 	
 	/**
-	 * the game which this board is a part of
+	 * The game which this board is a part of.
 	 */
 	private final Game game;
 	/**
-	 * 2D-array that holds all of the pieces in the appropriate locations
+	 * All the Pieces on this Board.
 	 */
 	private final Piece[][] board = new Piece[8][8];;
 	/**
-	 * Alias of the white king to make locating easier
+	 * Alias of the white king to make locating easier.
 	 */
 	private final King whiteKing;
 	/**
-	 * Alias of the black king to make locating easier
+	 * Alias of the black king to make locating easier.
 	 */
 	private final King blackKing;
 	
 	/**
-	 * creates a new Board object and initializes all pieces
 	 * @param game the game which this board is a part of
 	 */
 	protected Board(Game game) {
@@ -88,8 +87,9 @@ public class Board {
 	}
 	
 	/**
-	 * Tests if moving p to board[newRow][newColumn] is valid and does not check own king
-	 * Changes everything back to how it was before call
+	 * Tests if moving p to board[newRow][newColumn] is valid and does not check own king.
+	 * Changes everything back to how it was before call.
+	 * 
 	 * @param p Piece to test move
 	 * @param newRow row to move p to
 	 * @param newColumn column to move p to
@@ -113,37 +113,38 @@ public class Board {
 	}
 	
 	/**
-	 * Moves p to board[newRow][newColumn]
-	 * Updates the GUI accordingly
-	 * Should only be run if the move has been tested
-	 * @param p the piece to move
+	 * Moves the passed piece to the specified spot on this Board.
+	 * Updates the GUI accordingly.
+	 * Should only be run if the move has been tested.
+	 * 
+	 * @param piece the Piece to move
 	 * @param newRow the row to move p to
 	 * @param newColumn the column to move p to
 	 */
-	public void makeMove(Piece p, int newRow, int newColumn) {
-		int startRow = p.getRow(), startColumn = p.getColumn();
+	public void makeMove(Piece piece, int newRow, int newColumn) {
+		int startRow = piece.getRow(), startColumn = piece.getColumn();
 		
 		//move the piece
-		movePiece(p, newRow, newColumn);
+		movePiece(piece, newRow, newColumn);
 		
 		//update the GUI
 		game.updateSquare(startRow, startColumn);
 		game.updateSquare(newRow, newColumn);
 		
 		//Prevent King or Rook from being able to castle in the future
-		if(p instanceof King && !((King)p).hasMoved())
-			((King)p).kingMove();
-		if(p instanceof Rook && !((Rook)p).hasMoved())
-			((Rook)p).rookMove();
+		if(piece instanceof King && !((King)piece).hasMoved())
+			((King)piece).kingMove();
+		if(piece instanceof Rook && !((Rook)piece).hasMoved())
+			((Rook)piece).rookMove();
 		
 		//If the move is a castle also moves the rook
-		if(p instanceof King && startColumn == 4 && newColumn == 6)
+		if(piece instanceof King && startColumn == 4 && newColumn == 6)
 			movePiece(board[newRow][7], newRow, 5);
-		if(p instanceof King && startColumn == 4 && newColumn == 2)
+		if(piece instanceof King && startColumn == 4 && newColumn == 2)
 			movePiece(board[newRow][0], newRow, 3);
 		
 		//Creates a GUI for pawn promotion
-		if(p instanceof Pawn && (newRow == 0 || newRow == 7))
+		if(piece instanceof Pawn && (newRow == 0 || newRow == 7))
 			game.pawnChangeInit(newRow, newColumn);
 		
 		//See if the move has put the opposing king in check or checkmate
@@ -151,26 +152,28 @@ public class Board {
 	}
 	
 	/**
-	 * Moves p to board[newRow][newColumn]
-	 * Should only be run when the move is valid according to piece rules
-	 * @param p Piece to move
+	 * Moves the passed Piece to the specified spot on this Board.
+	 * Should only be run when the move is valid according to piece rules.
+	 * 
+	 * @param piece the Piece to move
 	 * @param newRow the row to move p to
 	 * @param newColumn the column to move p to
 	 * @return The piece that was captured (null if no piece was captured)
 	 */
-	private Piece movePiece(Piece p, int newRow, int newColumn) {
+	private Piece movePiece(Piece piece, int newRow, int newColumn) {
 		Piece captured = board[newRow][newColumn];
 		
-		board[newRow][newColumn] = p;
-		board[p.getRow()][p.getColumn()] = null;
-		p.setRow(newRow);
-		p.setColumn(newColumn);
+		board[newRow][newColumn] = piece;
+		board[piece.getRow()][piece.getColumn()] = null;
+		piece.setRow(newRow);
+		piece.setColumn(newColumn);
 		
 		return captured;
 	}
 	
 	/**
-	 * Tests if a move to a particular row and column has resulted in check or checkmate for the opposing player
+	 * Tests if a move to a particular row and column has resulted in check or checkmate for the opposing player.
+	 * 
 	 * @param row the row of the piece that just moved
 	 * @param column the column of the piece that just moved
 	 */
@@ -188,9 +191,10 @@ public class Board {
 	}
 	
 	/**
-	 * tests if king is in check
-	 * @param king king to test
-	 * @return true if king is checked, false otherwise
+	 * Tests if a King is in check.
+	 * 
+	 * @param king the King to test
+	 * @return true if the King is checked, false otherwise
 	 */
 	public boolean kingChecked (King king) {
 		for (Piece[] row : board)
@@ -202,9 +206,10 @@ public class Board {
 	}
 	
 	/**
-	 * Tests if king is in checkmate
-	 * @param king king to test if in checkmate
-	 * @return true if king is in checkmate, false otherwise
+	 * Tests if a King is in checkmate.
+	 * 
+	 * @param king the King to test
+	 * @return true if the King is in checkmate, false otherwise
 	 */
 	private boolean checkmate (King king) {
 		//tests if king can move
@@ -274,12 +279,13 @@ public class Board {
 	}
 	
 	/**
-	 * Changes pawn that reached far row to new Piece of player's choice
-	 * Updates GUI accordingly
-	 * Tests if promotion puts king in check
-	 * @param row row of pawn to change
-	 * @param col column of pawn to change
-	 * @param type name of the selected piece
+	 * Changes pawn that reached far row to new Piece of player's choice.
+	 * Updates GUI accordingly.
+	 * Tests if promotion puts king in check.
+	 * 
+	 * @param row the row of pawn to change
+	 * @param column the column of pawn to change
+	 * @param type the name of the selected piece
 	 */
 	protected void pawnChange(int row, int column, Pieces piece) {
 		boolean pawnIsWhite = board[row][column].isWhite();

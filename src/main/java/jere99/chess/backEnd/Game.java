@@ -9,36 +9,40 @@ import jere99.chess.frontEnd.PawnChangeGUI;
 import jere99.chess.reference.Pieces;
 
 /**
- * an instance of a chess game
- * also the interface between the board and the GUIs of the project
+ * Represents a chess game.
+ * Also serves as the interface between the Board and the GUIs of the project.
  * 
  * @author JeremiahDeGreeff
  */
 public class Game implements Cloneable {
 
 	/**
-	 * the board for this game
+	 * The board for this game.
 	 */
 	private final Board board = new Board(this);
 	/**
-	 * the GUI for this game
+	 * The GUI for this game.
 	 */
 	private final BoardGUI gui = new BoardGUI(this);
 
 	/**
-	 * whose turn it is currently: true if white, false if black
+	 * Whose turn it is currently: true if white, false if black.
 	 */
 	private boolean isWhiteTurn = true;
 	/**
-	 * the first piece that the user clicks
+	 * The first piece that the user clicked.
 	 */
 	private Piece firstClick;
 
-	/**
-	 * creates a new Game with a board and a GUI
-	 */
 	public Game() {
 		System.out.println("New Game\n\nWhite's Turn");
+	}
+	
+	/**
+	 * @return whose turn it is currently: true if white, false if black.
+	 */
+	public boolean isWhiteTurn() {
+		return isWhiteTurn;
 	}
 	
 	@Override
@@ -50,7 +54,8 @@ public class Game implements Cloneable {
 	}
 	
 	/**
-	 * returns the ImageIcon corresponding to the current state of the passed square
+	 * Determines the ImageIcon corresponding to the current state of the passed square.
+	 * 
 	 * @param row the row of the square
 	 * @param column the column of the square
 	 * @return the ImageIcon corresponding to the peice in the square
@@ -60,7 +65,8 @@ public class Game implements Cloneable {
 	}
 
 	/**
-	 * updates square at the passed coordinates on the BoardGUI based on the current state of the board
+	 * Updates the square at the passed coordinates on the BoardGUI based on the current state of the board.
+	 * 
 	 * @param row the row of the square to update
 	 * @param column the column of the square to update
 	 */
@@ -78,7 +84,7 @@ public class Game implements Cloneable {
 	}
 
 	/**
-	 * creates a CheckmateGUI
+	 * Creates a CheckmateGUI.
 	 */
 	protected void checkmateInit(boolean isWhiteWinner) {
 		System.out.println("Checkmate!\n" + (isWhiteWinner ? "White" : "Black") + " Wins");
@@ -86,24 +92,26 @@ public class Game implements Cloneable {
 	}
 
 	/**
-	 * creates a PawnChangeGUI
+	 * Creates a PawnChangeGUI.
 	 */
 	protected void pawnChangeInit(int row, int column) {
-		new PawnChangeGUI(row, column, this, isWhiteTurn);
+		new PawnChangeGUI(row, column, this);
 	}
 
 	/**
-	 * sends the results of a pawnChange to the board
-	 * @param row row of pawn to change
-	 * @param col column of pawn to change
-	 * @param type name of the selected piece
+	 * Sends the results of a pawnChange to the board.
+	 * 
+	 * @param row the row of pawn to change
+	 * @param column the column of pawn to change
+	 * @param type the name of the selected piece
 	 */
 	public void pawnChange(int row, int column, Pieces piece) {
 		board.pawnChange(row, column, piece);
 	}
 
 	/**
-	 * tests if the first click is valid and if so stores its information
+	 * Tests if the first click is valid and if so caches the Piece in that square.
+	 * 
 	 * @param row the row of the clicked square
 	 * @param column the column of the clicked square
 	 * @return true if the click is valid, false otherwise
@@ -128,7 +136,9 @@ public class Game implements Cloneable {
 	}
 
 	/**
-	 * tests if the second click is a valid move and if so performs the move
+	 * Tests if the second click is a valid move.
+	 * If it is valid, the move is performed.
+	 * 
 	 * @param row the row of the clicked square
 	 * @param column the column of the clicked square
 	 */

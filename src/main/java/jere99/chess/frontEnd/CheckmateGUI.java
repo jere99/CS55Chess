@@ -3,7 +3,7 @@ package jere99.chess.frontEnd;
 import jere99.chess.backEnd.Game;
 
 /**
- * a GUI that pops up when the game has ended
+ * A GUI that pops up when the game has ended.
  * 
  * @author Kevin
  * @author JeremiahDeGreeff
@@ -12,12 +12,11 @@ import jere99.chess.backEnd.Game;
 public class CheckmateGUI extends GenericPanelGUI {
 	
 	/**
-	 * the GUI of the completed game
+	 * The GUI of the completed game.
 	 */
 	private final BoardGUI boardGUI;
 	
 	/**
-	 * creates a pop-up window after checkmate occurs
 	 * @param boardGUI the GUI of the completed game
 	 * @param isWhiteWinner which player has won true for white, false for black
 	 */
@@ -40,7 +39,9 @@ public class CheckmateGUI extends GenericPanelGUI {
 	}
 	
 	/**
-	 * This method is run every time a button is clicked
+	 * Creates a new StartupScreenGUI, creates a new Game, or terminates the program depending on what button has been pressed.
+	 * Should be called every time a button on this CheckmateGUI is clicked.
+	 * 
 	 * @param b the button that was clicked
 	 */
 	@Override
@@ -48,7 +49,7 @@ public class CheckmateGUI extends GenericPanelGUI {
 		CheckmateButton button = (CheckmateButton) b;
 		boardGUI.dispose(); //close old game
 		dispose(); //close this GUI
-		switch(button.DISPLAY_NAME) {
+		switch(button.displayName) {
 		case "Main Menu":
 			new StartupScreenGUI(); //create a new startup screen
 			break;
@@ -63,7 +64,7 @@ public class CheckmateGUI extends GenericPanelGUI {
 	}
 	
 	/**
-	 * a button on a CheckmateGUI object
+	 * A button on a CheckmateGUI object.
 	 * 
 	 * @author Kevin
 	 * @author JeremiahDeGreeff
@@ -71,15 +72,15 @@ public class CheckmateGUI extends GenericPanelGUI {
 	private class CheckmateButton extends GenericPanelButton {
 		
 		/**
-		 * the text on the button
+		 * The text on the button.
 		 */
-		protected final String DISPLAY_NAME;
+		private final String displayName;
 		
 		/**
 		 * @param displayName the text to be put on the button
 		 */
-		protected CheckmateButton(String displayName) {
-			DISPLAY_NAME = displayName;
+		private CheckmateButton(String displayName) {
+			this.displayName = displayName;
 			
 			setText(displayName);
 			

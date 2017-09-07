@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 /**
  * An abstract GenericGUI which uses a JPanel.
  * Any GUI which uses a JPanel in this project extends this class.
+ * 
  * @author JeremiahDeGreeff
  * @see GenericLabelGUI
  */
@@ -14,12 +15,13 @@ import javax.swing.JPanel;
 public abstract class GenericPanelGUI extends GenericGUI {
 	
 	/**
-	 * the main display component of the GUI
+	 * The main display component of the GUI.
 	 */
 	protected final JPanel panel = new JPanel();
 	
 	/**
-	 * creates a GenericPanelGUI with an indicated title
+	 * Performs generic initialization for a JPanel based JFrame.
+	 * 
 	 * @param title the title of the window
 	 */
 	public GenericPanelGUI(String title) {
@@ -31,19 +33,21 @@ public abstract class GenericPanelGUI extends GenericGUI {
 	}
 	
 	/**
-	 * This method will be called whenever a button on this GUI is clicked
+	 * This method should be called whenever a button on this GUI is clicked.
+	 * 
 	 * @param b the button which has been clicked
 	 */
 	protected abstract void buttonClick(GenericButton b);
 	
 	/**
 	 * An abstract JButton which all buttons that are on GUIs which extend GenericPanelGUI in this project extend.
+	 * 
 	 * @author JeremiahDeGreeff
 	 */
 	protected abstract class GenericPanelButton extends GenericButton {
 		
 		/**
-		 * Runs when the button is clicked
+		 * Runs when the button is clicked.
 		 */
 		public void actionPerformed(ActionEvent e) {
 			((GenericPanelGUI)getParent().getParent().getParent().getParent().getParent()).buttonClick(this);
