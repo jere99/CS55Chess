@@ -7,7 +7,7 @@ import jere99.chess.backEnd.Board;
  * 
  * @author JeremiahDeGreeff
  */
-public class Rook extends Piece {
+public class Rook extends Piece implements Castleable {
 	
 	/**
 	 * True if the Rook has moved and thus cannot castle, false otherwise.
@@ -25,18 +25,13 @@ public class Rook extends Piece {
 		hasMoved = false;
 	}
 	
-	
-	/**
-	 * @return value of hasMoved
-	 */
+	@Override
 	public boolean hasMoved() {
 		return hasMoved;
 	}
 	
-	/**
-	 * Should be called if the rook moves and can thus no longer castle.
-	 */
-	public void rookMove() {
+	@Override
+	public void castleableMove() {
 		hasMoved = true;
 	}
 	
@@ -49,20 +44,23 @@ public class Rook extends Piece {
 	 */
 	@Override
 	public boolean isValid(int newRow, int newColumn) {
-		//same row
-		if(newRow == row && (board.getPieceAt(newRow, newColumn) == null || board.getPieceAt(newRow, newColumn).isWhite != this.isWhite)) {
-			for(int c = column + (int) Math.signum(newColumn - column); c != newColumn; c += (int) Math.signum(newColumn - column))
-				if(board.getPieceAt(newRow, c) != null)
-					return false;
-			return true;
-		}
-		//same column
-		if(newColumn == column && (board.getPieceAt(newRow, newColumn) == null || board.getPieceAt(newRow, newColumn).isWhite != this.isWhite)) {
-			for(int r = row + (int) Math.signum(newRow - row); r != newRow; r += (int) Math.signum(newRow - row))
-				if(board.getPieceAt(r, newColumn) != null)
-					return false;
-			return true;
+		if(board.getPieceAt(newRow, newColumn) == null || board.getPieceAt(newRow, newColumn).isWhite != this.isWhite) {
+			//same row
+			if(newRow == row) {
+				for(int c = column + (int) Math.signum(newColumn - column); c != newColumn; c += (int) Math.signum(newColumn - column))
+					if(board.getPieceAt(newRow, c) != null)
+						return false;
+				return true;
+			}
+			//same column
+			if(newColumn == column) {
+				for(int r = row + (int) Math.signum(newRow - row); r != newRow; r += (int) Math.signum(newRow - row))
+					if(board.getPieceAt(r, newColumn) != null)
+						return false;
+				return true;
+			}
 		}
 		return false;
 	}
+	
 }

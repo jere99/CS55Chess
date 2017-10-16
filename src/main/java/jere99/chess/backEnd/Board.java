@@ -10,7 +10,7 @@ import jere99.chess.reference.Pieces;
  * @author JeremiahDeGreeff
  */
 
-public class Board {
+public class Board implements Cloneable {
 	
 	/**
 	 * The game which this board is a part of.
@@ -30,6 +30,8 @@ public class Board {
 	private final King blackKing;
 	
 	/**
+	 * Initializes a Board with the starting piece positions.
+	 * 
 	 * @param game the game which this board is a part of
 	 */
 	protected Board(Game game) {
@@ -46,12 +48,39 @@ public class Board {
 				board[row][7] = new Rook(row, 7, row == 7, this);
 			}
 			else if(row == 1 || row == 6)
-				for (int column = 0; column < board[1].length; column++)
+				for(int column = 0; column < board[1].length; column++)
 					board[row][column] = new Pawn(row, column, row == 6, this);
 		}
 		
 		blackKing = (King)board[0][4];
 		whiteKing = (King)board[7][4];
+	}
+	
+	/**
+	 * Initializes a Board from an existing Board.
+	 * Intended to be used for cloning.
+	 * 
+	 * @param board the board whose state will be copied
+	 */
+	private Board(Board oldBoard) {
+		this.game = oldBoard.game;
+		for(int row = 0; row < 8; row++)
+			for(int column = 0; column < 8; column++) {
+				Piece p = oldBoard.board[row][column];
+				if(p != null) {
+					Piece newPiece = p.copyPiece(this);
+					if(p instanceof Castleable && ((Castleable) p).hasMoved())
+						((Castleable) newPiece).castleableMove();
+					this.board[row][column] = newPiece;
+				}
+			}
+		blackKing = (King)board[oldBoard.blackKing.getRow()][oldBoard.blackKing.getColumn()];
+		whiteKing = (King)board[oldBoard.whiteKing.getRow()][oldBoard.whiteKing.getColumn()];
+	}
+	
+	@Override
+	public Board clone() {
+		return new Board(this);
 	}
 	
 	/**
@@ -64,64 +93,48 @@ public class Board {
 	}
 	
 	/**
-	 * Copies the contents of a Board into this Board.
-	 * Intended to be used only when cloning a Game object.
+	 * Moves the passed Piece to the specified spot on this Board.
+	 * Should only be run when the move is valid according to piece rules.
 	 * 
-	 * @param oldBoard the Board whose contents will be copied
+	 * @param piece the Piece to move
+	 * @param newRow the row to move piece to
+	 * @param newColumn the column to move piece to
 	 */
-	protected void copyBoard(Board oldBoard) {
-		for(int row = 0; row < 8; row++)
-			for(int column = 0; column < 8; column++) {
-				Piece p = oldBoard.board[row][column];
-				if(p == null)
-					board[row][column] = null;
-				else {
-					 Piece newPiece = p.copyPiece(this);
-					 if(p instanceof King && ((King) p).hasMoved())
-						 ((King) newPiece).kingMove();
-					 else if(p instanceof Rook && ((Rook) p).hasMoved())
-						 ((Rook) newPiece).rookMove();
-					 board[row][column] = newPiece;
-				}
-			}
+	private void movePiece(Piece piece, int newRow, int newColumn) {
+		board[newRow][newColumn] = piece;
+		board[piece.getRow()][piece.getColumn()] = null;
+		piece.move(newRow, newColumn);
 	}
 	
 	/**
-	 * Tests if moving p to board[newRow][newColumn] is valid and does not check own king.
-	 * Changes everything back to how it was before call.
+	 * Tests if moving piece to board[newRow][newColumn] is valid and does not check own king.
+	 * Should only be called on a Board which is not associated with a GUI and can be discarded afterwards.
 	 * 
-	 * @param p Piece to test move
-	 * @param newRow row to move p to
-	 * @param newColumn column to move p to
+	 * @param piece Piece to test move
+	 * @param newRow row to move piece to
+	 * @param newColumn column to move piece to
 	 * @return true if move is valid and will not check own king, false otherwise
+	 * @throws IllegalStateException if this Board is associated with a GUI
 	 */
-	public boolean testMove (Piece p, int newRow, int newColumn) {
-		int tempRow = p.getRow(), tempCol = p.getColumn();
-		if(!(tempRow == newRow && tempCol == newColumn) && p.isValid(newRow, newColumn)) {
-			Piece temp = movePiece(p, newRow, newColumn);
-			if((p.isWhite() && kingChecked(whiteKing)) || (!p.isWhite() && kingChecked(blackKing))) {
-				movePiece(p, tempRow, tempCol);
-				board[newRow][newColumn] = temp;
-				return false;
-			} else {
-				movePiece(p, tempRow, tempCol);
-				board[newRow][newColumn] = temp;
-				return true;
-			}
-		}
-		return false;
+	public boolean testMove(Piece piece, int newRow, int newColumn) {
+		if(game.isRepresentedBoard(this))
+			throw new IllegalStateException("Cannot run move testing methods on a baord associated with a GUI");
+		if(piece.getRow() == newRow && piece.getColumn() == newColumn || !piece.isValid(newRow, newColumn)) //actually a move and is valid for the piece
+			return false;
+		movePiece(piece, newRow, newColumn);
+		return !kingChecked(piece.isWhite() ? whiteKing : blackKing); //doesn't check own king
 	}
 	
 	/**
 	 * Moves the passed piece to the specified spot on this Board.
 	 * Updates the GUI accordingly.
-	 * Should only be run if the move has been tested.
+	 * Should only be run if the move has been tested and is actually intended to be represented on the GUI.
 	 * 
 	 * @param piece the Piece to move
 	 * @param newRow the row to move p to
 	 * @param newColumn the column to move p to
 	 */
-	public void makeMove(Piece piece, int newRow, int newColumn) {
+	protected void makeMove(Piece piece, int newRow, int newColumn) {
 		int startRow = piece.getRow(), startColumn = piece.getColumn();
 		
 		//move the piece
@@ -131,44 +144,20 @@ public class Board {
 		game.updateSquare(startRow, startColumn);
 		game.updateSquare(newRow, newColumn);
 		
-		//Prevent King or Rook from being able to castle in the future
-		if(piece instanceof King && !((King)piece).hasMoved())
-			((King)piece).kingMove();
-		if(piece instanceof Rook && !((Rook)piece).hasMoved())
-			((Rook)piece).rookMove();
+		//if the move is a castle also move the rook
+		if(piece instanceof King && startColumn == 4 && (newColumn == 6 || newColumn == 2)) {
+			boolean kingSide = newColumn == 6; //true if into column 6, false if into column 2
+			movePiece(board[newRow][kingSide ? 7 : 0], newRow, kingSide ? 5 : 3);
+			game.updateSquare(newRow, kingSide ? 7 : 0);
+			game.updateSquare(newRow, kingSide ? 5 : 3);
+		}
 		
-		//If the move is a castle also moves the rook
-		if(piece instanceof King && startColumn == 4 && newColumn == 6)
-			movePiece(board[newRow][7], newRow, 5);
-		if(piece instanceof King && startColumn == 4 && newColumn == 2)
-			movePiece(board[newRow][0], newRow, 3);
-		
-		//Creates a GUI for pawn promotion
+		//create a GUI for pawn promotion if necessary
 		if(piece instanceof Pawn && (newRow == 0 || newRow == 7))
 			game.pawnChangeInit(newRow, newColumn);
 		
-		//See if the move has put the opposing king in check or checkmate
+		//see if the move has put the opposing king in check or checkmate
 		detectCheck(newRow, newColumn);
-	}
-	
-	/**
-	 * Moves the passed Piece to the specified spot on this Board.
-	 * Should only be run when the move is valid according to piece rules.
-	 * 
-	 * @param piece the Piece to move
-	 * @param newRow the row to move p to
-	 * @param newColumn the column to move p to
-	 * @return The piece that was captured (null if no piece was captured)
-	 */
-	private Piece movePiece(Piece piece, int newRow, int newColumn) {
-		Piece captured = board[newRow][newColumn];
-		
-		board[newRow][newColumn] = piece;
-		board[piece.getRow()][piece.getColumn()] = null;
-		piece.setRow(newRow);
-		piece.setColumn(newColumn);
-		
-		return captured;
 	}
 	
 	/**
@@ -177,16 +166,12 @@ public class Board {
 	 * @param row the row of the piece that just moved
 	 * @param column the column of the piece that just moved
 	 */
-	public void detectCheck(int row, int column) {
-		if(board[row][column].isWhite() && kingChecked(blackKing)) {
-			System.out.println("The Black king is in check!");
-			if(checkmate(blackKing))
-				game.checkmateInit(true);
-		}
-		else if(!board[row][column].isWhite() && kingChecked(whiteKing)) {
-			System.out.println("The White king is in check!");
-			if(checkmate(whiteKing))
-				game.checkmateInit(false);
+	private void detectCheck(int row, int column) {
+		boolean isWhiteMove = board[row][column].isWhite();
+		if(kingChecked(isWhiteMove ? blackKing : whiteKing)) {
+			System.out.println("The" + (isWhiteMove ? "black" : "white") + "king is in check!");
+			if(this.clone().checkmate(isWhiteMove ? blackKing : whiteKing))
+				game.checkmateInit(isWhiteMove);
 		}
 	}
 	
@@ -196,85 +181,79 @@ public class Board {
 	 * @param king the King to test
 	 * @return true if the King is checked, false otherwise
 	 */
-	public boolean kingChecked (King king) {
-		for (Piece[] row : board)
-			for (Piece p : row)
-				if (p != null && king.isWhite() != p.isWhite())
-					if (p.isValid(king.getRow(), king.getColumn()))
+	public boolean kingChecked(King king) {
+		for(Piece[] row : board)
+			for(Piece p : row)
+				if(p != null && king.isWhite() != p.isWhite())
+					if(p.isValid(king.getRow(), king.getColumn()))
 						return true;
 		return false;
 	}
 	
 	/**
 	 * Tests if a King is in checkmate.
+	 * Should only be called on a Board which is not associated with a GUI and can be discarded afterwards.
 	 * 
 	 * @param king the King to test
 	 * @return true if the King is in checkmate, false otherwise
+	 * @throws IllegalStateException if this Board is associated with a GUI
 	 */
-	private boolean checkmate (King king) {
-		//tests if king can move
-		for (int r = king.getRow() - 1; r < king.getRow() + 1; r++)
-			for (int c = king.getColumn() - 1; c < king.getColumn() + 1; c++)
-				if (r >= 0 && r <= 7 && c >= 0 && c <= 7 && testMove(king, r, c))
+	private boolean checkmate(King king) {
+		if(game.isRepresentedBoard(this))
+			throw new IllegalStateException("Cannot run move testing methods on a baord associated with a GUI");
+		
+		//test if king can move
+		for(int r = king.getRow() - 1; r < king.getRow() + 1; r++)
+			for(int c = king.getColumn() - 1; c < king.getColumn() + 1; c++)
+				if(r >= 0 && r <= 7 && c >= 0 && c <= 7 && testMove(king, r, c))
 					return false;
 		
-		Piece temp = null;
-		//find Piece checking king and set temp to Piece
-		for (Piece[] row : board)
-			for (Piece p : row)
-				if (p != null && p.isWhite() != king.isWhite() && testMove(p, king.getRow(), king.getColumn())) {
-					if (temp == null)
-						temp = p;
+		
+		//find Piece checking king
+		Piece checking = null;
+		for(Piece[] row : board)
+			for(Piece p : row)
+				if(p != null && p.isWhite() != king.isWhite() && p.isValid(king.getRow(), king.getColumn()))
+					if(checking == null)
+						checking = p;
 					else
 						return true;
-				}
 		
-		//find out if temp can be taken
-		for (Piece[] row : board)
-			for (Piece p : row)
-				if (p != null && p.isWhite() != temp.isWhite() && testMove(p, temp.getRow(), temp.getColumn()))
+		//find out if checking can be taken
+		for(Piece[] row : board)
+			for(Piece p : row)
+				if(p != null && p.isWhite() != checking.isWhite() && testMove(p, checking.getRow(), checking.getColumn()))
 					return false;
 		
-		//find out if temp can be blocked
-		if (!(temp instanceof Rook || temp instanceof Queen || temp instanceof Bishop))
+		//find out if checking can be blocked
+		if(checking instanceof Pawn || checking instanceof Knight)
 			return true;
-		
-		int row = temp.getRow();
-		int col = temp.getColumn();
-		//if temp is Rook (or Queen)...
-		if (temp instanceof Rook || temp instanceof Queen)
-			if (king.getRow() == row) { //same row
-				for (int c = col; c < king.getColumn(); c++)
+		int row = checking.getRow();
+		int column = checking.getColumn();
+		//if checking is Rook (or Queen)...
+		if(checking instanceof Rook || checking instanceof Queen)
+			if(king.getRow() == row) { //same row
+				for(int c = column; column < king.getColumn() ? c < king.getColumn() : c > king.getColumn(); c += (column < king.getColumn() ? 1 : -1))
 					for(Piece[] boardRow : board)
 						for(Piece p : boardRow)
-							if (p != null && p.isWhite() != temp.isWhite() && testMove(p, row, c))
+							if(p != null && p.isWhite() != checking.isWhite() && testMove(p, row, c))
 								return false;
-				for (int c = col; c > king.getColumn(); c--)
+			} else if(king.getColumn() == column) { //same column
+				for(int r = row; row < king.getRow() ? r < king.getRow() : r > king.getRow(); r += (row < king.getRow() ? 1 : -1))
 					for(Piece[] boardRow : board)
 						for(Piece p : boardRow)
-							if (p != null && p.isWhite() != temp.isWhite() && testMove(p, row, c))
-								return false;
-			} else if (king.getColumn() > col) { //same column
-				for (int r = row; r < king.getRow(); r++)
-					for(Piece[] boardRow : board)
-						for(Piece p : boardRow)
-							if (p != null && p.isWhite() != temp.isWhite() && testMove(p, r, col))
-								return false;
-				for (int r = row; r > king.getRow(); r--)
-					for(Piece[] boardRow : board)
-						for(Piece p : boardRow)
-							if (p != null && p.isWhite() != temp.isWhite() && testMove(p, r, col))
+							if(p != null && p.isWhite() != checking.isWhite() && testMove(p, r, column))
 								return false;
 			}
-		
-		//if temp is Bishop (or Queen)...
-		if (temp instanceof Bishop || temp instanceof Queen)
-			for (Piece[] boardRow : board)
-				for (Piece p : boardRow)
-					if(p != null && p.isWhite() != temp.isWhite())
+		//if checking is Bishop (or Queen)...
+		if(checking instanceof Bishop || checking instanceof Queen)
+			for(Piece[] boardRow : board)
+				for(Piece p : boardRow)
+					if(p != null && p.isWhite() != checking.isWhite())
 						for(int i = 1; i < Math.abs(row - king.getRow()); i++)
-							if(testMove(p, i * (int)Math.signum(king.getRow() - row) + row, i * (int)Math.signum(king.getColumn() - col) + col))
+							if(testMove(p, i * (int)Math.signum(king.getRow() - row) + row, i * (int)Math.signum(king.getColumn() - column) + column))
 								return false;
+		
 		return true;
 	}
 	

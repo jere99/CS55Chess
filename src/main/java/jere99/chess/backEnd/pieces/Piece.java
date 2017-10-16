@@ -74,26 +74,8 @@ public abstract class Piece {
 	}
 	
 	/**
-	 * Changes the row of this piece.
-	 * 
-	 * @param row new row value between 0 and 7 based on coordinate 8 - 1
-	 */
-	public void setRow(int row) {
-		this.row = row;
-	}
-	
-	/**
-	 * Changes the column of this piece.
-	 * 
-	 * @param column new column value between 0 and 7 based on coordinate a - h
-	 */
-	public void setColumn(int column) {
-		this.column = column;
-	}
-	
-	/**
 	 * Creates a copy of this Piece which is on a different Board.
-	 * Intended to be used only when cloning a Game object.
+	 * Intended to be used only when cloning a Board object.
 	 * 
 	 * @param newBoard the Board which the new piece is on
 	 * @return the new Piece
@@ -107,20 +89,16 @@ public abstract class Piece {
 	}
 	
 	/**
-	 * Moves the piece to the passed location if it is a valid move.
+	 * Changes the piece's internal coordinates to those which are passed.
 	 * 
 	 * @param newRow number between 0 and 7 based on coordinate 8 - 1
 	 * @param newColumn number between 0 and 7 based on coordinate a - h
-	 * @return true if move completed, false otherwise
 	 */
-	public boolean move(int newRow, int newColumn) {
-		//If the move is valid
-		if(board.testMove(this, newRow, newColumn)) {
-			//Then perform the move
-			board.makeMove(this, newRow, newColumn);
-			return true;
-		}
-		return false;
+	public void move(int newRow, int newColumn) {
+		row = newRow;
+		column = newColumn;
+		if(this instanceof Castleable)
+			((Castleable)this).castleableMove();
 	}
 	
 }

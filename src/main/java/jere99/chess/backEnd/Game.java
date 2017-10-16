@@ -14,7 +14,7 @@ import jere99.chess.reference.Pieces;
  * 
  * @author JeremiahDeGreeff
  */
-public class Game implements Cloneable {
+public class Game {
 
 	/**
 	 * The board for this game.
@@ -32,7 +32,7 @@ public class Game implements Cloneable {
 	/**
 	 * The first piece that the user clicked.
 	 */
-	private Piece firstClick;
+	private Piece selectedPiece;
 
 	public Game() {
 		System.out.println("New Game\n\nWhite's Turn");
@@ -45,12 +45,15 @@ public class Game implements Cloneable {
 		return isWhiteTurn;
 	}
 	
-	@Override
-	public Game clone() {
-		Game newGame = new Game();
-		newGame.board.copyBoard(board);
-		newGame.refreshGUI();
-		return newGame;
+	/**
+	 * Checks if a given Board object is currently being represented on the GUI.
+	 * Intended to be used to avoid move testing methods being represented.
+	 * 
+	 * @param board the board to check
+	 * @return true if this board is represented on the GUI, false otherwise
+	 */
+	protected boolean isRepresentedBoard(Board board) {
+		return this.board == board;
 	}
 	
 	/**
@@ -58,7 +61,7 @@ public class Game implements Cloneable {
 	 * 
 	 * @param row the row of the square
 	 * @param column the column of the square
-	 * @return the ImageIcon corresponding to the peice in the square
+	 * @return the ImageIcon corresponding to the piece in the square
 	 */
 	public ImageIcon getIconForSquare(int row, int column) {
 		return board.getPieceAt(row, column) != null ? Pieces.getIcon(board.getPieceAt(row, column)) : null;
@@ -71,7 +74,7 @@ public class Game implements Cloneable {
 	 * @param column the column of the square to update
 	 */
 	protected void updateSquare(int row, int column) {
-		gui.updateSquare(row, column, getIconForSquare(row, column));
+		gui.updateSquare(row, column);
 	}
 	
 	/**
@@ -80,7 +83,7 @@ public class Game implements Cloneable {
 	protected void refreshGUI() {
 		for(int row = 0; row < 8; row++)
 			for(int column = 0; column < 8; column++)
-				gui.updateSquare(row, column, getIconForSquare(row, column));
+				gui.updateSquare(row, column);
 	}
 
 	/**
@@ -117,11 +120,11 @@ public class Game implements Cloneable {
 	 * @return true if the click is valid, false otherwise
 	 */
 	public boolean firstClick(int row, int column) {
-		firstClick = board.getPieceAt(row, column);
+		selectedPiece = board.getPieceAt(row, column);
 		//If piece exists
-		if(firstClick != null)
+		if(selectedPiece != null)
 			//If piece is correct color
-			if(firstClick.isWhite() == isWhiteTurn)
+			if(selectedPiece.isWhite() == isWhiteTurn)
 				return true;
 		//If color of piece is invalid
 			else {
@@ -143,14 +146,14 @@ public class Game implements Cloneable {
 	 * @param column the column of the clicked square
 	 */
 	public void secondClick(int row, int column) {
-		if (firstClick.move(row, column)) {
+		if(board.clone().testMove(board.getPieceAt(selectedPiece.getRow(), selectedPiece.getColumn()), row, column)) {
 			System.out.println("valid move");
+			board.makeMove(selectedPiece, row, column);
 			//Switches to the next turn
 			isWhiteTurn = !isWhiteTurn;
 			System.out.println("\n" + (isWhiteTurn ? "White's" : "Black's") + " turn:");
 		}
-		//If the second square clicked is not a valid spot for the piece from the first click to move to
-		else
+		else //If the second square clicked is not a valid spot for the piece from the first click to move to
 			System.out.println("invalid move");
 	}
 

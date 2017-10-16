@@ -3,8 +3,6 @@ package jere99.chess.frontEnd;
 import java.awt.Color;
 import java.awt.GridLayout;
 
-import javax.swing.ImageIcon;
-
 import jere99.chess.backEnd.Game;
 import jere99.chess.reference.Pieces;
 
@@ -57,7 +55,7 @@ public class BoardGUI extends GenericPanelGUI {
 			for(int c = 0; c < 8; c ++) {
 				buttons[r][c] = new BoardButton(r, c);
 				panel.add(buttons[r][c]);
-				updateSquare(r, c, game.getIconForSquare(r, c));
+				updateSquare(r, c);
 			}
 		
 		//Last step: Set window to be visible
@@ -65,7 +63,7 @@ public class BoardGUI extends GenericPanelGUI {
 	}
 	
 	/**
-	 * Calls different methods on the GAME object based on whether or not this is the first click.
+	 * Calls different methods on the game object based on whether or not this is the first click.
 	 * Should be called every time a button on this BoardGUI is clicked.
 	 * 
 	 * @param b the button that was clicked
@@ -94,9 +92,9 @@ public class BoardGUI extends GenericPanelGUI {
 	 * @param column the column of the square to be updated
 	 * @param icon the icon to update to
 	 */
-	public void updateSquare(int row, int column, ImageIcon icon) {
+	public void updateSquare(int row, int column) {
 		System.out.println("Updating image at: " + row + ", " + column);
-		buttons[row][column].setIcon(icon);
+		buttons[row][column].setIcon(game.getIconForSquare(row, column));
 	}
 	
 	/** 

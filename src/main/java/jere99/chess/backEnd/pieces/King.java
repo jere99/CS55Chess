@@ -7,7 +7,7 @@ import jere99.chess.backEnd.Board;
  * 
  * @author JeremiahDeGreeff
  */
-public class King extends Piece {
+public class King extends Piece implements Castleable {
 	
 	/**
 	 * True if the King has moved and thus cannot castle, false otherwise.
@@ -24,17 +24,13 @@ public class King extends Piece {
 		super(row, column, isWhite, board);
 	}
 
-	/**
-	 * @return current column between 0 and 7 based on coordinate a - h
-	 */
+	@Override
 	public boolean hasMoved() {
 		return hasMoved;
 	}
-
-	/**
-	 * Should be called when the king moves and thus can no longer castle.
-	 */
-	public void kingMove() {
+	
+	@Override
+	public void castleableMove() {
 		hasMoved = true;
 	}
 
@@ -52,15 +48,10 @@ public class King extends Piece {
 			if(Math.abs(newRow - row) <= 1 && Math.abs(newColumn - column) <= 1)
 				return true;
 		//castle
-		if(!hasMoved && row == newRow && !board.kingChecked(this)) {
-			//castle into column 6
-			if(newColumn == 6 && board.getPieceAt(newRow, 7) instanceof Rook && ((Rook) board.getPieceAt(newRow, 7)).hasMoved() == false)
-				if(board.testMove(this, newRow, 5) && board.getPieceAt(newRow, 5) == null && board.getPieceAt(newRow, 6) == null)
-					return true;
-			//castle into column 2
-			if(newColumn == 2 && board.getPieceAt(newRow, 0) instanceof Rook && ((Rook) board.getPieceAt(newRow, 0)).hasMoved() == false)
-				if(board.testMove(this, newRow, 3) && board.getPieceAt(newRow, 3) == null && board.getPieceAt(newRow, 2) == null && board.getPieceAt(newRow, 1) == null)
-					return true;
+		if(!hasMoved && row == newRow && newColumn == 2 || newColumn == 6 && !board.kingChecked(this)) {
+			boolean kingSide = newColumn == 6; //true if into column 6, false if into column 2
+			if(board.getPieceAt(newRow, kingSide ? 7 : 0) instanceof Rook && ((Rook) board.getPieceAt(newRow, kingSide ? 7 : 0)).hasMoved() == false)
+				return board.clone().testMove(board.getPieceAt(row, column), newRow, kingSide ? 5 : 3) && board.getPieceAt(newRow, kingSide ? 5 : 3) == null && board.getPieceAt(newRow, kingSide ? 6 : 2) == null && (kingSide || board.getPieceAt(newRow, 1) == null);
 		}
 		return false;
 	}

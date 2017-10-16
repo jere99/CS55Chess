@@ -38,16 +38,8 @@ public class Pawn extends Piece {
 			if(Math.abs(newColumn - column) == 1 && board.getPieceAt(newRow, newColumn) != null && board.getPieceAt(newRow, newColumn).isWhite != this.isWhite)
 				return true;
 		}
-
 		//forward two empty squares as initial move
-		if(isWhite && row == 6 && newRow == 4 && newColumn == column)
-			if(board.getPieceAt(5, newColumn) == null && board.getPieceAt(4, newColumn) == null)
-				return true;
-		if(!isWhite && row == 1 && newRow == 3 && newColumn == column)
-			if(board.getPieceAt(2, newColumn) == null && board.getPieceAt(3, newColumn) == null)
-				return true;
-
-		return false;
+		return row == (isWhite ? 6 : 1) && newRow == (isWhite ? 4 : 3) && newColumn == column && board.getPieceAt(isWhite ? 5 : 2, newColumn) == null && board.getPieceAt(isWhite ? 4 : 3, newColumn) == null;
 	}
 
 }
