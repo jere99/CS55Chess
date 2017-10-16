@@ -12,6 +12,15 @@ import jere99.chess.backEnd.Game;
 public class CheckmateGUI extends GenericPanelGUI {
 	
 	/**
+	 * The width of the frame.
+	 */
+	private static final int FRAME_WIDTH = 352;
+	/**
+	 * The height of the frame.
+	 */
+	private static final int FRAME_HEIGHT = 64;
+	
+	/**
 	 * The GUI of the completed game.
 	 */
 	private final BoardGUI boardGUI;
@@ -27,7 +36,7 @@ public class CheckmateGUI extends GenericPanelGUI {
 		this.boardGUI = boardGUI;
 		
 		//Set the size of the window
-		setSize(352, 64);
+		setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		
 		//Create the necessary buttons and add to JPanel
 		panel.add(new CheckmateButton("New Game"));
@@ -46,10 +55,9 @@ public class CheckmateGUI extends GenericPanelGUI {
 	 */
 	@Override
 	protected void buttonClick(GenericButton b) {
-		CheckmateButton button = (CheckmateButton) b;
 		boardGUI.dispose(); //close old game
 		dispose(); //close this GUI
-		switch(button.displayName) {
+		switch(((CheckmateButton) b).displayName) {
 		case "Main Menu":
 			new StartupScreenGUI(); //create a new startup screen
 			break;

@@ -5,7 +5,7 @@ import javax.swing.ImageIcon;
 import jere99.chess.backEnd.pieces.Piece;
 import jere99.chess.frontEnd.BoardGUI;
 import jere99.chess.frontEnd.CheckmateGUI;
-import jere99.chess.frontEnd.PawnChangeGUI;
+import jere99.chess.frontEnd.PawnPromotionGUI;
 import jere99.chess.reference.Pieces;
 
 /**
@@ -66,7 +66,7 @@ public class Game {
 	public ImageIcon getIconForSquare(int row, int column) {
 		return board.getPieceAt(row, column) != null ? Pieces.getIcon(board.getPieceAt(row, column)) : null;
 	}
-
+	
 	/**
 	 * Updates the square at the passed coordinates on the BoardGUI based on the current state of the board.
 	 * 
@@ -88,6 +88,9 @@ public class Game {
 
 	/**
 	 * Creates a CheckmateGUI.
+	 * Should be called when checkmate occurs.
+	 * 
+	 * @param isWhiteWinner true if white is the winner, false otherwise.
 	 */
 	protected void checkmateInit(boolean isWhiteWinner) {
 		System.out.println("Checkmate!\n" + (isWhiteWinner ? "White" : "Black") + " Wins");
@@ -95,21 +98,25 @@ public class Game {
 	}
 
 	/**
-	 * Creates a PawnChangeGUI.
+	 * Creates a PawnPromotionGUI.
+	 * Should be called when a pawn promotion needs to occur.
+	 * 
+	 * @param row the row of the promotion
+	 * @param column the column of the promotion
 	 */
-	protected void pawnChangeInit(int row, int column) {
-		new PawnChangeGUI(row, column, this);
+	protected void pawnPromotionInit(int row, int column) {
+		new PawnPromotionGUI(row, column, this);
 	}
 
 	/**
-	 * Sends the results of a pawnChange to the board.
+	 * Sends the results of a pawn promotion to the board.
 	 * 
 	 * @param row the row of pawn to change
 	 * @param column the column of pawn to change
 	 * @param type the name of the selected piece
 	 */
-	public void pawnChange(int row, int column, Pieces piece) {
-		board.pawnChange(row, column, piece);
+	public void pawnPromotion(int row, int column, Pieces piece) {
+		board.pawnPromotion(row, column, piece);
 	}
 
 	/**
@@ -121,17 +128,15 @@ public class Game {
 	 */
 	public boolean firstClick(int row, int column) {
 		selectedPiece = board.getPieceAt(row, column);
-		//If piece exists
+		//If square is not empty
 		if(selectedPiece != null)
 			//If piece is correct color
 			if(selectedPiece.isWhite() == isWhiteTurn)
 				return true;
-		//If color of piece is invalid
 			else {
 				System.out.println("wrong color");
 				return false;
 			}
-		//If square is empty
 		else {
 			System.out.println("empty square");
 			return false;
@@ -151,7 +156,7 @@ public class Game {
 			board.makeMove(selectedPiece, row, column);
 			//Switches to the next turn
 			isWhiteTurn = !isWhiteTurn;
-			System.out.println("\n" + (isWhiteTurn ? "White's" : "Black's") + " turn:");
+			System.out.println("\n" + (isWhiteTurn ? "White" : "Black") + "'s turn:");
 		}
 		else //If the second square clicked is not a valid spot for the piece from the first click to move to
 			System.out.println("invalid move");

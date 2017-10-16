@@ -154,7 +154,7 @@ public class Board implements Cloneable {
 		
 		//create a GUI for pawn promotion if necessary
 		if(piece instanceof Pawn && (newRow == 0 || newRow == 7))
-			game.pawnChangeInit(newRow, newColumn);
+			game.pawnPromotionInit(newRow, newColumn);
 		
 		//see if the move has put the opposing king in check or checkmate
 		detectCheck(newRow, newColumn);
@@ -258,7 +258,7 @@ public class Board implements Cloneable {
 	}
 	
 	/**
-	 * Changes pawn that reached far row to new Piece of player's choice.
+	 * Promotes a Pawn that reached far row to a new Piece of player's choice.
 	 * Updates GUI accordingly.
 	 * Tests if promotion puts king in check.
 	 * 
@@ -266,7 +266,7 @@ public class Board implements Cloneable {
 	 * @param column the column of pawn to change
 	 * @param type the name of the selected piece
 	 */
-	protected void pawnChange(int row, int column, Pieces piece) {
+	protected void pawnPromotion(int row, int column, Pieces piece) {
 		boolean pawnIsWhite = board[row][column].isWhite();
 		switch(piece.toString()) {
 		case "QUEEN":

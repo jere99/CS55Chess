@@ -10,7 +10,16 @@ import jere99.chess.reference.Pieces;
  * @author JeremiahDeGreeff
  */
 @SuppressWarnings("serial")
-public class PawnChangeGUI extends GenericPanelGUI {
+public class PawnPromotionGUI extends GenericPanelGUI {
+	
+	/**
+	 * The width of the frame.
+	 */
+	private static final int FRAME_WIDTH = 352;
+	/**
+	 * The height of the frame.
+	 */
+	private static final int FRAME_HEIGHT = 112;
 	
 	/**
 	 * The Game in which this promotion is occurring.
@@ -30,7 +39,7 @@ public class PawnChangeGUI extends GenericPanelGUI {
 	 * @param column the column where this promotion is occurring
 	 * @param game the game in which this promotion is occurring
 	 */
-	public PawnChangeGUI(int row, int column, Game game) {
+	public PawnPromotionGUI(int row, int column, Game game) {
 		//Name the window
 		super("Pawn Promotion");
 		
@@ -39,11 +48,11 @@ public class PawnChangeGUI extends GenericPanelGUI {
 		this.game = game;
 		
 		//Set the size of the window
-		setSize(352, 112);
+		setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		
 		//Create the necessary buttons and add them to the JPanel
 		for(int i = 1; i <= 4; i++)
-			panel.add(new PawnChangeButton(Pieces.values()[i], game.isWhiteTurn()));
+			panel.add(new PawnPromotionButton(Pieces.values()[i], game.isWhiteTurn()));
 		
 		//Last step: Set window to be visible
 		setVisible(true);
@@ -51,29 +60,29 @@ public class PawnChangeGUI extends GenericPanelGUI {
 	
 	/**
 	 * Promotes the pawn to the selected piece.
-	 * Should be called every time a button on this PawnChangeGUI is clicked.
+	 * Should be called every time a button on this PawnPromotionGUI is clicked.
 	 * 
 	 * @param b the button that was clicked
 	 */
 	@Override
 	public void buttonClick(GenericButton b) {
-		PawnChangeButton button = (PawnChangeButton) b;
+		PawnPromotionButton button = (PawnPromotionButton) b;
 		System.out.println("Promoting to " + button.piece.toString().toLowerCase());
 		
 		//promote the pawn into the selected piece
-		game.pawnChange(row, column, button.piece);
+		game.pawnPromotion(row, column, button.piece);
 		
 		//close this GUI
 		dispose();
 	}
 	
 	/**
-	 * A button on a PawnChangeGUI object.
+	 * A button on a PawnPromotionGUI object.
 	 * 
 	 * @author Kevin
 	 * @author JeremiahDeGreeff
 	 */
-	private class PawnChangeButton extends GenericPanelButton {
+	private class PawnPromotionButton extends GenericPanelButton {
 		
 		/**
 		 * The text on the button which is the name of the piece it corresponds to.
@@ -84,7 +93,7 @@ public class PawnChangeGUI extends GenericPanelGUI {
 		 * @param piece the text to be put on the button which is the name of a piece
 		 * @param isWhite true if the piece being promoted is white, false if it is black
 		 */
-		private PawnChangeButton(Pieces piece, boolean isWhite) {
+		private PawnPromotionButton(Pieces piece, boolean isWhite) {
 			this.piece = piece;
 			
 			setIcon(piece.getIcon(isWhite));

@@ -82,8 +82,7 @@ public class StartupScreenGUI extends GenericLabelGUI {
 	 */
 	@Override
 	protected void buttonClick(GenericButton b) {
-		StartupScreenButton button = (StartupScreenButton) b;
-		switch(button.displayName) {
+		switch(((StartupScreenButton) b).displayName) {
 		case "New Game":
 			new Game(); //Start the game
 			dispose(); //Dispose of the GUI

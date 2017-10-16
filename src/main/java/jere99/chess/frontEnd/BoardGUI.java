@@ -16,6 +16,10 @@ import jere99.chess.reference.Pieces;
 public class BoardGUI extends GenericPanelGUI {
 	
 	/**
+	 * The height and width of all the buttons on this GUI.
+	 */
+	private static final int BUTTON_SIZE = 100;
+	/**
 	 * The game that this GUI represents.
 	 */
 	private final Game game;
@@ -27,10 +31,6 @@ public class BoardGUI extends GenericPanelGUI {
 	 * The first button that the user clicked.
 	 */
 	private BoardButton firstClick;
-	/**
-	 * True if no square has been selected yet, false otherwise.
-	 */
-	private boolean isFirstClick = true;
 	
 	/**
 	 * @param game the game whose board this GUI represents
@@ -42,7 +42,7 @@ public class BoardGUI extends GenericPanelGUI {
 		this.game = game;
 		
 		//Sets the size, (width, height)
-		setSize(800,800);
+		setSize(BUTTON_SIZE * 8, BUTTON_SIZE * 8);
 		
 		//Create new grid layout
 		panel.setLayout(new GridLayout(8,8));
@@ -51,8 +51,8 @@ public class BoardGUI extends GenericPanelGUI {
 		Pieces.loadIcons();
 		
 		//Add the buttons
-		for (int r = 0; r < 8; r ++)
-			for(int c = 0; c < 8; c ++) {
+		for(int r = 0; r < 8; r++)
+			for(int c = 0; c < 8; c++) {
 				buttons[r][c] = new BoardButton(r, c);
 				panel.add(buttons[r][c]);
 				updateSquare(r, c);
@@ -71,17 +71,16 @@ public class BoardGUI extends GenericPanelGUI {
 	@Override
 	protected void buttonClick(GenericButton b) {
 		BoardButton button = (BoardButton) b;
-		System.out.println((isFirstClick ? "First" : "Second") + " Click: " + button.row + ", " + button.column);
-		if(isFirstClick) {
+		System.out.println((firstClick == null ? "First" : "Second") + " Click: " + button.row + ", " + button.column);
+		if(firstClick == null) {
 			if(game.firstClick(button.row, button.column)) {
 				firstClick = button;
 				firstClick.highlight();
-				isFirstClick = false;
 			}
 		} else {
 			game.secondClick(button.row, button.column);
 			firstClick.resetColor();
-			isFirstClick = true;
+			firstClick = null;
 		}
 	}
 	

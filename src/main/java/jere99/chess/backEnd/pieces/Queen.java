@@ -19,7 +19,6 @@ public class Queen extends Piece {
 		super(row, column, isWhite, board);
 	}
 	
-	
 	/**
 	 * Tests if a move is valid for a Queen.
 	 * 

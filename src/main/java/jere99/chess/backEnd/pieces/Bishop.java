@@ -19,7 +19,6 @@ public class Bishop extends Piece {
 		super(row, column, isWhite, board);
 	}
 	
-	
 	/**
 	 * Tests if a move is valid for a bishop.
 	 * 
