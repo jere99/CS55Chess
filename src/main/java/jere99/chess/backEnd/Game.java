@@ -151,7 +151,8 @@ public class Game {
 	 * @param column the column of the clicked square
 	 */
 	public void secondClick(int row, int column) {
-		if(board.clone().testMove(board.getPieceAt(selectedPiece.getRow(), selectedPiece.getColumn()), row, column)) {
+		Board testBoard = board.clone();
+		if(testBoard.testMove(testBoard.getPieceAt(selectedPiece.getRow(), selectedPiece.getColumn()), row, column)) {
 			System.out.println("valid move");
 			board.makeMove(selectedPiece, row, column);
 			//Switches to the next turn

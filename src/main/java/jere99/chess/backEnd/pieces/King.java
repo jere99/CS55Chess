@@ -50,8 +50,10 @@ public class King extends Piece implements Castleable {
 		//castle
 		if(!hasMoved && row == newRow && newColumn == 2 || newColumn == 6 && !board.kingChecked(this)) {
 			boolean kingSide = newColumn == 6; //true if into column 6, false if into column 2
-			if(board.getPieceAt(newRow, kingSide ? 7 : 0) instanceof Rook && ((Rook) board.getPieceAt(newRow, kingSide ? 7 : 0)).hasMoved() == false)
-				return board.clone().testMove(board.getPieceAt(row, column), newRow, kingSide ? 5 : 3) && board.getPieceAt(newRow, kingSide ? 5 : 3) == null && board.getPieceAt(newRow, kingSide ? 6 : 2) == null && (kingSide || board.getPieceAt(newRow, 1) == null);
+			if(board.getPieceAt(newRow, kingSide ? 7 : 0) instanceof Rook && ((Rook) board.getPieceAt(newRow, kingSide ? 7 : 0)).hasMoved() == false) {
+				Board testBoard = board.clone();
+				return testBoard.testMove(testBoard.getPieceAt(row, column), newRow, kingSide ? 5 : 3) && board.getPieceAt(newRow, kingSide ? 5 : 3) == null && board.getPieceAt(newRow, kingSide ? 6 : 2) == null && (kingSide || board.getPieceAt(newRow, 1) == null);
+			}
 		}
 		return false;
 	}

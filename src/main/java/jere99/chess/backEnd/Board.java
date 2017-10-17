@@ -136,7 +136,6 @@ public class Board implements Cloneable {
 	 */
 	protected void makeMove(Piece piece, int newRow, int newColumn) {
 		int startRow = piece.getRow(), startColumn = piece.getColumn();
-		
 		//move the piece
 		movePiece(piece, newRow, newColumn);
 		
@@ -169,8 +168,9 @@ public class Board implements Cloneable {
 	private void detectCheck(int row, int column) {
 		boolean isWhiteMove = board[row][column].isWhite();
 		if(kingChecked(isWhiteMove ? blackKing : whiteKing)) {
-			System.out.println("The" + (isWhiteMove ? "black" : "white") + "king is in check!");
-			if(this.clone().checkmate(isWhiteMove ? blackKing : whiteKing))
+			System.out.println("The " + (isWhiteMove ? "black" : "white") + " king is in check!");
+			Board testBoard = this.clone();
+			if(testBoard.checkmate(isWhiteMove ? testBoard.blackKing : testBoard.whiteKing))
 				game.checkmateInit(isWhiteMove);
 		}
 	}
