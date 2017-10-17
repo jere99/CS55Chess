@@ -2,6 +2,8 @@ package jere99.chess.frontEnd;
 
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import jere99.chess.backEnd.Game;
 import jere99.chess.reference.Pieces;
@@ -53,7 +55,7 @@ public class BoardGUI extends GenericPanelGUI {
 		//Add the buttons
 		for(int r = 0; r < 8; r++)
 			for(int c = 0; c < 8; c++) {
-				buttons[r][c] = new BoardButton(r, c);
+				buttons[r][c] = new BoardButton(this, r, c);
 				panel.add(buttons[r][c]);
 				updateSquare(r, c);
 			}
@@ -64,13 +66,13 @@ public class BoardGUI extends GenericPanelGUI {
 	
 	/**
 	 * Calls different methods on the game object based on whether or not this is the first click.
-	 * Should be called every time a button on this BoardGUI is clicked.
+	 * Will be called every time a button on this BoardGUI is clicked.
 	 * 
-	 * @param b the button that was clicked
+	 * @param e the ActionEvent corresponding to a button click on this GUI
 	 */
 	@Override
-	protected void buttonClick(GenericButton b) {
-		BoardButton button = (BoardButton) b;
+	public void actionPerformed(ActionEvent e) {
+		BoardButton button = (BoardButton) e.getSource();
 		System.out.println((firstClick == null ? "First" : "Second") + " Click: " + button.row + ", " + button.column);
 		if(firstClick == null) {
 			if(game.firstClick(button.row, button.column)) {
@@ -102,7 +104,7 @@ public class BoardGUI extends GenericPanelGUI {
 	 * @author Kevin
 	 * @author JeremiahDeGreeff
 	 */
-	private class BoardButton extends GenericPanelButton {
+	private class BoardButton extends GenericButton {
 		
 		/**
 		 * This buttons's row on the BoardGUI.
@@ -116,10 +118,13 @@ public class BoardGUI extends GenericPanelGUI {
 		/**
 		 * Creates a new button and gives it the correct initial values.
 		 * 
+		 * @param l the object who should listen for this button to be clicked
 		 * @param row the buttons's row on the BoardGUI
 		 * @param col the buttons's column on the BoardGUI
 		 */
-		private BoardButton(int row, int column) {
+		private BoardButton(ActionListener l, int row, int column) {
+			super(l);
+			
 			this.row = row;
 			this.column = column;
 

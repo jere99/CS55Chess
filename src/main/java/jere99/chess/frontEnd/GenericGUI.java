@@ -1,6 +1,5 @@
 package jere99.chess.frontEnd;
 
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
@@ -14,10 +13,11 @@ import javax.swing.JFrame;
  * @see GenericLabelGUI
  */
 @SuppressWarnings("serial")
-public abstract class GenericGUI extends JFrame {
+public abstract class GenericGUI extends JFrame implements ActionListener {
 	
 	/**
 	 * Performs generic initialization for a JFrame.
+	 * 
 	 * @param title the title of the window
 	 */
 	protected GenericGUI(String title) {
@@ -32,34 +32,25 @@ public abstract class GenericGUI extends JFrame {
 	}
 	
 	/**
-	 * This method should be called whenever a button on this GUI is clicked.
-	 * 
-	 * @param b the button which has been clicked
-	 */
-	protected abstract void buttonClick(GenericButton b);
-	
-	/**
 	 * An abstract JButton which all buttons in this project extend.
 	 * 
 	 * @author JeremiahDeGreeff
 	 */
-	protected abstract class GenericButton extends JButton implements ActionListener {
+	protected abstract class GenericButton extends JButton {
 		
 		/**
 		 * Performs generic initialization for a JButton.
+		 * 
+		 * @param l the object who should listen for this button to be clicked
 		 */
-		protected GenericButton() {
+		protected GenericButton(ActionListener l) {
 			setOpaque(true);
 			setBorderPainted(false);
 			
 			//creates a new Action Listener
-			addActionListener(this);
+			addActionListener(l);
 		}
 		
-		/**
-		 * Runs when the button is clicked.
-		 */
-		public abstract void actionPerformed(ActionEvent e);
 	}
 	
 }

@@ -1,5 +1,8 @@
 package jere99.chess.frontEnd;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import jere99.chess.backEnd.Game;
 
 /**
@@ -39,9 +42,9 @@ public class CheckmateGUI extends GenericPanelGUI {
 		setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		
 		//Create the necessary buttons and add to JPanel
-		panel.add(new CheckmateButton("New Game"));
-		panel.add(new CheckmateButton("Main Menu"));
-		panel.add(new CheckmateButton("Exit"));
+		panel.add(new CheckmateButton(this, "New Game"));
+		panel.add(new CheckmateButton(this, "Main Menu"));
+		panel.add(new CheckmateButton(this, "Exit"));
 		
 		//Last step: Set window to be visible
 		setVisible(true);
@@ -49,25 +52,32 @@ public class CheckmateGUI extends GenericPanelGUI {
 	
 	/**
 	 * Creates a new StartupScreenGUI, creates a new Game, or terminates the program depending on what button has been pressed.
-	 * Should be called every time a button on this CheckmateGUI is clicked.
+	 * Will be called every time a button on this CheckmateGUI is clicked.
 	 * 
-	 * @param b the button that was clicked
+	 * @param e the ActionEvent corresponding to a button click on this GUI
 	 */
 	@Override
-	protected void buttonClick(GenericButton b) {
-		boardGUI.dispose(); //close old game
-		dispose(); //close this GUI
-		switch(((CheckmateButton) b).displayName) {
+	public void actionPerformed(ActionEvent e) {
+		//close old game
+		boardGUI.dispose();
+		//close this GUI
+		dispose();
+		
+		switch(((CheckmateButton)e.getSource()).getText()) {
 		case "Main Menu":
-			new StartupScreenGUI(); //create a new startup screen
+			//create a new startup screen
+			new StartupScreenGUI();
 			break;
 		case "New Game":
-			System.out.println("\n\n\n"); //create space in console between old game and new game
-			new Game(); //start a new game
+			//create space in console between old game and new game
+			System.out.println("\n\n\n");
+			//start a new game
+			new Game();
 			break;
 		case "Exit":
+			//terminate everything
 			System.out.println("Terminating program");
-			System.exit(0); //terminate everything
+			System.exit(0); 
 		}
 	}
 	
@@ -77,21 +87,15 @@ public class CheckmateGUI extends GenericPanelGUI {
 	 * @author Kevin
 	 * @author JeremiahDeGreeff
 	 */
-	private class CheckmateButton extends GenericPanelButton {
+	private class CheckmateButton extends GenericButton {
 		
 		/**
-		 * The text on the button.
-		 */
-		private final String displayName;
-		
-		/**
+		 * @param l the object who should listen for this button to be clicked
 		 * @param displayName the text to be put on the button
 		 */
-		private CheckmateButton(String displayName) {
-			this.displayName = displayName;
-			
+		private CheckmateButton(ActionListener l, String displayName) {
+			super(l);
 			setText(displayName);
-			
 			setBorderPainted(true);
 		}
 

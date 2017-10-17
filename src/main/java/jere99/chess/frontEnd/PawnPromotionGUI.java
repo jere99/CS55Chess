@@ -1,5 +1,8 @@
 package jere99.chess.frontEnd;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import jere99.chess.backEnd.Game;
 import jere99.chess.reference.Pieces;
 
@@ -52,7 +55,7 @@ public class PawnPromotionGUI extends GenericPanelGUI {
 		
 		//Create the necessary buttons and add them to the JPanel
 		for(int i = 1; i <= 4; i++)
-			panel.add(new PawnPromotionButton(Pieces.values()[i], game.isWhiteTurn()));
+			panel.add(new PawnPromotionButton(this, Pieces.values()[i], game.isWhiteTurn()));
 		
 		//Last step: Set window to be visible
 		setVisible(true);
@@ -60,17 +63,17 @@ public class PawnPromotionGUI extends GenericPanelGUI {
 	
 	/**
 	 * Promotes the pawn to the selected piece.
-	 * Should be called every time a button on this PawnPromotionGUI is clicked.
+	 * Will be called every time a button on this PawnPromotionGUI is clicked.
 	 * 
-	 * @param b the button that was clicked
+	 * @param e the ActionEvent corresponding to a button click on this GUI
 	 */
 	@Override
-	public void buttonClick(GenericButton b) {
-		PawnPromotionButton button = (PawnPromotionButton) b;
-		System.out.println("Promoting to " + button.piece.toString().toLowerCase());
+	public void actionPerformed(ActionEvent e) {
+		Pieces piece = ((PawnPromotionButton) e.getSource()).piece;
+		System.out.println("Promoting to " + piece.toString().toLowerCase());
 		
 		//promote the pawn into the selected piece
-		game.pawnPromotion(row, column, button.piece);
+		game.pawnPromotion(row, column, piece);
 		
 		//close this GUI
 		dispose();
@@ -82,7 +85,7 @@ public class PawnPromotionGUI extends GenericPanelGUI {
 	 * @author Kevin
 	 * @author JeremiahDeGreeff
 	 */
-	private class PawnPromotionButton extends GenericPanelButton {
+	private class PawnPromotionButton extends GenericButton {
 		
 		/**
 		 * The text on the button which is the name of the piece it corresponds to.
@@ -90,10 +93,12 @@ public class PawnPromotionGUI extends GenericPanelGUI {
 		private final Pieces piece;
 		
 		/**
+		 * @param l the object who should listen for this button to be clicked
 		 * @param piece the text to be put on the button which is the name of a piece
 		 * @param isWhite true if the piece being promoted is white, false if it is black
 		 */
-		private PawnPromotionButton(Pieces piece, boolean isWhite) {
+		private PawnPromotionButton(ActionListener l, Pieces piece, boolean isWhite) {
+			super(l);
 			this.piece = piece;
 			
 			setIcon(piece.getIcon(isWhite));

@@ -1,6 +1,8 @@
 package jere99.chess.frontEnd;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import jere99.chess.backEnd.Game;
 import jere99.chess.reference.Labels;
@@ -12,12 +14,8 @@ import jere99.chess.reference.Labels;
  * @author JeremiahDeGreeff
  */
 @SuppressWarnings("serial")
-public class StartupScreenGUI extends GenericLabelGUI {
-
-	/**
-	 * Keeps track of whether or not a settings menu has already been created in order to prevent multiple settings menus from existing simultaneously.
-	 */
-	private static boolean settingsMenuCreated = false;
+public class StartupScreenGUI extends GenericGUI {
+	
 	/**
 	 * The width of the frame.
 	 */
@@ -46,43 +44,50 @@ public class StartupScreenGUI extends GenericLabelGUI {
 	 * The vertical spacing between the buttons.
 	 */
 	private static final int VERTICAL_SPACING = 70;
-
+	/**
+	 * Keeps track of whether or not a settings menu has already been created in order to prevent multiple settings menus from existing simultaneously.
+	 */
+	private static boolean settingsMenuCreated = false;
+	
 	public StartupScreenGUI() {
 		//Name the window
 		super("Chromatic Chess");
-
+		
 		//Sets the size, (width, height)
 		setSize(FRAME_WIDTH, FRAME_HEIGHT);
-
+		
 		//Background image
 		setContentPane(Labels.STARTUP_SCREEN);
-
+		
+		//Set JFrame to Absolute Layout so that elements may be positioned
+		setLayout(null);
+		
 		//Creating the buttons
 		StartupScreenButton[] buttons = {
-				new StartupScreenButton("New Game"),
-				new StartupScreenButton("Exit"),
-				new StartupScreenButton("Color Scheme")};
-
+				new StartupScreenButton(this, "New Game"),
+				new StartupScreenButton(this, "Exit"),
+				new StartupScreenButton(this, "Color Scheme")};
+		
 		//Configuring locations and sizes of buttons (x,y,width,height)
 		//Adding the buttons to the JFrame
 		for(int i = 0; i < buttons.length; i++) {
 			buttons[i].setBounds(HORIZONTAL_OFFSET, VERTICAL_OFFSET + VERTICAL_SPACING * i, BUTTON_WIDTH, BUTTON_HEIGHT);
 			add(buttons[i]);
 		}
-
+		
 		//Last step: Set window to be visible
 		setVisible(true);
 	}
-
+	
 	/**
 	 * Starts a new Game, opens a new SettingsMenuGUI, or terminates the program depending on which button has been clicked.
-	 * Should be called every time a button on this StartupScreenGUI is clicked.
+	 * Will be called every time a button on this StartupScreenGUI is clicked.
 	 * 
-	 * @param b the button that was clicked
+	 * @param e the ActionEvent corresponding to a button click on this GUI
 	 */
 	@Override
-	protected void buttonClick(GenericButton b) {
-		switch(((StartupScreenButton) b).displayName) {
+	public void actionPerformed(ActionEvent e) {
+		switch(((StartupScreenButton)e.getSource()).getText()) {
 		case "New Game":
 			new Game(); //Start the game
 			dispose(); //Dispose of the GUI
@@ -98,7 +103,7 @@ public class StartupScreenGUI extends GenericLabelGUI {
 			System.exit(0); //Terminate the program
 		}
 	}
-
+	
 	/**
 	 * Allows for a new SettingsMenuGUI to be created after the current one has closed.
 	 */
@@ -112,18 +117,14 @@ public class StartupScreenGUI extends GenericLabelGUI {
 	 * @author Kevin
 	 * @author JeremiahDeGreeff
 	 */
-	private class StartupScreenButton extends GenericLabelButton {
-
+	private class StartupScreenButton extends GenericButton {
+		
 		/**
-		 * The text displayed on the button.
-		 */
-		private final String displayName;
-
-		/**
+		 * @param l the object who should listen for this button to be clicked
 		 * @param displayName the text to be displayed on the button
 		 */
-		private StartupScreenButton(String displayName) {
-			this.displayName = displayName;
+		private StartupScreenButton(ActionListener l, String displayName) {
+			super(l);
 			
 			//Set the button to show the text
 			setText(displayName);

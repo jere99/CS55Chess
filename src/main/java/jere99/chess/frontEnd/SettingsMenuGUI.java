@@ -1,6 +1,8 @@
 package jere99.chess.frontEnd;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import jere99.chess.reference.Colors;
 import jere99.chess.reference.Labels;
@@ -13,7 +15,7 @@ import jere99.chess.reference.Settings;
  * @author JeremiahDeGreeff
  */
 @SuppressWarnings("serial")
-public class SettingsMenuGUI extends GenericLabelGUI {
+public class SettingsMenuGUI extends GenericGUI {
 
 	/**
 	 * The buttons on this GUI.
@@ -47,29 +49,32 @@ public class SettingsMenuGUI extends GenericLabelGUI {
 	protected SettingsMenuGUI() {
 		//Name the window
 		super("Color Scheme");
-
+		
 		//Sets the size, (width, height)
 		setSize(FRAME_WIDTH, FRAME_HEIGHT);
-
+		
 		//Disables the "X" button on the top corner of the JFrame Dialog
 		//This is needed because if the user "X's" out of the Settings window instead of clicking "Main Menu",
 		//The instance variable that allows another settings menu to be created will not be reset,
 		//thus another settings menu cannot be created
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-
+		
 		//Background Image
 		setContentPane(Labels.SETTINGS_MENU);
-
+		
+		//Set JFrame to Absolute Layout so that elements may be positioned
+		setLayout(null);
+		
 		//Creating the buttons
 		//Customizing the buttons' locations & sizes (x,y,width,height)
 		//Adding the buttons to the JFrame
 		for(Colors c : Colors.values()) {
-			buttons[c.ordinal()] = new SettingsMenuButton(c);
+			buttons[c.ordinal()] = new SettingsMenuButton(this, c);
 			buttons[c.ordinal()].setBounds(c.isWhite() ? HORIZONTAL_OFFSET : FRAME_WIDTH - HORIZONTAL_OFFSET - BUTTON_WIDTH, (c.ordinal() % (Colors.values().length / 2) + 1) * VERTICAL_OFFSET, BUTTON_WIDTH, BUTTON_HEIGHT);
 			add(buttons[c.ordinal()]);
 		}
 		//null is the MainMenu Button
-		SettingsMenuButton MainMenu = new SettingsMenuButton(null);
+		SettingsMenuButton MainMenu = new SettingsMenuButton(this, null);
 		MainMenu.setBounds(300, 600, 150, 50);
 		add(MainMenu);
 		
@@ -79,27 +84,27 @@ public class SettingsMenuGUI extends GenericLabelGUI {
 	
 	/**
 	 * Changes the settings depending on which button has been clicked.
-	 * Should be called every time a button on this SettingsMenuGUI is clicked.
+	 * Will be called every time a button on this SettingsMenuGUI is clicked.
 	 * 
-	 * @param b the button that was clicked
+	 * @param e the ActionEvent corresponding to a button click on this GUI
 	 */
 	@Override
-	protected void buttonClick(GenericButton b) {
-		SettingsMenuButton button = (SettingsMenuButton) b;
+	public void actionPerformed(ActionEvent e) {
+		SettingsMenuButton button = (SettingsMenuButton) e.getSource();
 		//If "Main Menu" button is clicked
 		if (button.color == null) {
-			//Disposes of Settings Menu GUI
+			//Dispose of Settings Menu GUI
 			dispose();
-			//Resets static variable so that the window may be re-created
+			//Reset static variable so that the window may be re-created
 			StartupScreenGUI.SettingsMenuClosed();
 		} else {
 			//Confirmation in the Console
 			System.out.println("Setting default " + (button.color.isWhite() ? "white" : "black") + " color to: " + button.color.toString().toLowerCase());
-			//Resets the background color of the old selection of the same color to white
+			//Reset the background color of the old selection of the same color to white
 			buttons[Settings.getColor(button.color.isWhite()).ordinal()].setBackground(Color.WHITE);
-			//Sets the background color of the new piece to green
+			//Set the background color of the new piece to green
 			button.setBackground(Color.GREEN);
-			//Updates Settings
+			//Update Settings
 			Settings.update(button.color);
 		}
 	}
@@ -110,7 +115,7 @@ public class SettingsMenuGUI extends GenericLabelGUI {
 	 * @author Kevin
 	 * @author JeremiahDeGreeff
 	 */
-	private class SettingsMenuButton extends GenericLabelButton {
+	private class SettingsMenuButton extends GenericButton {
 		
 		/**
 		 * The color of the piece which this button represents.
@@ -118,14 +123,12 @@ public class SettingsMenuGUI extends GenericLabelGUI {
 		private final Colors color;
 		
 		/**
+		 * @param l the object who should listen for this button to be clicked
 		 * @param color the color which clicking this button would select - null indicates the Main Menu button
 		 */
-		private SettingsMenuButton(Colors color) {
+		private SettingsMenuButton(ActionListener l, Colors color) {
+			super(l);
 			this.color = color;
-			
-			//Necessary for buttons to work on OSX
-			setOpaque(true);
-			setBorderPainted(false);
 			
 			//Set the background to white
 			setBackground(Color.white);
@@ -134,12 +137,8 @@ public class SettingsMenuGUI extends GenericLabelGUI {
 			if(color == null) {
 				setText("Main Menu");
 				setForeground(Color.cyan);
-			} else
-			//Set the necessary images to the correct buttons
+			} else //Set the necessary image to the button
 				setIcon(color.getPawn());
-			
-			//Create a new Action Listener
-			addActionListener(this);
 		}
 		
 	}
