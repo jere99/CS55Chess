@@ -2,7 +2,6 @@ package jere99.chess.frontEnd;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import jere99.chess.backEnd.Game;
 import jere99.chess.reference.Labels;
@@ -63,15 +62,17 @@ public class StartupScreenGUI extends GenericGUI {
 		setLayout(null);
 		
 		//Creating the buttons
-		StartupScreenButton[] buttons = {
-				new StartupScreenButton(this, "New Game"),
-				new StartupScreenButton(this, "Exit"),
-				new StartupScreenButton(this, "Color Scheme")};
+		GenericButton[] buttons = {
+				new GenericButton("New Game", this),
+				new GenericButton("Exit", this),
+				new GenericButton("Color Scheme", this)};
 		
 		//Configuring locations and sizes of buttons (x,y,width,height)
 		//Adding the buttons to the JFrame
 		for(int i = 0; i < buttons.length; i++) {
 			buttons[i].setBounds(HORIZONTAL_OFFSET, VERTICAL_OFFSET + VERTICAL_SPACING * i, BUTTON_WIDTH, BUTTON_HEIGHT);
+			buttons[i].setForeground(Color.CYAN);
+			buttons[i].setBackground(Color.WHITE);
 			add(buttons[i]);
 		}
 		
@@ -87,7 +88,8 @@ public class StartupScreenGUI extends GenericGUI {
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		switch(((StartupScreenButton)e.getSource()).getText()) {
+		System.out.println(e.getActionCommand());
+		switch(e.getActionCommand()) {
 		case "New Game":
 			new Game(); //Start the game
 			dispose(); //Dispose of the GUI
@@ -109,31 +111,6 @@ public class StartupScreenGUI extends GenericGUI {
 	 */
 	protected static void SettingsMenuClosed() {
 		settingsMenuCreated = false;
-	}
-	
-	/**
-	 * A button on a StartupScreenGUI.
-	 * 
-	 * @author Kevin
-	 * @author JeremiahDeGreeff
-	 */
-	private class StartupScreenButton extends GenericButton {
-		
-		/**
-		 * @param l the object who should listen for this button to be clicked
-		 * @param displayName the text to be displayed on the button
-		 */
-		private StartupScreenButton(ActionListener l, String displayName) {
-			super(l);
-			
-			//Set the button to show the text
-			setText(displayName);
-			
-			//Set Foreground/Background colors
-			setForeground(Color.CYAN);
-			setBackground(Color.white);
-		}
-		
 	}
 
 }

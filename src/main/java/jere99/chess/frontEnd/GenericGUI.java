@@ -2,6 +2,7 @@ package jere99.chess.frontEnd;
 
 import java.awt.event.ActionListener;
 
+import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
@@ -36,7 +37,7 @@ public abstract class GenericGUI extends JFrame implements ActionListener {
 	 * 
 	 * @author JeremiahDeGreeff
 	 */
-	protected abstract class GenericButton extends JButton {
+	protected class GenericButton extends JButton {
 		
 		/**
 		 * Performs generic initialization for a JButton.
@@ -44,11 +45,41 @@ public abstract class GenericGUI extends JFrame implements ActionListener {
 		 * @param l the object who should listen for this button to be clicked
 		 */
 		protected GenericButton(ActionListener l) {
+			this(null, null, l);
+		}
+		
+		/**
+		 * Performs generic initialization for a JButton.
+		 * 
+		 * @param text the text of the button
+		 * @param l the object who should listen for this button to be clicked
+		 */
+		protected GenericButton(String text, ActionListener l) {
+			this(text, null, l);
+		}
+		
+		/**
+		 * Performs generic initialization for a JButton.
+		 * 
+		 * @param icon the Icon image to display on the button
+		 * @param l the object who should listen for this button to be clicked
+		 */
+		protected GenericButton(Icon icon, ActionListener l) {
+			this(null, icon, l);
+		}
+		/**
+		 * Performs generic initialization for a JButton.
+		 * 
+		 * @param text the text of the button
+		 * @param icon the Icon image to display on the button
+		 * @param l the object who should listen for this button to be clicked
+		 */
+		protected GenericButton(String text, Icon icon, ActionListener l) {
+			super(text, icon);
+			addActionListener(l);
+			
 			setOpaque(true);
 			setBorderPainted(false);
-			
-			//creates a new Action Listener
-			addActionListener(l);
 		}
 		
 	}

@@ -1,5 +1,6 @@
 package jere99.chess.reference;
 
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
 /**
@@ -43,6 +44,20 @@ public enum Colors {
 	 */
 	public ImageIcon getPawn() {
 		return pawn;
+	}
+	
+	/**
+	 * Determines the color of a pawn Icon.
+	 * Intended to be used for the SettingsMenuGUI.
+	 * 
+	 * @param icon the Icon to look for
+	 * @return the element of this enum with the same pawn icon, null if no such element exists
+	 */
+	public static Colors getColorOfPawnIcon(Icon icon) {
+		for(Colors color : values())
+			if(color.pawn == icon)
+				return color;
+		return null;
 	}
 	
 }

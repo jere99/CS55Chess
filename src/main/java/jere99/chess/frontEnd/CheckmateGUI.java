@@ -1,7 +1,6 @@
 package jere99.chess.frontEnd;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import jere99.chess.backEnd.Game;
 
@@ -42,9 +41,9 @@ public class CheckmateGUI extends GenericPanelGUI {
 		setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		
 		//Create the necessary buttons and add to JPanel
-		panel.add(new CheckmateButton(this, "New Game"));
-		panel.add(new CheckmateButton(this, "Main Menu"));
-		panel.add(new CheckmateButton(this, "Exit"));
+		panel.add(new GenericButton("New Game", this));
+		panel.add(new GenericButton("Main Menu", this));
+		panel.add(new GenericButton("Exit", this));
 		
 		//Last step: Set window to be visible
 		setVisible(true);
@@ -63,7 +62,7 @@ public class CheckmateGUI extends GenericPanelGUI {
 		//close this GUI
 		dispose();
 		
-		switch(((CheckmateButton)e.getSource()).getText()) {
+		switch(e.getActionCommand()) {
 		case "Main Menu":
 			//create a new startup screen
 			new StartupScreenGUI();
@@ -79,26 +78,6 @@ public class CheckmateGUI extends GenericPanelGUI {
 			System.out.println("Terminating program");
 			System.exit(0); 
 		}
-	}
-	
-	/**
-	 * A button on a CheckmateGUI object.
-	 * 
-	 * @author Kevin
-	 * @author JeremiahDeGreeff
-	 */
-	private class CheckmateButton extends GenericButton {
-		
-		/**
-		 * @param l the object who should listen for this button to be clicked
-		 * @param displayName the text to be put on the button
-		 */
-		private CheckmateButton(ActionListener l, String displayName) {
-			super(l);
-			setText(displayName);
-			setBorderPainted(true);
-		}
-
 	}
 	
 }

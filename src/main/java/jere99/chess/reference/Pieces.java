@@ -1,5 +1,6 @@
 package jere99.chess.reference;
 
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
 import jere99.chess.backEnd.pieces.*;
@@ -58,6 +59,20 @@ public enum Pieces {
 		for(Pieces p : values())
 			if(piece.getClass().equals(p.type))
 				return p.getIcon(piece.isWhite());
+		return null;
+	}
+	
+	/**
+	 * Determines the piece of an Icon.
+	 * Intended to be used for the PawnChangeGUI.
+	 * 
+	 * @param icon the Icon to look for
+	 * @return the element of this enum with the icon, null if no such element exists
+	 */
+	public static Pieces getPieceOfIcon(Icon icon) {
+		for(Pieces piece : values())
+			if(piece.getIcon(true) == icon || piece.getIcon(false) == icon)
+				return piece;
 		return null;
 	}
 	

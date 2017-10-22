@@ -2,7 +2,6 @@ package jere99.chess.frontEnd;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import jere99.chess.reference.Colors;
 import jere99.chess.reference.Labels;
@@ -20,7 +19,7 @@ public class SettingsMenuGUI extends GenericGUI {
 	/**
 	 * The buttons on this GUI.
 	 */
-	private final SettingsMenuButton[] buttons = new SettingsMenuButton[6];
+	private final GenericButton[] buttons = new GenericButton[6];
 	/**
 	 * The width of the frame.
 	 */
@@ -65,16 +64,21 @@ public class SettingsMenuGUI extends GenericGUI {
 		//Set JFrame to Absolute Layout so that elements may be positioned
 		setLayout(null);
 		
-		//Creating the buttons
-		//Customizing the buttons' locations & sizes (x,y,width,height)
+		//Create the buttons
+		//Customize the buttons' locations & sizes (x,y,width,height)
 		//Adding the buttons to the JFrame
 		for(Colors c : Colors.values()) {
-			buttons[c.ordinal()] = new SettingsMenuButton(this, c);
+			buttons[c.ordinal()] = new GenericButton(c.getPawn(), this);
 			buttons[c.ordinal()].setBounds(c.isWhite() ? HORIZONTAL_OFFSET : FRAME_WIDTH - HORIZONTAL_OFFSET - BUTTON_WIDTH, (c.ordinal() % (Colors.values().length / 2) + 1) * VERTICAL_OFFSET, BUTTON_WIDTH, BUTTON_HEIGHT);
 			add(buttons[c.ordinal()]);
 		}
+		//Set button background colors
+		updateButtons();
+		
 		//null is the MainMenu Button
-		SettingsMenuButton MainMenu = new SettingsMenuButton(this, null);
+		GenericButton MainMenu = new GenericButton("Main Menu", this);
+		MainMenu.setBackground(Color.WHITE);
+		MainMenu.setForeground(Color.CYAN);
 		MainMenu.setBounds(300, 600, 150, 50);
 		add(MainMenu);
 		
@@ -90,57 +94,29 @@ public class SettingsMenuGUI extends GenericGUI {
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		SettingsMenuButton button = (SettingsMenuButton) e.getSource();
+		Colors color = Colors.getColorOfPawnIcon(((GenericButton)e.getSource()).getIcon());
 		//If "Main Menu" button is clicked
-		if (button.color == null) {
+		if(color == null) {
 			//Dispose of Settings Menu GUI
 			dispose();
 			//Reset static variable so that the window may be re-created
 			StartupScreenGUI.SettingsMenuClosed();
 		} else {
 			//Confirmation in the Console
-			System.out.println("Setting default " + (button.color.isWhite() ? "white" : "black") + " color to: " + button.color.toString().toLowerCase());
-			//Reset the background color of the old selection of the same color to white
-			buttons[Settings.getColor(button.color.isWhite()).ordinal()].setBackground(Color.WHITE);
-			//Set the background color of the new piece to green
-			button.setBackground(Color.GREEN);
+			System.out.println("Setting default " + (color.isWhite() ? "white" : "black") + " color to: " + color.toString().toLowerCase());
 			//Update Settings
-			Settings.update(button.color);
+			Settings.update(color);
+			//Update Button background colors
+			updateButtons();
 		}
 	}
 	
 	/**
-	 * A button on a SettingsMenuGUI.
-	 * 
-	 * @author Kevin
-	 * @author JeremiahDeGreeff
+	 * Sets the background color of selected buttons to be green and that of unselected buttons to be white.
 	 */
-	private class SettingsMenuButton extends GenericButton {
-		
-		/**
-		 * The color of the piece which this button represents.
-		 */
-		private final Colors color;
-		
-		/**
-		 * @param l the object who should listen for this button to be clicked
-		 * @param color the color which clicking this button would select - null indicates the Main Menu button
-		 */
-		private SettingsMenuButton(ActionListener l, Colors color) {
-			super(l);
-			this.color = color;
-			
-			//Set the background to white
-			setBackground(Color.white);
-			
-			//Set the text and color for the button that returns to the Startup Screen
-			if(color == null) {
-				setText("Main Menu");
-				setForeground(Color.cyan);
-			} else //Set the necessary image to the button
-				setIcon(color.getPawn());
-		}
-		
+	private void updateButtons() {
+		for(int i = 0; i < buttons.length; i++)
+			buttons[i].setBackground(Settings.getColor(i < 3) == Colors.values()[i] ? Color.GREEN : Color.WHITE);
 	}
 	
 }
