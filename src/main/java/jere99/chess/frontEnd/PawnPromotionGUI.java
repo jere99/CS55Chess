@@ -2,6 +2,8 @@ package jere99.chess.frontEnd;
 
 import java.awt.event.ActionEvent;
 
+import javax.swing.JPanel;
+
 import jere99.chess.backEnd.Game;
 import jere99.chess.reference.Pieces;
 
@@ -12,7 +14,7 @@ import jere99.chess.reference.Pieces;
  * @author JeremiahDeGreeff
  */
 @SuppressWarnings("serial")
-public class PawnPromotionGUI extends GenericPanelGUI {
+public class PawnPromotionGUI extends GenericGUI {
 	
 	/**
 	 * The width of the frame.
@@ -52,9 +54,14 @@ public class PawnPromotionGUI extends GenericPanelGUI {
 		//Set the size of the window
 		setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		
+		//Prevent window from being closed
+		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+		
 		//Create the necessary buttons and add them to the JPanel
+		JPanel panel = new JPanel();
 		for(int i = 1; i <= 4; i++)
 			panel.add(new GenericButton(Pieces.values()[i].getIcon(game.isWhiteTurn()), this));
+		this.add(panel);
 		
 		//Last step: Set window to be visible
 		setVisible(true);
@@ -68,14 +75,11 @@ public class PawnPromotionGUI extends GenericPanelGUI {
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		Pieces piece = Pieces.getPieceOfIcon(((GenericButton) e.getSource()).getIcon());
-		System.out.println("Promoting to " + piece.toString().toLowerCase());
-		
-		//promote the pawn into the selected piece
-		game.pawnPromotion(row, column, piece);
-		
 		//close this GUI
 		dispose();
+		
+		//promote the pawn into the selected piece
+		game.pawnPromotion(row, column, Pieces.getPieceOfIcon(((GenericButton) e.getSource()).getIcon()));
 	}
 	
 }

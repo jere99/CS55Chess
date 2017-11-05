@@ -116,6 +116,7 @@ public class Game {
 	 * @param type the name of the selected piece
 	 */
 	public void pawnPromotion(int row, int column, Pieces piece) {
+		System.out.println("Promoting to " + piece.toString().toLowerCase());
 		board.pawnPromotion(row, column, piece);
 	}
 

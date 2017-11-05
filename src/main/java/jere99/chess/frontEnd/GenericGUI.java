@@ -25,11 +25,8 @@ public abstract class GenericGUI extends JFrame implements ActionListener {
 		//Name the window
 		super(title);
 		
-		//Prevents window from being resized
+		//Prevent window from being resized
 		setResizable(false);
-				
-		//Default program end
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 	
 	/**

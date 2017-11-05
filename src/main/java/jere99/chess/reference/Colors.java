@@ -4,7 +4,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
 /**
- * an enum which stores the available color for the chess pieces
+ * An enum that stores the available color for the chess pieces.
  * 
  * @author JeremiahDeGreeff
  */

@@ -5,6 +5,8 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JPanel;
+
 import jere99.chess.backEnd.Game;
 import jere99.chess.reference.Pieces;
 
@@ -15,7 +17,7 @@ import jere99.chess.reference.Pieces;
  * @author JeremiahDeGreeff
  */
 @SuppressWarnings("serial")
-public class BoardGUI extends GenericPanelGUI {
+public class BoardGUI extends GenericGUI {
 	
 	/**
 	 * The height and width of all the buttons on this GUI.
@@ -46,11 +48,15 @@ public class BoardGUI extends GenericPanelGUI {
 		//Sets the size, (width, height)
 		setSize(BUTTON_SIZE * 8, BUTTON_SIZE * 8);
 		
-		//Create new grid layout
-		panel.setLayout(new GridLayout(8,8));
+		//Default program end
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 		//Load the correct piece icons
 		Pieces.loadIcons();
+				
+		//Create new grid layout
+		JPanel panel = new JPanel();
+		panel.setLayout(new GridLayout(8,8));
 		
 		//Add the buttons
 		for(int r = 0; r < 8; r++)
@@ -59,6 +65,8 @@ public class BoardGUI extends GenericPanelGUI {
 				panel.add(buttons[r][c]);
 				updateSquare(r, c);
 			}
+		
+		this.add(panel);
 		
 		//Last step: Set window to be visible
 		setVisible(true);
@@ -95,7 +103,7 @@ public class BoardGUI extends GenericPanelGUI {
 	 */
 	public void updateSquare(int row, int column) {
 		System.out.println("Updating image at: " + row + ", " + column);
-		buttons[row][column].setIcon(game.getIconForSquare(row, column));
+		buttons[row][column].updateIcon();
 	}
 	
 	/** 
@@ -130,6 +138,13 @@ public class BoardGUI extends GenericPanelGUI {
 
 			//Set Background Colors
 			resetColor();
+		}
+		
+		/**
+		 * Updates the icon of this button.
+		 */
+		private void updateIcon() {
+			setIcon(game.getIconForSquare(row, column));
 		}
 		
 		/**

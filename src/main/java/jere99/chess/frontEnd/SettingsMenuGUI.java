@@ -2,6 +2,7 @@ package jere99.chess.frontEnd;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import jere99.chess.reference.Colors;
 import jere99.chess.reference.Labels;
@@ -12,6 +13,7 @@ import jere99.chess.reference.Settings;
  * 
  * @author Kevin
  * @author JeremiahDeGreeff
+ * @see Settings
  */
 @SuppressWarnings("serial")
 public class SettingsMenuGUI extends GenericGUI {
@@ -54,8 +56,7 @@ public class SettingsMenuGUI extends GenericGUI {
 		
 		//Disables the "X" button on the top corner of the JFrame Dialog
 		//This is needed because if the user "X's" out of the Settings window instead of clicking "Main Menu",
-		//The instance variable that allows another settings menu to be created will not be reset,
-		//thus another settings menu cannot be created
+		//The instance variable that allows another settings menu to be created will not be reset, thus another settings menu cannot be created
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		
 		//Background Image
@@ -66,7 +67,7 @@ public class SettingsMenuGUI extends GenericGUI {
 		
 		//Create the buttons
 		//Customize the buttons' locations & sizes (x,y,width,height)
-		//Adding the buttons to the JFrame
+		//Add the buttons to the JFrame
 		for(Colors c : Colors.values()) {
 			buttons[c.ordinal()] = new GenericButton(c.getPawn(), this);
 			buttons[c.ordinal()].setBounds(c.isWhite() ? HORIZONTAL_OFFSET : FRAME_WIDTH - HORIZONTAL_OFFSET - BUTTON_WIDTH, (c.ordinal() % (Colors.values().length / 2) + 1) * VERTICAL_OFFSET, BUTTON_WIDTH, BUTTON_HEIGHT);
@@ -75,8 +76,8 @@ public class SettingsMenuGUI extends GenericGUI {
 		//Set button background colors
 		updateButtons();
 		
-		//null is the MainMenu Button
-		GenericButton MainMenu = new GenericButton("Main Menu", this);
+		//Create button to return to main menu
+		GenericButton MainMenu = new GenericButton("Main Menu", new MainMenuListener());
 		MainMenu.setBackground(Color.WHITE);
 		MainMenu.setForeground(Color.CYAN);
 		MainMenu.setBounds(300, 600, 150, 50);
@@ -88,27 +89,19 @@ public class SettingsMenuGUI extends GenericGUI {
 	
 	/**
 	 * Changes the settings depending on which button has been clicked.
-	 * Will be called every time a button on this SettingsMenuGUI is clicked.
+	 * Will be called every time a pawn button on this SettingsMenuGUI is clicked.
 	 * 
 	 * @param e the ActionEvent corresponding to a button click on this GUI
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Colors color = Colors.getColorOfPawnIcon(((GenericButton)e.getSource()).getIcon());
-		//If "Main Menu" button is clicked
-		if(color == null) {
-			//Dispose of Settings Menu GUI
-			dispose();
-			//Reset static variable so that the window may be re-created
-			StartupScreenGUI.SettingsMenuClosed();
-		} else {
-			//Confirmation in the Console
-			System.out.println("Setting default " + (color.isWhite() ? "white" : "black") + " color to: " + color.toString().toLowerCase());
-			//Update Settings
-			Settings.update(color);
-			//Update Button background colors
-			updateButtons();
-		}
+		//Confirmation in the Console
+		System.out.println("Setting default " + (color.isWhite() ? "white" : "black") + " color to: " + color.toString().toLowerCase());
+		//Update Settings
+		Settings.update(color);
+		//Update Button background colors
+		updateButtons();
 	}
 	
 	/**
@@ -117,6 +110,29 @@ public class SettingsMenuGUI extends GenericGUI {
 	private void updateButtons() {
 		for(int i = 0; i < buttons.length; i++)
 			buttons[i].setBackground(Settings.getColor(i < 3) == Colors.values()[i] ? Color.GREEN : Color.WHITE);
+	}
+	
+	/**
+	 * Defines a listener for the Main Menu Button.
+	 * 
+	 * @author JeremiahDeGreeff
+	 */
+	private class MainMenuListener implements ActionListener {
+		
+		/**
+		 * Closes this GUI.
+		 * Will be called every time the Main Menu button this SettingsMenuGUI is clicked.
+		 * 
+		 * @param e the ActionEvent corresponding to a button click on this GUI
+		 */
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			//Dispose of Settings Menu GUI
+			dispose();
+			//Reset static variable so that the window may be re-created
+			StartupScreenGUI.SettingsMenuClosed();
+		}
+		
 	}
 	
 }

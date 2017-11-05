@@ -1,7 +1,7 @@
 package jere99.chess.reference;
 
 /**
- * a class which stores the selected colors for both players
+ * A class that stores the selected colors for both players.
  * 
  * @author JeremiahDeGreeff
  */

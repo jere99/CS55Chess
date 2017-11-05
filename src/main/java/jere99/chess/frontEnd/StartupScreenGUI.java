@@ -55,6 +55,9 @@ public class StartupScreenGUI extends GenericGUI {
 		//Sets the size, (width, height)
 		setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		
+		//Default program end
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		
 		//Background image
 		setContentPane(Labels.STARTUP_SCREEN);
 		

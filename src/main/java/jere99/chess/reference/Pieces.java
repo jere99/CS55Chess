@@ -6,7 +6,8 @@ import javax.swing.ImageIcon;
 import jere99.chess.backEnd.pieces.*;
 
 /**
- * an enum which represents all the pieces in a chess game
+ * An enum that represents all the pieces in a chess game.
+ * 
  * @author JeremiahDeGreeff
  */
 public enum Pieces {

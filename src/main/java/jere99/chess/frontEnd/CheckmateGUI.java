@@ -2,6 +2,8 @@ package jere99.chess.frontEnd;
 
 import java.awt.event.ActionEvent;
 
+import javax.swing.JPanel;
+
 import jere99.chess.backEnd.Game;
 
 /**
@@ -11,7 +13,7 @@ import jere99.chess.backEnd.Game;
  * @author JeremiahDeGreeff
  */
 @SuppressWarnings("serial")
-public class CheckmateGUI extends GenericPanelGUI {
+public class CheckmateGUI extends GenericGUI {
 	
 	/**
 	 * The width of the frame.
@@ -40,10 +42,16 @@ public class CheckmateGUI extends GenericPanelGUI {
 		//Set the size of the window
 		setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		
+		//Prevent window from being closed
+		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+		
 		//Create the necessary buttons and add to JPanel
+		JPanel panel = new JPanel();
 		panel.add(new GenericButton("New Game", this));
 		panel.add(new GenericButton("Main Menu", this));
 		panel.add(new GenericButton("Exit", this));
+		
+		this.add(panel);
 		
 		//Last step: Set window to be visible
 		setVisible(true);
@@ -60,19 +68,19 @@ public class CheckmateGUI extends GenericPanelGUI {
 		//close old game
 		boardGUI.dispose();
 		//close this GUI
-		dispose();
+		this.dispose();
 		
 		switch(e.getActionCommand()) {
 		case "Main Menu":
 			//create a new startup screen
 			new StartupScreenGUI();
-			break;
+			return;
 		case "New Game":
 			//create space in console between old game and new game
 			System.out.println("\n\n\n");
 			//start a new game
 			new Game();
-			break;
+			return;
 		case "Exit":
 			//terminate everything
 			System.out.println("Terminating program");
